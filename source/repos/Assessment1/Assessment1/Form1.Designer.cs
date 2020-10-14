@@ -34,6 +34,8 @@
             this.lblnput = new System.Windows.Forms.Label();
             this.lblOutput = new System.Windows.Forms.Label();
             this.lblCommandLine = new System.Windows.Forms.Label();
+            this.OutputWindow = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.OutputWindow)).BeginInit();
             this.SuspendLayout();
             // 
             // txtOutput
@@ -65,11 +67,11 @@
             this.txtCommandLine.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCommandLine.ForeColor = System.Drawing.SystemColors.Menu;
             this.txtCommandLine.Location = new System.Drawing.Point(12, 654);
-            this.txtCommandLine.Multiline = true;
             this.txtCommandLine.Name = "txtCommandLine";
-            this.txtCommandLine.Size = new System.Drawing.Size(1795, 262);
+            this.txtCommandLine.Size = new System.Drawing.Size(1795, 26);
             this.txtCommandLine.TabIndex = 2;
             this.txtCommandLine.TextChanged += new System.EventHandler(this.txtCommandLine_TextChanged);
+            this.txtCommandLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCommandLine_KeyDown);
             // 
             // lblnput
             // 
@@ -105,12 +107,23 @@
             this.lblCommandLine.TabIndex = 5;
             this.lblCommandLine.Text = "Command Line";
             // 
+            // OutputWindow
+            // 
+            this.OutputWindow.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.OutputWindow.Location = new System.Drawing.Point(936, 32);
+            this.OutputWindow.Name = "OutputWindow";
+            this.OutputWindow.Size = new System.Drawing.Size(871, 548);
+            this.OutputWindow.TabIndex = 6;
+            this.OutputWindow.TabStop = false;
+            this.OutputWindow.Paint += new System.Windows.Forms.PaintEventHandler(this.OutputWindow_Paint);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ClientSize = new System.Drawing.Size(1827, 928);
+            this.Controls.Add(this.OutputWindow);
             this.Controls.Add(this.lblCommandLine);
             this.Controls.Add(this.lblOutput);
             this.Controls.Add(this.lblnput);
@@ -119,6 +132,7 @@
             this.Controls.Add(this.txtOutput);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.OutputWindow)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,6 +146,7 @@
         private System.Windows.Forms.Label lblnput;
         private System.Windows.Forms.Label lblOutput;
         private System.Windows.Forms.Label lblCommandLine;
+        private System.Windows.Forms.PictureBox OutputWindow;
     }
 }
 
