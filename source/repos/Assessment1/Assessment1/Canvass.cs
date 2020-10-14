@@ -28,28 +28,48 @@ namespace Assessment1
         {
             g.DrawRectangle(Pen, xPos, yPos, xPos + width, yPos + width);
         }
-        public void DrawCircle(Rectangle radius)
+        public void DrawCircle(int radius)
         {
-            g.DrawEllipse(Pen,radius);
+            g.DrawEllipse(Pen, xPos - radius, yPos - radius, xPos + radius , yPos+radius);
         }
-        public void DrawTriangle(double toX, double toY, int toX2, int toY2)
+        public void DrawTriangle(int toX, int toY, int toX2, int toY2)
         {
-            //g.DrawLines(Pen, point1);
+            Point[] Triangle = new Point[] { new Point(xPos, yPos), new Point(toX, toY), new Point(toX2, toY2) };
+            g.DrawPolygon(Pen, Triangle);
         }
 
+        public void DrawRectangle(int width, int height)
+        {
+            g.DrawRectangle(Pen, xPos, yPos, xPos + width, yPos + height);
+        }
         public void PenColour(Color colour)
         {
             Pen.Color = colour;
         }
 
-        public void shapeFill(Brush  brush, float x, float y, float width, float height)
+        public void FillSquare( int width)
         {
-            g.FillRectangle(brush,x,y,width,height);
+            SolidBrush solidBrush = new SolidBrush(Pen.Color);
+            g.FillRectangle(solidBrush,xPos, yPos, xPos + width, yPos + width);
         }
 
-        public void shapeUnFill(Brush brush, float x, float y, float width, float height)
+        public void FillCircle(int radius)
         {
-            
+            SolidBrush solidBrush = new SolidBrush(Pen.Color);
+            g.FillEllipse(solidBrush, xPos - radius, yPos - radius, xPos + radius, yPos + radius);
+        }
+
+        public void FillTriangle(int toX, int toY, int toX2, int toY2)
+        {
+            Point[] Triangle = new Point[] { new Point(xPos, yPos), new Point(toX, toY), new Point(toX2, toY2) };
+            SolidBrush solidBrush = new SolidBrush(Pen.Color);
+            g.FillPolygon(solidBrush, Triangle);
+        }
+
+        public void FillRectangle(int width, int height)
+        {
+            SolidBrush solidBrush = new SolidBrush(Pen.Color);
+            g.FillRectangle(solidBrush, xPos, yPos, xPos + width, yPos + height);
         }
 
         public void clearArea(Color colour)
