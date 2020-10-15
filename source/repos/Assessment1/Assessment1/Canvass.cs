@@ -17,7 +17,13 @@ namespace Assessment1
             Pen = new Pen(Color.White, 1);
         }
 
-        public void DrawLine(int toX, int toY)
+        public void MoveTo(int toX, int toY)
+        {
+            xPos = toX;
+            yPos = toY;
+        }
+
+        public void DrawTo(int toX, int toY)
         {
             g.DrawLine(Pen, xPos, yPos, toX, toY);
             xPos = toX;
@@ -32,9 +38,9 @@ namespace Assessment1
         {
             g.DrawEllipse(Pen, xPos - radius, yPos - radius, xPos + radius , yPos+radius);
         }
-        public void DrawTriangle(int toX, int toY, int toX2, int toY2)
+        public void DrawTriangle(int width, int height)
         {
-            Point[] Triangle = new Point[] { new Point(xPos, yPos), new Point(toX, toY), new Point(toX2, toY2) };
+            Point[] Triangle = new Point[] { new Point(xPos, yPos), new Point(xPos + width, yPos), new Point(xPos, yPos + height) };
             g.DrawPolygon(Pen, Triangle);
         }
 
@@ -59,9 +65,9 @@ namespace Assessment1
             g.FillEllipse(solidBrush, xPos - radius, yPos - radius, xPos + radius, yPos + radius);
         }
 
-        public void FillTriangle(int toX, int toY, int toX2, int toY2)
+        public void FillTriangle(int width, int height)
         {
-            Point[] Triangle = new Point[] { new Point(xPos, yPos), new Point(toX, toY), new Point(toX2, toY2) };
+            Point[] Triangle = new Point[] { new Point(xPos, yPos), new Point(xPos + width, yPos), new Point(xPos, yPos + height) };
             SolidBrush solidBrush = new SolidBrush(Pen.Color);
             g.FillPolygon(solidBrush, Triangle);
         }

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Shapes;
 
 namespace Assessment1
 {
@@ -15,6 +18,7 @@ namespace Assessment1
         Bitmap OutputBitMap = new Bitmap(640, 480);
         Canvass MyCanvass;
         Boolean Fill = false;
+        String[] CommandSplit;
         public Form1()
         {
             InitializeComponent();
@@ -30,99 +34,176 @@ namespace Assessment1
         }
         private void txtCommandLine_KeyDown(object sender, KeyEventArgs e)
         {
-            
+
             if (e.KeyCode == Keys.Enter)
             {
                 String Command = txtCommandLine.Text.Trim().ToLower();
-                if (Command.Equals("line") == true)
+                CommandSplit = Command.Split(' ');
+
+                if (CommandSplit[0].Equals("run") == true)
                 {
-                    MyCanvass.DrawLine(160, 120);
-                    Console.WriteLine("LINE");
-                }
-                else if (Command.Equals("square") == true)
-                {
-                    MyCanvass.DrawSquare(25);
-                    if (Fill)
+                    using (StringReader reader = new StringReader(txtInput.Text))
                     {
-                        MyCanvass.FillSquare(25);
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                             CommandSplit = line.Split(' ');
+                            command();
+                        }
                     }
-                    Console.WriteLine("SQUARE");
+                    Refresh();
                 }
-                else if (Command.Equals("circle") == true)
+                else if (CommandSplit[0].Equals("save") == true)
                 {
-                    MyCanvass.DrawCircle(5);
-                    if (Fill)
+                    CommandSplit = Command.Split(' ');
+                    string path = @"C:\Users\robbi\source\repos\Assessment1\Assessment1\";
+
+                    if (Directory.Exists(path))
                     {
-                        MyCanvass.FillCircle(5);
+                        File.AppendAllText(path + CommandSplit[1], txtInput.Text);
                     }
-                    Console.WriteLine("CIRCLE");
-                }
-                else if (Command.Equals("triangle") == true)
-                {
-                    MyCanvass.DrawTriangle(25,25,0,25);
-                    if (Fill)
+
+                    else
                     {
-                        MyCanvass.FillTriangle(25,25,0,25);
+                        Directory.CreateDirectory(path);
+                        File.AppendAllText(path +CommandSplit[1], "The first line");
                     }
-                    Console.WriteLine("TRIANGLE");
+                    
+                  
+
+                  
                 }
-                else if (Command.Equals("rectangle") == true)
+                else if (CommandSplit[0].Equals("load") == true)
                 {
-                    MyCanvass.DrawRectangle(25,50);
-                    if (Fill)
-                    {
-                        MyCanvass.FillRectangle(25,50);
-                    }
-                    Console.WriteLine("SQUARE");
+                    string path = @"C:\Users\robbi\source\repos\Assessment1\Assessment1\";
+                    string text = System.IO.File.ReadAllText(path+CommandSplit[1]);
+                    txtInput.Clear();
+                    txtInput.AppendText(text);
                 }
-                else if (Command.Equals("clear") == true)
+                else
                 {
-                    MyCanvass.clearArea(OutputWindow.BackColor);
-                    Console.WriteLine("CLEAR");
+                    CommandSplit = Command.Split(' ');
+                    command();
                 }
-                else if (Command.Equals("reset") == true)
+                txtCommandLine.Text = "";
+                Refresh();
+            }
+        }
+
+        private void command()
+        {
+            if (CommandSplit[0].Equals("position") == true)
+            {
+                if (CommandSplit[1].Equals("pen") == true)
                 {
-                    MyCanvass.resetPenPosition();
-                    Console.WriteLine("RESET PEN");
+                    int x = int.Parse(CommandSplit[2]);
+                    int y = int.Parse(CommandSplit[3]);
+                    MyCanvass.MoveTo(x, y);
+                    Console.WriteLine("POSITION PEN");
                 }
-                else if (Command.Equals("fill on") == true)
+            }
+
+            else if (CommandSplit[0].Equals("square") == true)
+            {
+                int length = int.Parse(CommandSplit[1]);
+                MyCanvass.DrawSquare(length);
+                if (Fill)
+                {
+                    MyCanvass.FillSquare(length);
+                }
+                Console.WriteLine("SQUARE");
+            }
+            else if (CommandSplit[0].Equals("circle") == true)
+            {
+                int radius = int.Parse(CommandSplit[1]);
+                MyCanvass.DrawCircle(radius);
+                if (Fill)
+                {
+                    MyCanvass.FillCircle(radius);
+                }
+                Console.WriteLine("CIRCLE");
+            }
+            else if (CommandSplit[0].Equals("triangle") == true)
+            {
+                int width = int.Parse(CommandSplit[1]);
+                int height = int.Parse(CommandSplit[2]);
+                MyCanvass.DrawTriangle(width, height);
+                if (Fill)
+                {
+
+                    MyCanvass.FillTriangle(width, height);
+                }
+                Console.WriteLine("TRIANGLE");
+            }
+            else if (CommandSplit[0].Equals("rectangle") == true)
+            {
+                int width = int.Parse(CommandSplit[1]);
+                int height = int.Parse(CommandSplit[2]);
+                MyCanvass.DrawRectangle(width, height);
+                if (Fill)
+                {
+                    MyCanvass.FillRectangle(width, height);
+                }
+                Console.WriteLine("SQUARE");
+            }
+            else if (CommandSplit[0].Equals("clear") == true)
+            {
+                MyCanvass.clearArea(OutputWindow.BackColor);
+                Console.WriteLine("CLEAR");
+            }
+            else if (CommandSplit[0].Equals("reset") == true)
+            {
+                MyCanvass.resetPenPosition();
+                Console.WriteLine("RESET PEN");
+            }
+            else if (CommandSplit[0].Equals("fill") == true)
+            {
+                if (CommandSplit[1].Equals("on") == true)
                 {
                     Fill = true;
                     Console.WriteLine("FILL ON");
                 }
-                else if (Command.Equals("fill off") == true)
+
+                else if (CommandSplit[1].Equals("off") == true)
                 {
-                    Fill=false;
-                    
+                    Fill = false;
                     Console.WriteLine("FILL OFF");
                 }
-                else if (Command.Equals("pen red") == true)
+            }
+            else if (CommandSplit[0].Equals("pen") == true)
+            {
+                if (CommandSplit[1].Equals("red") == true)
                 {
                     MyCanvass.PenColour(Color.Red);
                     Console.WriteLine("PEN RED");
                 }
-                else if (Command.Equals("pen green") == true)
+                else if (CommandSplit[1].Equals("green") == true)
                 {
                     MyCanvass.PenColour(Color.Green);
                     Console.WriteLine("PEN GREEN");
                 }
-                else if (Command.Equals("pen blue") == true)
+                else if (CommandSplit[1].Equals("blue") == true)
                 {
                     MyCanvass.PenColour(Color.Blue);
                     Console.WriteLine("PEN BLUE");
                 }
-                else if (Command.Equals("pen yellow") == true)
+                else if (CommandSplit[1].Equals("yellow") == true)
                 {
                     MyCanvass.PenColour(Color.Yellow);
                     Console.WriteLine("PEN YELLOW");
                 }
-                else if (Command.Equals("pen white") == true)
+                else if (CommandSplit[1].Equals("white") == true)
                 {
                     MyCanvass.PenColour(Color.White);
                     Console.WriteLine("PEN WHITE");
                 }
-                txtCommandLine.Text = "";
-                Refresh();
+                else if (CommandSplit[1].Equals("draw") == true)
+                {
+                    int x = int.Parse(CommandSplit[2]);
+                    int y = int.Parse(CommandSplit[3]);
+                    MyCanvass.DrawTo(x, y);
+                    Console.WriteLine("PEN DRAW");
+                }
             }
         }
 

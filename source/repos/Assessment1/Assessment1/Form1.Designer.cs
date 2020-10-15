@@ -43,7 +43,7 @@
             this.txtOutput.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.txtOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtOutput.ForeColor = System.Drawing.SystemColors.Menu;
-            this.txtOutput.Location = new System.Drawing.Point(936, 32);
+            this.txtOutput.Location = new System.Drawing.Point(936, 61);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.Size = new System.Drawing.Size(871, 548);
@@ -55,7 +55,7 @@
             this.txtInput.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.txtInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtInput.ForeColor = System.Drawing.SystemColors.Menu;
-            this.txtInput.Location = new System.Drawing.Point(12, 32);
+            this.txtInput.Location = new System.Drawing.Point(12, 61);
             this.txtInput.Multiline = true;
             this.txtInput.Name = "txtInput";
             this.txtInput.Size = new System.Drawing.Size(871, 548);
@@ -110,7 +110,7 @@
             // OutputWindow
             // 
             this.OutputWindow.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.OutputWindow.Location = new System.Drawing.Point(936, 32);
+            this.OutputWindow.Location = new System.Drawing.Point(936, 61);
             this.OutputWindow.Name = "OutputWindow";
             this.OutputWindow.Size = new System.Drawing.Size(871, 548);
             this.OutputWindow.TabIndex = 6;
