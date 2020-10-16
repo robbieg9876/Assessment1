@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Shapes;
+
 
 namespace Assessment1
 {
@@ -22,12 +22,12 @@ namespace Assessment1
         public Form1()
         {
             InitializeComponent();
-            MyCanvass= new Canvass(Graphics.FromImage(OutputBitMap));
+            MyCanvass = new Canvass(Graphics.FromImage(OutputBitMap));
         }
 
-        
 
-       
+
+
         private void txtCommandLine_TextChanged(object sender, EventArgs e)
         {
 
@@ -47,7 +47,7 @@ namespace Assessment1
                         string line;
                         while ((line = reader.ReadLine()) != null)
                         {
-                             CommandSplit = line.Split(' ');
+                            CommandSplit = line.Split(' ');
                             command();
                         }
                     }
@@ -66,17 +66,17 @@ namespace Assessment1
                     else
                     {
                         Directory.CreateDirectory(path);
-                        File.AppendAllText(path +CommandSplit[1], "The first line");
+                        File.AppendAllText(path + CommandSplit[1], "The first line");
                     }
-                    
-                  
 
-                  
+
+
+
                 }
                 else if (CommandSplit[0].Equals("load") == true)
                 {
                     string path = @"C:\Users\robbi\source\repos\Assessment1\Assessment1\";
-                    string text = System.IO.File.ReadAllText(path+CommandSplit[1]);
+                    string text = System.IO.File.ReadAllText(path + CommandSplit[1]);
                     txtInput.Clear();
                     txtInput.AppendText(text);
                 }
@@ -212,5 +212,7 @@ namespace Assessment1
             Graphics g = e.Graphics;
             g.DrawImageUnscaled(OutputBitMap, 0, 0);
         }
+
+
     }
 }
