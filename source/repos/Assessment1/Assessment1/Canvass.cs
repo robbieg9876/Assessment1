@@ -25,18 +25,6 @@ namespace Assessment1
 
         public void MoveTo(int toX, int toY)
         {
-            //checks if inputs are valid
-            if (toX < 0)
-            {
-                //Throws exception if input is invalid
-                throw new System.ArgumentOutOfRangeException("MoveTo", toX, "Point is out of range");
-            }
-           
-            if (toY < 0)
-            {
-                //Throws exception if input is invalid
-                throw new System.ArgumentOutOfRangeException("MoveTo", toY, "Point is out of range");
-            }
             //Moves the drawing start point to the values inputted
             xPos = toX;
             yPos = toY;
@@ -45,18 +33,6 @@ namespace Assessment1
 
         public void DrawTo(int toX, int toY)
         {
-            //checks if inputs are valid
-            if (toX < 0)
-            {
-                //Throws exception if input is invalid
-                throw new System.ArgumentOutOfRangeException("MoveTo", toX, "Point is out of range");
-            }
-
-            if (toY < 0)
-            {
-                //Throws exception if input is invalid
-                throw new System.ArgumentOutOfRangeException("MoveTo", toY, "Point is out of range");
-            }
             // Draws a line from the current position to the inputted co-ordinates
             g.DrawLine(Pen, xPos, yPos, toX, toY);
             //Changes current drawing position to where the line finishes
@@ -66,49 +42,13 @@ namespace Assessment1
 
         public void DrawSquare(int width)
         {
-            //Checks that the shape will fit on the graphics panel
-            if (xPos+width <0)
-            {
-                //Throws exception if input is invalid
-                throw new System.ArgumentOutOfRangeException("MoveTo", xPos+width, "Point is out of range");
-            }
-
-            if (xPos +width < 0)
-            {
-                //Throws exception if input is invalid
-                throw new System.ArgumentOutOfRangeException("MoveTo", yPos+width, "Point is out of range");
-            }
             //Draws a square from the current drawing postion with sides of the width inputted
             g.DrawRectangle(Pen, xPos, yPos, xPos + width, yPos + width);
         }
         public void DrawCircle(int radius)
         {
-            //Checks that the shape will fit on the graphics panel
-            if (xPos - radius < 0)
-            {
-                //Throws exception if input is invalid
-                throw new System.ArgumentOutOfRangeException("MoveTo", xPos - radius , "Point is out of range");
-            }
-
-            if (xPos + radius < 0)
-            {
-                //Throws exception if input is invalid
-                throw new System.ArgumentOutOfRangeException("MoveTo", xPos + radius, "Point is out of range");
-            }
-
-            if (yPos - radius < 0)
-            {
-                //Throws exception if input is invalid
-                throw new System.ArgumentOutOfRangeException("MoveTo", yPos - radius, "Point is out of range");
-            }
-
-            if (yPos + radius < 0)
-            {
-                //Throws exception if input is invalid
-                throw new System.ArgumentOutOfRangeException("MoveTo", yPos + radius, "Point is out of range");
-            }
             //Draws a circle with the radius inputted
-            g.DrawEllipse(Pen, xPos - radius, yPos - radius, xPos + radius, yPos + radius);
+            g.DrawEllipse(Pen, xPos, yPos, radius + radius,radius + radius);
         }
         public void DrawTriangle(int width, int height)
         {

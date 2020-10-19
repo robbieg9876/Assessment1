@@ -16,7 +16,7 @@ namespace Assessment1
     public partial class Form1 : Form
     {
         //Initialises bitmap with set size
-        Bitmap OutputBitMap = new Bitmap(640, 480);
+        Bitmap OutputBitMap = new Bitmap(871, 548);
         //Makes an instance of the Canvass class
         Canvass MyCanvass;
         //Initialises variables
@@ -86,10 +86,6 @@ namespace Assessment1
                         // Adds file with the name inputted to the folder
                         File.AppendAllText(path + CommandSplit[1], txtInput.Text);
                     }
-
-
-
-
                 }
                 else if (CommandSplit[0].Equals("load") == true)
                 {
@@ -110,71 +106,107 @@ namespace Assessment1
                     //Calls command method
                     command();
                 }
-                //Clears command line
-                txtCommandLine.Text = "";
-                Refresh();
+              
             }
         }
 
         private void command()
         {
+            txtCommandLine.Text = "";
+            Refresh();
             //Checks for valid commands
-            if (CommandSplit[0].Equals("position") == true)
+            if (CommandSplit[0].Equals("move") == true)
             {
-                if (CommandSplit[1].Equals("pen") == true)
+                if (CommandSplit[1].Equals("to") == true)
                 {
                     //Recieves two inputs and stores as integers
-                    int x = int.Parse(CommandSplit[2]);
-                    int y = int.Parse(CommandSplit[3]);
+                    try
+                    {
+                        int x = int.Parse(CommandSplit[2]);
+                        int y = int.Parse(CommandSplit[3]);
+                        MyCanvass.MoveTo(x, y);
+                    }
+                    catch
+                    {
+                        validParameter(false);
+                        //throw new IOException("Inputs are invalid");
+                    }
+                    
                     //Passes the values as parameters to MyCanvass.MoveTo 
-                    MyCanvass.MoveTo(x, y);
+                    
                     //Writes message to console
-                    Console.WriteLine("POSITION PEN");
+                    Console.WriteLine("MOVE TO");
                 }
             }
 
             else if (CommandSplit[0].Equals("square") == true)
             {
                 //Recieves input and strores as an integer
-                int length = int.Parse(CommandSplit[1]);
-                //Passes the value as a parameter to MyCanvass.DrawSquare
-                MyCanvass.DrawSquare(length);
-                //Checks if fill is on
-                if (Fill)
+                try
                 {
-                    //Fills shape
-                    MyCanvass.FillSquare(length);
+                    int length = int.Parse(CommandSplit[1]);
+                    //Passes the value as a parameter to MyCanvass.DrawSquare
+                    MyCanvass.DrawSquare(length);
+                    //Checks if fill is on
+                    if (Fill)
+                    {
+                        //Fills shape
+                        MyCanvass.FillSquare(length);
+                    }
                 }
+                catch
+                {
+                    validParameter(false);
+                    //throw new IOException("Inputs are invalid");
+                }
+              
                 //Writes to console
                 Console.WriteLine("SQUARE");
             }
             else if (CommandSplit[0].Equals("circle") == true)
             {
                 //Recieves input and strores as an integer
-                int radius = int.Parse(CommandSplit[1]);
-                //Passes the value as a parameter to MyCanvass.DrawCircle
-                MyCanvass.DrawCircle(radius);
-                //Checks if fill is on
-                if (Fill)
+                try
                 {
-                    //Fills shape
-                    MyCanvass.FillCircle(radius);
+                    int radius = int.Parse(CommandSplit[1]);
+                    //Passes the value as a parameter to MyCanvass.DrawCircle
+                    MyCanvass.DrawCircle(radius);
+                    //Checks if fill is on
+                    if (Fill)
+                    {
+                        //Fills shape
+                        MyCanvass.FillCircle(radius);
+                    }
                 }
+                catch
+                {
+                    validParameter(false);
+                    //throw new IOException("Inputs are invalid");
+                }
+                
                 //Writes to console
                 Console.WriteLine("CIRCLE");
             }
             else if (CommandSplit[0].Equals("triangle") == true)
             {
                 //Recieves two inputs and stores as integers
-                int width = int.Parse(CommandSplit[1]);
-                int height = int.Parse(CommandSplit[2]);
-                //Passes the values as parameters to MyCanvass.DrawTriangle
-                MyCanvass.DrawTriangle(width, height);
-                //Checks if fill is on
-                if (Fill)
+                try
                 {
-                    //Fills shape
-                    MyCanvass.FillTriangle(width, height);
+                    int width = int.Parse(CommandSplit[1]);
+                    int height = int.Parse(CommandSplit[2]);
+                    //Passes the values as parameters to MyCanvass.DrawTriangle
+                    MyCanvass.DrawTriangle(width, height);
+                    //Checks if fill is on
+                    if (Fill)
+                    {
+                        //Fills shape
+                        MyCanvass.FillTriangle(width, height);
+                    }
+                }
+                catch
+                {
+                    validParameter(false);
+                    //throw new IOException("Inputs are invalid");
                 }
                 //Writes to console
                 Console.WriteLine("TRIANGLE");
@@ -182,15 +214,23 @@ namespace Assessment1
             else if (CommandSplit[0].Equals("rectangle") == true)
             {
                 //Recieves two inputs and stores as integers
-                int width = int.Parse(CommandSplit[1]);
-                int height = int.Parse(CommandSplit[2]);
-                //Passes the values as parameters to MyCanvass.DrawRectangle
-                MyCanvass.DrawRectangle(width, height);
-                //Checks if fill is on
-                if (Fill)
+                try
                 {
-                    //Fills shape
-                    MyCanvass.FillRectangle(width, height);
+                    int width = int.Parse(CommandSplit[1]);
+                    int height = int.Parse(CommandSplit[2]);
+                    //Passes the values as parameters to MyCanvass.DrawRectangle
+                    MyCanvass.DrawRectangle(width, height);
+                    //Checks if fill is on
+                    if (Fill)
+                    {
+                        //Fills shape
+                        MyCanvass.FillRectangle(width, height);
+                    }
+                }
+                catch
+                {
+                    validParameter(false);
+                    //throw new IOException("Inputs are invalid");
                 }
                 //Writes to console
                 Console.WriteLine("SQUARE");
@@ -225,6 +265,10 @@ namespace Assessment1
                     Fill = false;
                     //Writes to console
                     Console.WriteLine("FILL OFF");
+                }
+                else
+                {
+                    validParameter(false);
                 }
             }
             else if (CommandSplit[0].Equals("pen") == true)
@@ -267,17 +311,43 @@ namespace Assessment1
                 else if (CommandSplit[1].Equals("draw") == true)
                 {
                     //Recieves two inputs and stores as integers
-                    int x = int.Parse(CommandSplit[2]);
-                    int y = int.Parse(CommandSplit[3]);
-                    //Passes the values as parameters to MyCanvass.DrawTo
-                    MyCanvass.DrawTo(x, y);
+                    try
+                    {
+                        int x = int.Parse(CommandSplit[2]);
+                        int y = int.Parse(CommandSplit[3]);
+                        //Passes the values as parameters to MyCanvass.DrawTo
+                        MyCanvass.DrawTo(x, y);
+                    }
+                    catch
+                    {
+                        validParameter(false);
+                        //throw new IOException("Inputs are invalid");
+
+                    }
                     //Writes to console
                     Console.WriteLine("PEN DRAW");
                 }
+                else
+                {
+                    validParameter(false);
+                }
+            }
+            else
+            {
+                txtCommandLine.Text = "ERROR INVALID COMMAND";
+                Refresh();
+            }
+            
+        }
+        private void validParameter(Boolean valid)
+        {
+            if (valid.Equals(false))
+                {
+                txtCommandLine.Text = "ERROR INVALID PARAMETERS";
             }
         }
 
-        private void OutputWindow_Paint(object sender, PaintEventArgs e)
+            private void OutputWindow_Paint(object sender, PaintEventArgs e)
         {
             //Initialises the graphics on the output window
             Graphics g = e.Graphics;
