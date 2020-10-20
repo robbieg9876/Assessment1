@@ -67,8 +67,6 @@ namespace Assessment1
                 }
                 else if (CommandSplit1[0].Equals("save") == true)
                 {
-                    //splits string and stores values in commandSplit Array
-                    CommandSplit = Command.Split(' ');
                     //Sets folder for file to be saved into
                     string path = @"C:\Users\robbi\source\repos\Assessment1\Assessment1\";
                     //Checks if the folder already exists
@@ -313,8 +311,8 @@ namespace Assessment1
                 txtCommandLine.Text = "ERROR INVALID COMMAND";
                 Refresh();
             }
+            Refresh();
 
-            
         }
     
         private void validParameter(Boolean valid)
