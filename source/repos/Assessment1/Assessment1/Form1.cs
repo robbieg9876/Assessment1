@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,9 +20,8 @@ namespace Assessment1
         Bitmap OutputBitMap = new Bitmap(871, 548);
         //Makes an instance of the Canvass class
         Canvass MyCanvass;
-        //Initialises variables
-        Boolean Fill = false;
-        String[] CommandSplit;
+        public String[] CommandSplit;
+        public String[] CommandSplit1;
         public Form1()
         {
             //Sets graphics up on bitmap
@@ -45,10 +45,9 @@ namespace Assessment1
                 //Removes whitespace and converts letters to lower case
                 String Command = txtCommandLine.Text.Trim().ToLower();
                 //Splits the string and stores values in commandSplit Array
-                CommandSplit = Command.Split(' ');
-
+                CommandSplit1 = Command.Split(' ');
                 //Checks if the first value in the array is a valid command
-                if (CommandSplit[0].Equals("run") == true)
+                if (CommandSplit1[0].Equals("run") == true)
                 {
                     //This takes all the text in the input box
                     //Splits it into individual lines
@@ -66,7 +65,7 @@ namespace Assessment1
                     }
                     Refresh();
                 }
-                else if (CommandSplit[0].Equals("save") == true)
+                else if (CommandSplit1[0].Equals("save") == true)
                 {
                     //splits string and stores values in commandSplit Array
                     CommandSplit = Command.Split(' ');
@@ -76,7 +75,7 @@ namespace Assessment1
                     if (Directory.Exists(path))
                     {
                         //Adds file with the name inputted to the folder
-                        File.AppendAllText(path + CommandSplit[1], txtInput.Text);
+                        File.AppendAllText(path + CommandSplit1[1], txtInput.Text);
                     }
 
                     else
@@ -84,15 +83,15 @@ namespace Assessment1
                         //Creates the folder set above
                         Directory.CreateDirectory(path);
                         // Adds file with the name inputted to the folder
-                        File.AppendAllText(path + CommandSplit[1], txtInput.Text);
+                        File.AppendAllText(path + CommandSplit1[1], txtInput.Text);
                     }
                 }
-                else if (CommandSplit[0].Equals("load") == true)
+                else if (CommandSplit1[0].Equals("load") == true)
                 {
                     //Sets target file to load in
                     string path = @"C:\Users\robbi\source\repos\Assessment1\Assessment1\";
                     //Gets all the text from the file
-                    string text = System.IO.File.ReadAllText(path + CommandSplit[1]);
+                    string text = System.IO.File.ReadAllText(path + CommandSplit1[1]);
                     //Clears input box
                     txtInput.Clear();
                     //Fills input box with text from the file
@@ -101,18 +100,17 @@ namespace Assessment1
                 else
                 //This means that they aren't using the input box so will only look for commands from  the command line
                 {
-                    //Splits strings and stores values in CommandSplit array
                     CommandSplit = Command.Split(' ');
                     //Calls command method
                     command();
                 }
-              
+
             }
         }
 
         private void command()
         {
-            txtCommandLine.Text = "";
+            txtCommandLine.Clear();
             Refresh();
             //Checks for valid commands
             if (CommandSplit[0].Equals("move") == true)
@@ -131,14 +129,35 @@ namespace Assessment1
                         validParameter(false);
                         //throw new IOException("Inputs are invalid");
                     }
-                    
+
                     //Passes the values as parameters to MyCanvass.MoveTo 
-                    
+
                     //Writes message to console
                     Console.WriteLine("MOVE TO");
                 }
             }
+            else if (CommandSplit[0].Equals("draw") == true)
+            {
+                if (CommandSplit[1].Equals("to") == true)
+                {
+                    //Recieves two inputs and stores as integers
+                    try
+                    {
+                        int x = int.Parse(CommandSplit[2]);
+                        int y = int.Parse(CommandSplit[3]);
+                        //Passes the values as parameters to MyCanvass.DrawTo
+                        MyCanvass.DrawTo(x, y);
+                    }
+                    catch
+                    {
+                        validParameter(false);
+                        //throw new IOException("Inputs are invalid");
 
+                    }
+                    //Writes to console
+                    Console.WriteLine("PEN DRAW");
+                }
+            }
             else if (CommandSplit[0].Equals("square") == true)
             {
                 //Recieves input and strores as an integer
@@ -147,19 +166,13 @@ namespace Assessment1
                     int length = int.Parse(CommandSplit[1]);
                     //Passes the value as a parameter to MyCanvass.DrawSquare
                     MyCanvass.DrawSquare(length);
-                    //Checks if fill is on
-                    if (Fill)
-                    {
-                        //Fills shape
-                        MyCanvass.FillSquare(length);
-                    }
                 }
                 catch
                 {
                     validParameter(false);
                     //throw new IOException("Inputs are invalid");
                 }
-              
+
                 //Writes to console
                 Console.WriteLine("SQUARE");
             }
@@ -171,19 +184,13 @@ namespace Assessment1
                     int radius = int.Parse(CommandSplit[1]);
                     //Passes the value as a parameter to MyCanvass.DrawCircle
                     MyCanvass.DrawCircle(radius);
-                    //Checks if fill is on
-                    if (Fill)
-                    {
-                        //Fills shape
-                        MyCanvass.FillCircle(radius);
-                    }
                 }
                 catch
                 {
                     validParameter(false);
                     //throw new IOException("Inputs are invalid");
                 }
-                
+
                 //Writes to console
                 Console.WriteLine("CIRCLE");
             }
@@ -196,12 +203,6 @@ namespace Assessment1
                     int height = int.Parse(CommandSplit[2]);
                     //Passes the values as parameters to MyCanvass.DrawTriangle
                     MyCanvass.DrawTriangle(width, height);
-                    //Checks if fill is on
-                    if (Fill)
-                    {
-                        //Fills shape
-                        MyCanvass.FillTriangle(width, height);
-                    }
                 }
                 catch
                 {
@@ -220,12 +221,6 @@ namespace Assessment1
                     int height = int.Parse(CommandSplit[2]);
                     //Passes the values as parameters to MyCanvass.DrawRectangle
                     MyCanvass.DrawRectangle(width, height);
-                    //Checks if fill is on
-                    if (Fill)
-                    {
-                        //Fills shape
-                        MyCanvass.FillRectangle(width, height);
-                    }
                 }
                 catch
                 {
@@ -254,7 +249,7 @@ namespace Assessment1
                 if (CommandSplit[1].Equals("on") == true)
                 {
                     //Turns fill on by making boolean Fill true
-                    Fill = true;
+                    MyCanvass.FillShape(true);
                     //Writes to console
                     Console.WriteLine("FILL ON");
                 }
@@ -262,7 +257,7 @@ namespace Assessment1
                 else if (CommandSplit[1].Equals("off") == true)
                 {
                     //Turns fill off by making boolean Fill false
-                    Fill = false;
+                    MyCanvass.FillShape(false);
                     //Writes to console
                     Console.WriteLine("FILL OFF");
                 }
@@ -308,25 +303,6 @@ namespace Assessment1
                     //Writes to console
                     Console.WriteLine("PEN WHITE");
                 }
-                else if (CommandSplit[1].Equals("draw") == true)
-                {
-                    //Recieves two inputs and stores as integers
-                    try
-                    {
-                        int x = int.Parse(CommandSplit[2]);
-                        int y = int.Parse(CommandSplit[3]);
-                        //Passes the values as parameters to MyCanvass.DrawTo
-                        MyCanvass.DrawTo(x, y);
-                    }
-                    catch
-                    {
-                        validParameter(false);
-                        //throw new IOException("Inputs are invalid");
-
-                    }
-                    //Writes to console
-                    Console.WriteLine("PEN DRAW");
-                }
                 else
                 {
                     validParameter(false);
@@ -337,8 +313,10 @@ namespace Assessment1
                 txtCommandLine.Text = "ERROR INVALID COMMAND";
                 Refresh();
             }
+
             
         }
+    
         private void validParameter(Boolean valid)
         {
             if (valid.Equals(false))
