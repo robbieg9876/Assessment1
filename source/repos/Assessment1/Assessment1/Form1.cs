@@ -350,55 +350,98 @@ namespace Assessment1
                 //Writes to console
                 Console.WriteLine("RESET PEN");
             }
-            else if (CommandSplit[0].Equals("fillon") == true)
+            else if (CommandSplit[0].Equals("fill") == true)
             {
-                //Turns fill on by making boolean Fill true
-                MyCanvass.FillShape(true);
-                //Writes to console
-                Console.WriteLine("FILL ON");
-            }
+                if (nullCheck)
+                {
+                    NoParameters();
+                }
+                else
+                {
+                    if (ParameterSplit.Length != 1)
+                    {
+                        IncorrectNumberOfParameters();
+                    }
+                    else
+                    {
+                        if (ParameterSplit[0].Equals("on"))
+                        {
+                            //Turns fill on by making boolean Fill true
+                            MyCanvass.FillShape(true);
+                            //Writes to console
+                            Console.WriteLine("FILL ON");
+                        }
+                        else if (ParameterSplit[0].Equals("off") == true)
+                        {
+                            //Turns fill off by making boolean Fill false
+                            MyCanvass.FillShape(false);
+                            //Writes to console
+                            Console.WriteLine("FILL OFF");
+                        }
+                        else
+                        {
+                            InvalidParameter();
+                        }
 
-            else if (CommandSplit[0].Equals("filloff") == true)
-            {
-                //Turns fill off by making boolean Fill false
-                MyCanvass.FillShape(false);
-                //Writes to console
-                Console.WriteLine("FILL OFF");
+                    }
+                }
+
             }
-            else if (CommandSplit[0].Equals("red") == true)
+            else if (CommandSplit[0].Equals("pen"))
             {
-                //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                MyCanvass.PenColour(Color.Red);
-                //Writes to console
-                Console.WriteLine("RED");
-            }
-            else if (CommandSplit[0].Equals("green") == true)
-            {
-                //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                MyCanvass.PenColour(Color.Green);
-                //Writes to console
-                Console.WriteLine("GREEN");
-            }
-            else if (CommandSplit[0].Equals("blue") == true)
-            {
-                //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                MyCanvass.PenColour(Color.Blue);
-                //Writes to console
-                Console.WriteLine("BLUE");
-            }
-            else if (CommandSplit[0].Equals("yellow") == true)
-            {
-                //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                MyCanvass.PenColour(Color.Yellow);
-                //Writes to console
-                Console.WriteLine("YELLOW");
-            }
-            else if (CommandSplit[0].Equals("white") == true)
-            {
-                //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                MyCanvass.PenColour(Color.White);
-                //Writes to console
-                Console.WriteLine("WHITE");
+                if (nullCheck)
+                {
+                    NoParameters();
+                }
+                else
+                {
+                    if (ParameterSplit.Length != 1)
+                    {
+                        IncorrectNumberOfParameters();
+                    }
+                    else
+                    {
+                        if (ParameterSplit[0].Equals("red") == true)
+                        {
+                            //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                            MyCanvass.PenColour(Color.Red);
+                            //Writes to console
+                            Console.WriteLine("RED");
+                        }
+                        else if (ParameterSplit[0].Equals("green") == true)
+                        {
+                            //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                            MyCanvass.PenColour(Color.Green);
+                            //Writes to console
+                            Console.WriteLine("GREEN");
+                        }
+                        else if (ParameterSplit[0].Equals("blue") == true)
+                        {
+                            //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                            MyCanvass.PenColour(Color.Blue);
+                            //Writes to console
+                            Console.WriteLine("BLUE");
+                        }
+                        else if (ParameterSplit[0].Equals("yellow") == true)
+                        {
+                            //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                            MyCanvass.PenColour(Color.Yellow);
+                            //Writes to console
+                            Console.WriteLine("YELLOW");
+                        }
+                        else if (ParameterSplit[0].Equals("white") == true)
+                        {
+                            //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                            MyCanvass.PenColour(Color.White);
+                            //Writes to console
+                            Console.WriteLine("WHITE");
+                        }
+                        else
+                        {
+                            InvalidParameter();
+                        }
+                    }
+                }
             }
             else
             {
