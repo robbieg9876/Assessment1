@@ -51,11 +51,11 @@ namespace Assessment1
             {
                 //Fills the square with the current pen colour
                 SolidBrush solidBrush = new SolidBrush(Pen.Color);
-                g.FillRectangle(solidBrush, xPos, yPos, xPos + width, yPos + width);
+                g.FillRectangle(solidBrush, xPos, yPos,width,width);
             }
             else
             {
-                g.DrawRectangle(Pen, xPos, yPos, xPos + width, yPos + width);
+                g.DrawRectangle(Pen, xPos, yPos,width,width);
             }
                 
         }
@@ -67,7 +67,7 @@ namespace Assessment1
                 //Fills the square with the current pen colour
                 //Fills the circle with the current pen colour
                 SolidBrush solidBrush = new SolidBrush(Pen.Color);
-                g.FillEllipse(solidBrush, xPos - radius, yPos - radius, xPos + radius, yPos + radius);
+                g.FillEllipse(solidBrush, xPos, yPos, radius + radius, radius + radius);
             }
             else
             {
@@ -103,11 +103,11 @@ namespace Assessment1
             {
                 //Fills the rectangle with the current pen colour
                 SolidBrush solidBrush = new SolidBrush(Pen.Color);
-                g.FillRectangle(solidBrush, xPos, yPos, xPos + width, yPos + height);
+                g.FillRectangle(solidBrush, xPos, yPos, width, height);
             }
             else
             {
-                g.DrawRectangle(Pen, xPos, yPos, xPos + width, yPos + height);
+                g.DrawRectangle(Pen, xPos, yPos, width, height);
             }
             
         }

@@ -21,7 +21,9 @@ namespace Assessment1
         //Makes an instance of the Canvass class
         Canvass MyCanvass;
         public String[] CommandSplit;
-        public String[] CommandSplit1;
+        public String[] ParameterSplit;
+        public int lineNumber = 0;
+        public string ErrorList = "";
         public Form1()
         {
             //Sets graphics up on bitmap
@@ -45,9 +47,12 @@ namespace Assessment1
                 //Removes whitespace and converts letters to lower case
                 String Command = txtCommandLine.Text.Trim().ToLower();
                 //Splits the string and stores values in commandSplit Array
-                CommandSplit1 = Command.Split(' ');
+                CommandSplit = Command.Split(' ');
+                txtCommandLine.Clear();
+                txtErrors.Clear();
+                Refresh();
                 //Checks if the first value in the array is a valid command
-                if (CommandSplit1[0].Equals("run") == true)
+                if (CommandSplit[0].Equals("run") == true)
                 {
                     //This takes all the text in the input box
                     //Splits it into individual lines
@@ -55,17 +60,34 @@ namespace Assessment1
                     {
                         //Loops through each line in the input box
                         string line;
+                        lineNumber = 0;
+                        ErrorList="";
                         while ((line = reader.ReadLine()) != null)
                         {
                             //Splits line and stores values in commandSplit Array
                             CommandSplit = line.Split(' ');
+                            lineNumber++;
                             //Calls command method
                             command();
+                        }
+                        if (ErrorList.Equals(""))
+                        {
+                            txtErrors.Text = ErrorList;
+                            Refresh();
+                        }
+                        else
+                        {
+                            
+                            txtCommandLine.Clear();
+                            Refresh();
+                            MyCanvass.clearArea(OutputWindow.BackColor);
+
+                            txtErrors.Text = ErrorList;
                         }
                     }
                     Refresh();
                 }
-                else if (CommandSplit1[0].Equals("save") == true)
+                else if (CommandSplit[0].Equals("save") == true)
                 {
                     //Sets folder for file to be saved into
                     string path = @"C:\Users\robbi\source\repos\Assessment1\Assessment1\";
@@ -73,7 +95,7 @@ namespace Assessment1
                     if (Directory.Exists(path))
                     {
                         //Adds file with the name inputted to the folder
-                        File.AppendAllText(path + CommandSplit1[1], txtInput.Text);
+                        File.AppendAllText(path + CommandSplit[1], txtInput.Text);
                     }
 
                     else
@@ -81,15 +103,15 @@ namespace Assessment1
                         //Creates the folder set above
                         Directory.CreateDirectory(path);
                         // Adds file with the name inputted to the folder
-                        File.AppendAllText(path + CommandSplit1[1], txtInput.Text);
+                        File.AppendAllText(path + CommandSplit[1], txtInput.Text);
                     }
                 }
-                else if (CommandSplit1[0].Equals("load") == true)
+                else if (CommandSplit[0].Equals("load") == true)
                 {
                     //Sets target file to load in
                     string path = @"C:\Users\robbi\source\repos\Assessment1\Assessment1\";
                     //Gets all the text from the file
-                    string text = System.IO.File.ReadAllText(path + CommandSplit1[1]);
+                    string text = System.IO.File.ReadAllText(path + CommandSplit[1]);
                     //Clears input box
                     txtInput.Clear();
                     //Fills input box with text from the file
@@ -110,65 +132,112 @@ namespace Assessment1
         {
             txtCommandLine.Clear();
             Refresh();
-            //Checks for valid commands
-            if (CommandSplit[0].Equals("move") == true)
+            Boolean nullCheck = false;
+            //Checks that parameters have been inputted
+            if (CommandSplit.Length > 1)
             {
-                if (CommandSplit[1].Equals("to") == true)
-                {
-                    //Recieves two inputs and stores as integers
-                    try
-                    {
-                        int x = int.Parse(CommandSplit[2]);
-                        int y = int.Parse(CommandSplit[3]);
-                        MyCanvass.MoveTo(x, y);
-                    }
-                    catch
-                    {
-                        validParameter(false);
-                        //throw new IOException("Inputs are invalid");
-                    }
-
-                    //Passes the values as parameters to MyCanvass.MoveTo 
-
-                    //Writes message to console
-                    Console.WriteLine("MOVE TO");
-                }
+                //Splits parameters into seperate values and stores in array
+                ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
             }
-            else if (CommandSplit[0].Equals("draw") == true)
+            else
             {
-                if (CommandSplit[1].Equals("to") == true)
+                nullCheck = true;
+            }
+            //Checks for valid commands
+            if (CommandSplit[0].Equals("moveto") == true)
+            {
+                //Recieves two inputs and stores as integers
+                try
                 {
-                    //Recieves two inputs and stores as integers
-                    try
+                    //Checks if no parameters have been inputted
+                    if (nullCheck)
                     {
-                        int x = int.Parse(CommandSplit[2]);
-                        int y = int.Parse(CommandSplit[3]);
-                        //Passes the values as parameters to MyCanvass.DrawTo
-                        MyCanvass.DrawTo(x, y);
+                        NoParameters();
                     }
-                    catch
+                    else
                     {
-                        validParameter(false);
-                        //throw new IOException("Inputs are invalid");
-
+                        //Checks if the correct number of parameters have been inputted
+                        if (ParameterSplit.Length != 2)
+                        {
+                            IncorrectNumberOfParameters();
+                        }
+                        else
+                        {
+                            //Tries to pass parameters
+                            int x = int.Parse(ParameterSplit[0]);
+                            int y = int.Parse(ParameterSplit[1]);
+                            MyCanvass.MoveTo(x, y);
+                        }
                     }
-                    //Writes to console
-                    Console.WriteLine("PEN DRAW");
                 }
+                catch
+                {
+                    //If try fails then this means the parameters are invalid e.g wrong data type
+                    InvalidParameter();
+                }
+
+                //Passes the values as parameters to MyCanvass.MoveTo 
+
+                //Writes message to console
+                Console.WriteLine("MOVE TO");
+            }
+            else if (CommandSplit[0].Equals("drawto") == true)
+            {
+                //Recieves two inputs and stores as integers
+                try
+                {
+                    if (nullCheck)
+                    {
+                        NoParameters();
+                    }
+                    else
+                    {
+                        if (ParameterSplit.Length != 2)
+                        {
+                            IncorrectNumberOfParameters();
+                        }
+                        else
+                        {
+                            int x = int.Parse(ParameterSplit[0]);
+                            int y = int.Parse(ParameterSplit[1]);
+                            //Passes the values as parameters to MyCanvass.DrawTo
+                            MyCanvass.DrawTo(x, y);
+                        }
+                    }
+                }
+                catch
+                {
+                    InvalidParameter();
+                }
+                //Writes to console
+                Console.WriteLine("DRAW TO");
             }
             else if (CommandSplit[0].Equals("square") == true)
             {
                 //Recieves input and strores as an integer
                 try
                 {
-                    int length = int.Parse(CommandSplit[1]);
-                    //Passes the value as a parameter to MyCanvass.DrawSquare
-                    MyCanvass.DrawSquare(length);
+                    if (nullCheck)
+                    {
+                        NoParameters();
+                    }
+                    else
+                    {
+                        if (ParameterSplit.Length != 1)
+                        {
+                            IncorrectNumberOfParameters();
+                        }
+                        else
+                        {
+                            int length = int.Parse(ParameterSplit[0]);
+                            //Passes the value as a parameter to MyCanvass.DrawSquare
+                            MyCanvass.DrawSquare(length);
+                        }
+                    }
                 }
                 catch
                 {
-                    validParameter(false);
-                    //throw new IOException("Inputs are invalid");
+                    InvalidParameter();
                 }
 
                 //Writes to console
@@ -179,14 +248,27 @@ namespace Assessment1
                 //Recieves input and strores as an integer
                 try
                 {
-                    int radius = int.Parse(CommandSplit[1]);
-                    //Passes the value as a parameter to MyCanvass.DrawCircle
-                    MyCanvass.DrawCircle(radius);
+                    if (nullCheck)
+                    {
+                        NoParameters();
+                    }
+                    else
+                    {
+                        if (ParameterSplit.Length != 1)
+                        {
+                            IncorrectNumberOfParameters();
+                        }
+                        else
+                        {
+                            int radius = int.Parse(ParameterSplit[0]);
+                            //Passes the value as a parameter to MyCanvass.DrawCircle
+                            MyCanvass.DrawCircle(radius);
+                        }
+                    }
                 }
                 catch
                 {
-                    validParameter(false);
-                    //throw new IOException("Inputs are invalid");
+                    InvalidParameter();
                 }
 
                 //Writes to console
@@ -197,15 +279,28 @@ namespace Assessment1
                 //Recieves two inputs and stores as integers
                 try
                 {
-                    int width = int.Parse(CommandSplit[1]);
-                    int height = int.Parse(CommandSplit[2]);
-                    //Passes the values as parameters to MyCanvass.DrawTriangle
-                    MyCanvass.DrawTriangle(width, height);
+                    if (nullCheck)
+                    {
+                        NoParameters();
+                    }
+                    else
+                    {
+                        if (ParameterSplit.Length != 2)
+                        {
+                            IncorrectNumberOfParameters();
+                        }
+                        else
+                        {
+                            int width = int.Parse(ParameterSplit[0]);
+                            int height = int.Parse(ParameterSplit[1]);
+                            //Passes the values as parameters to MyCanvass.DrawTriangle
+                            MyCanvass.DrawTriangle(width, height);
+                        }
+                    }
                 }
                 catch
                 {
-                    validParameter(false);
-                    //throw new IOException("Inputs are invalid");
+                    InvalidParameter();
                 }
                 //Writes to console
                 Console.WriteLine("TRIANGLE");
@@ -215,15 +310,28 @@ namespace Assessment1
                 //Recieves two inputs and stores as integers
                 try
                 {
-                    int width = int.Parse(CommandSplit[1]);
-                    int height = int.Parse(CommandSplit[2]);
-                    //Passes the values as parameters to MyCanvass.DrawRectangle
-                    MyCanvass.DrawRectangle(width, height);
+                    if (nullCheck)
+                    {
+                        NoParameters();
+                    }
+                    else
+                    {
+                        if (ParameterSplit.Length != 2)
+                        {
+                            IncorrectNumberOfParameters();
+                        }
+                        else
+                        {
+                            int width = int.Parse(ParameterSplit[0]);
+                            int height = int.Parse(ParameterSplit[1]);
+                            //Passes the values as parameters to MyCanvass.DrawRectangle
+                            MyCanvass.DrawRectangle(width, height);
+                        }
+                    }
                 }
                 catch
                 {
-                    validParameter(false);
-                    //throw new IOException("Inputs are invalid");
+                    InvalidParameter();
                 }
                 //Writes to console
                 Console.WriteLine("SQUARE");
@@ -242,88 +350,94 @@ namespace Assessment1
                 //Writes to console
                 Console.WriteLine("RESET PEN");
             }
-            else if (CommandSplit[0].Equals("fill") == true)
+            else if (CommandSplit[0].Equals("fillon") == true)
             {
-                if (CommandSplit[1].Equals("on") == true)
-                {
-                    //Turns fill on by making boolean Fill true
-                    MyCanvass.FillShape(true);
-                    //Writes to console
-                    Console.WriteLine("FILL ON");
-                }
-
-                else if (CommandSplit[1].Equals("off") == true)
-                {
-                    //Turns fill off by making boolean Fill false
-                    MyCanvass.FillShape(false);
-                    //Writes to console
-                    Console.WriteLine("FILL OFF");
-                }
-                else
-                {
-                    validParameter(false);
-                }
+                //Turns fill on by making boolean Fill true
+                MyCanvass.FillShape(true);
+                //Writes to console
+                Console.WriteLine("FILL ON");
             }
-            else if (CommandSplit[0].Equals("pen") == true)
+
+            else if (CommandSplit[0].Equals("filloff") == true)
             {
-                if (CommandSplit[1].Equals("red") == true)
-                {
-                    //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                    MyCanvass.PenColour(Color.Red);
-                    //Writes to console
-                    Console.WriteLine("PEN RED");
-                }
-                else if (CommandSplit[1].Equals("green") == true)
-                {
-                    //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                    MyCanvass.PenColour(Color.Green);
-                    //Writes to console
-                    Console.WriteLine("PEN GREEN");
-                }
-                else if (CommandSplit[1].Equals("blue") == true)
-                {
-                    //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                    MyCanvass.PenColour(Color.Blue);
-                    //Writes to console
-                    Console.WriteLine("PEN BLUE");
-                }
-                else if (CommandSplit[1].Equals("yellow") == true)
-                {
-                    //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                    MyCanvass.PenColour(Color.Yellow);
-                    //Writes to console
-                    Console.WriteLine("PEN YELLOW");
-                }
-                else if (CommandSplit[1].Equals("white") == true)
-                {
-                    //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                    MyCanvass.PenColour(Color.White);
-                    //Writes to console
-                    Console.WriteLine("PEN WHITE");
-                }
-                else
-                {
-                    validParameter(false);
-                }
+                //Turns fill off by making boolean Fill false
+                MyCanvass.FillShape(false);
+                //Writes to console
+                Console.WriteLine("FILL OFF");
+            }
+            else if (CommandSplit[0].Equals("red") == true)
+            {
+                //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                MyCanvass.PenColour(Color.Red);
+                //Writes to console
+                Console.WriteLine("RED");
+            }
+            else if (CommandSplit[0].Equals("green") == true)
+            {
+                //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                MyCanvass.PenColour(Color.Green);
+                //Writes to console
+                Console.WriteLine("GREEN");
+            }
+            else if (CommandSplit[0].Equals("blue") == true)
+            {
+                //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                MyCanvass.PenColour(Color.Blue);
+                //Writes to console
+                Console.WriteLine("BLUE");
+            }
+            else if (CommandSplit[0].Equals("yellow") == true)
+            {
+                //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                MyCanvass.PenColour(Color.Yellow);
+                //Writes to console
+                Console.WriteLine("YELLOW");
+            }
+            else if (CommandSplit[0].Equals("white") == true)
+            {
+                //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                MyCanvass.PenColour(Color.White);
+                //Writes to console
+                Console.WriteLine("WHITE");
             }
             else
             {
-                txtCommandLine.Text = "ERROR INVALID COMMAND";
-                Refresh();
+                InvalidCommand();
             }
             Refresh();
 
         }
-    
-        private void validParameter(Boolean valid)
+        private void InvalidCommand()
         {
-            if (valid.Equals(false))
-                {
-                txtCommandLine.Text = "ERROR INVALID PARAMETERS";
-            }
+            string error = "ERROR INVALID COMMAND";
+            txtErrors.Text = error;
+            ErrorList = ErrorList + Environment.NewLine;
+            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+        }
+        private void InvalidParameter()
+        {
+            string error = "ERROR INVALID PARAMETERS";
+            txtErrors.Text = error;
+            ErrorList = ErrorList + Environment.NewLine;
+            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+        }
+        private void NoParameters()
+        {
+            string error = "ERROR NO PARAMETERS";
+            txtErrors.Text = error;
+            ErrorList = ErrorList + Environment.NewLine;
+            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
 
-            private void OutputWindow_Paint(object sender, PaintEventArgs e)
+        private void IncorrectNumberOfParameters()
+        {
+            string error = "ERROR INCORRECT NUMBER OF PARAMETERS";
+            txtErrors.Text = error ;
+            ErrorList = ErrorList + Environment.NewLine;
+            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+        }
+
+        private void OutputWindow_Paint(object sender, PaintEventArgs e)
         {
             //Initialises the graphics on the output window
             Graphics g = e.Graphics;
