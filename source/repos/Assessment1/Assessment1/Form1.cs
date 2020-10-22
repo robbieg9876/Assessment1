@@ -121,11 +121,11 @@ namespace Assessment1
                         //Fills input box with text from the file
                         txtInput.AppendText(text);
                     }
-                    catch
+                    catch(FileNotFoundException)
                     {
                         string error = "ERROR FILE NOT FOUND";
                         txtErrors.Text = error;
-                        throw new FileNotFoundException("FILE NOT FOUND");
+                        return;
                     }
                 }
                 else
@@ -167,6 +167,7 @@ namespace Assessment1
                     //Checks if the correct number of parameters have been inputted
                     if (ParameterSplit.Length != 2)
                     {
+                        //Forces IndexOutOfRangeException
                         ParameterCheck[2] = ParameterSplit[2];
                      }
                     else

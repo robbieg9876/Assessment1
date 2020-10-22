@@ -13,6 +13,12 @@ namespace Assessment1
         public int xPos, yPos;
         public SolidBrush solidBrush;
         public Boolean Fill;
+        public string CurrentVariableName;
+        public int CurrentVariableValue;
+        public int StartLine;
+        public int EndLine;
+        public string CurrentMethodName;
+        public string[] CurrentParameters  = new string[100];
 
         public Canvass(Graphics g)
         {
@@ -136,6 +142,32 @@ namespace Assessment1
             else
             {
                 Fill = false;
+            }
+        }
+
+        public void InitaliseVariable(string variableName, int value)
+        {
+            CurrentVariableName = variableName;
+            CurrentVariableValue = value;
+        }
+
+        public void IfStatement(int startLine, int endLine)
+        {
+            StartLine = startLine;
+            EndLine = endLine;
+        }
+
+        public void Loop(int startLine, int endLine)
+        {
+            StartLine = startLine;
+            EndLine = endLine;
+        }
+
+        public void Methods(string methodName, string[] parameters)
+        {
+            CurrentMethodName = methodName;
+            foreach (string parameter in parameters){
+                CurrentParameters.Append(parameter);
             }
         }
     }
