@@ -22,6 +22,7 @@ namespace Assessment1
         Canvass MyCanvass;
         public String[] CommandSplit;
         public String[] ParameterSplit;
+        public String[] ParameterCheck = new string[1];
         public int lineNumber = 0;
         public string ErrorList = "";
         public Form1()
@@ -70,6 +71,7 @@ namespace Assessment1
                             //Calls command method
                             command();
                         }
+                        //Checks if there are any errors
                         if (ErrorList.Equals(""))
                         {
                             txtErrors.Text = ErrorList;
@@ -77,7 +79,7 @@ namespace Assessment1
                         }
                         else
                         {
-                            
+                            //Outputs errors to error textbox
                             txtCommandLine.Clear();
                             Refresh();
                             MyCanvass.clearArea(OutputWindow.BackColor);
@@ -111,11 +113,20 @@ namespace Assessment1
                     //Sets target file to load in
                     string path = @"C:\Users\robbi\source\repos\Assessment1\Assessment1\";
                     //Gets all the text from the file
-                    string text = System.IO.File.ReadAllText(path + CommandSplit[1]);
-                    //Clears input box
-                    txtInput.Clear();
-                    //Fills input box with text from the file
-                    txtInput.AppendText(text);
+                    try
+                    {
+                        string text = System.IO.File.ReadAllText(path + CommandSplit[1]);
+                        //Clears input box
+                        txtInput.Clear();
+                        //Fills input box with text from the file
+                        txtInput.AppendText(text);
+                    }
+                    catch
+                    {
+                        string error = "ERROR FILE NOT FOUND";
+                        txtErrors.Text = error;
+                        throw new FileNotFoundException("FILE NOT FOUND");
+                    }
                 }
                 else
                 //This means that they aren't using the input box so will only look for commands from  the command line
@@ -132,16 +143,17 @@ namespace Assessment1
         {
             txtCommandLine.Clear();
             Refresh();
-            Boolean nullCheck = false;
             //Checks that parameters have been inputted
-            if (CommandSplit.Length > 1)
+
+            try
             {
                 //Splits parameters into seperate values and stores in array
                 ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
             }
-            else
+            catch (IndexOutOfRangeException ex1)
             {
-                nullCheck = true;
+                NoParameters();
+                return;
             }
             //Checks for valid commands
             if (CommandSplit[0].Equals("moveto") == true)
@@ -149,31 +161,33 @@ namespace Assessment1
                 //Recieves two inputs and stores as integers
                 try
                 {
-                    //Checks if no parameters have been inputted
-                    if (nullCheck)
+                    //Tries to pass parameters
+                    int x = int.Parse(ParameterSplit[0]);
+                    int y = int.Parse(ParameterSplit[1]);
+                    //Checks if the correct number of parameters have been inputted
+                    if (ParameterSplit.Length != 2)
                     {
-                        NoParameters();
-                    }
+                        ParameterCheck[2] = ParameterSplit[2];
+                     }
                     else
                     {
-                        //Checks if the correct number of parameters have been inputted
-                        if (ParameterSplit.Length != 2)
-                        {
-                            IncorrectNumberOfParameters();
-                        }
-                        else
-                        {
-                            //Tries to pass parameters
-                            int x = int.Parse(ParameterSplit[0]);
-                            int y = int.Parse(ParameterSplit[1]);
-                            MyCanvass.MoveTo(x, y);
-                        }
-                    }
+                        MyCanvass.MoveTo(x, y);
+                     }
                 }
-                catch
+                catch (FormatException ex)
                 {
-                    //If try fails then this means the parameters are invalid e.g wrong data type
                     InvalidParameter();
+                    return;
+                }
+                catch (NullReferenceException ex1)
+                {
+                    NoParameters();
+                    return;
+                }
+                catch (IndexOutOfRangeException ex1)
+                {
+                    IncorrectNumberOfParameters();
+                    return;
                 }
 
                 //Passes the values as parameters to MyCanvass.MoveTo 
@@ -186,28 +200,33 @@ namespace Assessment1
                 //Recieves two inputs and stores as integers
                 try
                 {
-                    if (nullCheck)
+                    //Checks if the correct number of paramters have been passed
+                    int x = int.Parse(ParameterSplit[0]);
+                    int y = int.Parse(ParameterSplit[1]);
+                    if (ParameterSplit.Length != 2)
                     {
-                        NoParameters();
+                        ParameterCheck[2] = ParameterSplit[2];
                     }
                     else
                     {
-                        if (ParameterSplit.Length != 2)
-                        {
-                            IncorrectNumberOfParameters();
-                        }
-                        else
-                        {
-                            int x = int.Parse(ParameterSplit[0]);
-                            int y = int.Parse(ParameterSplit[1]);
-                            //Passes the values as parameters to MyCanvass.DrawTo
-                            MyCanvass.DrawTo(x, y);
-                        }
+                        //Passes the values as parameters to MyCanvass.DrawTo
+                        MyCanvass.DrawTo(x, y);
                     }
                 }
-                catch
+                catch (FormatException ex)
                 {
                     InvalidParameter();
+                    return;
+                }
+                catch (NullReferenceException ex1)
+                {
+                    NoParameters();
+                    return;
+                }
+                catch (IndexOutOfRangeException ex1)
+                {
+                    IncorrectNumberOfParameters();
+                    return;
                 }
                 //Writes to console
                 Console.WriteLine("DRAW TO");
@@ -217,27 +236,33 @@ namespace Assessment1
                 //Recieves input and strores as an integer
                 try
                 {
-                    if (nullCheck)
+                    //Checks if the correct number of paramters have been passed
+                    int length = int.Parse(ParameterSplit[0]);
+                    if (ParameterSplit.Length != 1)
                     {
-                        NoParameters();
+                        ParameterCheck[1] = ParameterSplit[1];
                     }
                     else
                     {
-                        if (ParameterSplit.Length != 1)
-                        {
-                            IncorrectNumberOfParameters();
-                        }
-                        else
-                        {
-                            int length = int.Parse(ParameterSplit[0]);
-                            //Passes the value as a parameter to MyCanvass.DrawSquare
-                            MyCanvass.DrawSquare(length);
-                        }
+                        //Passes the value as a parameter to MyCanvass.DrawSquare
+                        MyCanvass.DrawSquare(length);
                     }
+
                 }
-                catch
+                catch (FormatException ex)
                 {
                     InvalidParameter();
+                    return;
+                }
+                catch (NullReferenceException ex1)
+                {
+                    NoParameters();
+                    return;
+                }
+                catch (IndexOutOfRangeException ex1)
+                {
+                    IncorrectNumberOfParameters();
+                    return;
                 }
 
                 //Writes to console
@@ -248,27 +273,32 @@ namespace Assessment1
                 //Recieves input and strores as an integer
                 try
                 {
-                    if (nullCheck)
+                    //Checks if the correct number of paramters have been passed
+                    int radius = int.Parse(ParameterSplit[0]);
+                    if (ParameterSplit.Length != 1)
                     {
-                        NoParameters();
+                        ParameterCheck[2] = ParameterSplit[2];
                     }
                     else
                     {
-                        if (ParameterSplit.Length != 1)
-                        {
-                            IncorrectNumberOfParameters();
-                        }
-                        else
-                        {
-                            int radius = int.Parse(ParameterSplit[0]);
-                            //Passes the value as a parameter to MyCanvass.DrawCircle
-                            MyCanvass.DrawCircle(radius);
-                        }
+                        //Passes the value as a parameter to MyCanvass.DrawCircle
+                        MyCanvass.DrawCircle(radius);
                     }
                 }
-                catch
+                catch (FormatException ex)
                 {
                     InvalidParameter();
+                    return;
+                }
+                catch (NullReferenceException ex1)
+                {
+                    NoParameters();
+                    return;
+                }
+                catch (IndexOutOfRangeException ex1)
+                {
+                    IncorrectNumberOfParameters();
+                    return;
                 }
 
                 //Writes to console
@@ -279,28 +309,33 @@ namespace Assessment1
                 //Recieves two inputs and stores as integers
                 try
                 {
-                    if (nullCheck)
+                        int width = int.Parse(ParameterSplit[0]);
+                        int height = int.Parse(ParameterSplit[1]);
+                    //Checks if the correct number of paramters have been passed
+                    if (ParameterSplit.Length != 2)
                     {
-                        NoParameters();
+                        ParameterCheck[2] = ParameterSplit[2];
                     }
                     else
                     {
-                        if (ParameterSplit.Length != 2)
-                        {
-                            IncorrectNumberOfParameters();
-                        }
-                        else
-                        {
-                            int width = int.Parse(ParameterSplit[0]);
-                            int height = int.Parse(ParameterSplit[1]);
-                            //Passes the values as parameters to MyCanvass.DrawTriangle
-                            MyCanvass.DrawTriangle(width, height);
-                        }
+                        //Passes the values as parameters to MyCanvass.DrawTriangle
+                        MyCanvass.DrawTriangle(width, height);
                     }
                 }
-                catch
+                catch (FormatException ex)
                 {
                     InvalidParameter();
+                    return;
+                }
+                catch (NullReferenceException ex1)
+                {
+                    NoParameters();
+                    return;
+                }
+                catch (IndexOutOfRangeException ex1)
+                {
+                    IncorrectNumberOfParameters();
+                    return;
                 }
                 //Writes to console
                 Console.WriteLine("TRIANGLE");
@@ -310,28 +345,33 @@ namespace Assessment1
                 //Recieves two inputs and stores as integers
                 try
                 {
-                    if (nullCheck)
+                    //Checks if the correct number of paramters have been passed
+                        int width = int.Parse(ParameterSplit[0]);
+                        int height = int.Parse(ParameterSplit[1]);
+                    if (ParameterSplit.Length != 2)
                     {
-                        NoParameters();
+                        ParameterCheck[2] = ParameterSplit[2];
                     }
                     else
                     {
-                        if (ParameterSplit.Length != 2)
-                        {
-                            IncorrectNumberOfParameters();
-                        }
-                        else
-                        {
-                            int width = int.Parse(ParameterSplit[0]);
-                            int height = int.Parse(ParameterSplit[1]);
-                            //Passes the values as parameters to MyCanvass.DrawRectangle
-                            MyCanvass.DrawRectangle(width, height);
-                        }
+                        //Passes the values as parameters to MyCanvass.DrawRectangle
+                        MyCanvass.DrawRectangle(width, height);
                     }
                 }
-                catch
+                catch (FormatException ex)
                 {
                     InvalidParameter();
+                    return;
+                }
+                catch (NullReferenceException ex1)
+                {
+                    NoParameters();
+                    return;
+                }
+                catch (IndexOutOfRangeException ex1)
+                {
+                    IncorrectNumberOfParameters();
+                    return;
                 }
                 //Writes to console
                 Console.WriteLine("SQUARE");
@@ -352,26 +392,24 @@ namespace Assessment1
             }
             else if (CommandSplit[0].Equals("fill") == true)
             {
-                if (nullCheck)
+                try
                 {
-                    NoParameters();
-                }
-                else
-                {
+                    //Checks if the correct number of paramters have been passed
+                    String check = ParameterSplit[0];
                     if (ParameterSplit.Length != 1)
                     {
-                        IncorrectNumberOfParameters();
+                        ParameterCheck[2] = ParameterSplit[2];
                     }
                     else
                     {
-                        if (ParameterSplit[0].Equals("on"))
+                        if (check.Equals("on"))
                         {
                             //Turns fill on by making boolean Fill true
                             MyCanvass.FillShape(true);
                             //Writes to console
                             Console.WriteLine("FILL ON");
                         }
-                        else if (ParameterSplit[0].Equals("off") == true)
+                        else if (check.Equals("off") == true)
                         {
                             //Turns fill off by making boolean Fill false
                             MyCanvass.FillShape(false);
@@ -382,22 +420,34 @@ namespace Assessment1
                         {
                             InvalidParameter();
                         }
-
                     }
+                }
+                catch (FormatException ex)
+                {
+                    InvalidParameter();
+                    return;
+                }
+                catch (NullReferenceException ex1)
+                {
+                    NoParameters();
+                    return;
+                }
+                catch (IndexOutOfRangeException ex1)
+                {
+                    IncorrectNumberOfParameters();
+                    return;
                 }
 
             }
             else if (CommandSplit[0].Equals("pen"))
             {
-                if (nullCheck)
+                try
                 {
-                    NoParameters();
-                }
-                else
-                {
+                    //Checks if the correct number of paramters have been passed
+                    String Check = ParameterSplit[0];
                     if (ParameterSplit.Length != 1)
                     {
-                        IncorrectNumberOfParameters();
+                        ParameterCheck[2] = ParameterSplit[2];
                     }
                     else
                     {
@@ -442,10 +492,25 @@ namespace Assessment1
                         }
                     }
                 }
-            }
+                catch (FormatException ex)
+                {
+                    InvalidParameter();
+                    return;
+                }
+                catch (NullReferenceException ex1)
+                {
+                    NoParameters();
+                    return;
+                }
+                catch (IndexOutOfRangeException ex1)
+                {
+                    IncorrectNumberOfParameters();
+                    return;
+                }
+        }
             else
             {
-                InvalidCommand();
+                InvalidCommand();    
             }
             Refresh();
 
@@ -478,6 +543,7 @@ namespace Assessment1
             txtErrors.Text = error ;
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+            
         }
 
         private void OutputWindow_Paint(object sender, PaintEventArgs e)
