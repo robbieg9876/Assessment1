@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="00e449d3-50d0-4265-be8a-318c3266e7d3" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ErrorTreeViewConfiguration">
+    <option name="hideInfoMessages" value="true" />
+    <option name="hideWarnings" value="true" />
+    <option name="HIDE_WARNINGS" value="true" />
+    <option name="HIDE_INFO_MESSAGES" value="true" />
+  </component>
+  <component name="ProjectId" id="1Ztw0jTaWLxJgwkYfgPXDXYO7oh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/wills code/M250PortableV5.1/M250PortableV5.1/bluej.exe" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RunManager">
+    <configuration name="QueueDriver" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="11.0.6" />
+      <option name="MAIN_CLASS_NAME" value="week7.QueueDriver" />
+      <module name="week7" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="week7.QueueDriver" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="00e449d3-50d0-4265-be8a-318c3266e7d3" name="Default Changelist" comment="" />
+      <created>1585671476824</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585671476824</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="721" y="329" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600980772427">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="721" y="329" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/1920.305.1366.728@0.0.1920.1040" timestamp="1600980772427" />
+    <state x="740" y="277" key="FileChooserDialogImpl" timestamp="1600980764519">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="277" key="FileChooserDialogImpl/0.0.1920.1040/1920.305.1366.728@0.0.1920.1040" timestamp="1600980764519" />
+    <state width="1921" height="287" key="GridCell.Tab.0.bottom" timestamp="1600980976641">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="287" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.305.1366.728@0.0.1920.1040" timestamp="1600980976641" />
+    <state width="1921" height="287" key="GridCell.Tab.0.center" timestamp="1600980976640">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="287" key="GridCell.Tab.0.center/0.0.1920.1040/1920.305.1366.728@0.0.1920.1040" timestamp="1600980976640" />
+    <state width="1921" height="287" key="GridCell.Tab.0.left" timestamp="1600980976640">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="287" key="GridCell.Tab.0.left/0.0.1920.1040/1920.305.1366.728@0.0.1920.1040" timestamp="1600980976640" />
+    <state width="1921" height="287" key="GridCell.Tab.0.right" timestamp="1600980976641">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="287" key="GridCell.Tab.0.right/0.0.1920.1040/1920.305.1366.728@0.0.1920.1040" timestamp="1600980976641" />
+    <state x="668" y="347" key="com.intellij.ide.util.TipDialog" timestamp="1600980730741">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="668" y="347" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.305.1366.728@0.0.1920.1040" timestamp="1600980730741" />
+  </component>
+</project>
