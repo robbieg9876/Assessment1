@@ -1,0 +1,43 @@
+Rows
+
+1 Norwich-City 45 30 9 6 82 48 34 99
+2 Sheffield-United 45 28 8 9 67 37 30 77
+3 Leeds-United 45 23 7 10 66 42 24 76
+4 West-Bromwich-Albion 45 20 10 10 75 52 23 70
+5 Aston-Villa 
+6 Bristol-City
+7 Derby-County
+8 Middlesbrough
+9 Nottingham-Forest
+10 Preston-North-End
+11 Hull-City
+12 Sheffield-Wednesday
+13 Swansea-City
+14 Brentford
+15 Stoke-City
+16 Blackburn-Rovers
+17 Birmingham-City
+18 Queens-Park-Rangers
+19 Wigan-Athletic
+20 Millwall
+21 Reading
+22 Rotherham-United
+23 Bolton-Wanderers
+24 Ipswich-Town
+
+Columns
+
+Position
+Team
+Played
+Won
+Drawn
+Lost
+For
+Against
+Goal Difference
+Points
+
+Caption
+
+Championship Table
