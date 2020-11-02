@@ -22,6 +22,54 @@ namespace CanvassTests
         }
 
         [TestMethod]
+        public void TestInvalidCommand()
+        {
+            //Sets variables
+            String Command = "move to ";
+            String[] CommandSplit = new String[100]; 
+            CommandSplit=Command.Split(' ');
+            //Checks if the statements are true as expected
+            Assert.AreNotEqual("moveto.", CommandSplit[0]);
+        }
+        [TestMethod]
+        public void TestNoParameters()
+        {
+            //Sets integer variables
+            String message = "";
+            String input= "test " ;
+            String[] testArray = new String[5];
+            testArray= input.Split(",".ToCharArray());
+            try
+            {
+                int x = int.Parse(testArray[1]);
+            }
+            catch (IndexOutOfRangeException ex1)
+            {
+                message = ex1.Message;
+            }
+            //Checks if the statements are true as expected
+            Assert.AreEqual("Index was outside the bounds of the array.", message);
+        }
+
+        [TestMethod]
+        public void TestTooManyParameters()
+        {
+            //Sets integer variables
+
+            String message = "";
+            int[] testArray = new int[1];
+            try
+            {
+                int check = testArray[2];
+            }
+            catch (IndexOutOfRangeException ex2)
+            {
+                message = ex2.Message;
+            }
+            //Checks if the statements are true as expected
+            Assert.AreEqual("Index was outside the bounds of the array.", message);
+        }
+        [TestMethod]
         public void MoveToTest()
         {
             //Sets integer variables
@@ -35,6 +83,28 @@ namespace CanvassTests
         }
 
         [TestMethod]
+        public void MoveToTestInvalidParameter()
+        {
+            //Sets integer variables
+             String toX = "250a";
+             String toY = "250a";
+            String message = "";
+            //Passes values as parameters to Test.MoveTo
+            try
+            {
+                Test.MoveTo(int.Parse(toX), int.Parse(toY));
+            }
+            catch (FormatException ex)
+            {
+                message = ex.Message;
+            }
+
+
+            //Checks if the statements are true as expected
+            Assert.AreEqual("Input string was not in a correct format.", message);
+        }
+
+        [TestMethod]
         public void DrawToTest()
         {
             //Sets integer variables
@@ -45,6 +115,28 @@ namespace CanvassTests
             //Checks if the statements are true as expected
             Assert.IsTrue(toX == Test.xPos);
             Assert.IsTrue(toY == Test.yPos);
+        }
+
+        [TestMethod]
+        public void DrawToTestInvalidParameter()
+        {
+            //Sets integer variables
+            String toX = "250a";
+            String toY = "250a";
+            String message = "";
+            //Passes values as parameters to Test.MoveTo
+            try
+            {
+                Test.DrawTo(int.Parse(toX), int.Parse(toY));
+            }
+            catch (FormatException ex)
+            {
+                message = ex.Message;
+            }
+
+
+            //Checks if the statements are true as expected
+            Assert.AreEqual("Input string was not in a correct format.", message);
         }
 
         [TestMethod]
@@ -109,6 +201,27 @@ namespace CanvassTests
             Assert.IsTrue(toX + width == Test.xPos + width);
             Assert.IsTrue(toY + width == Test.yPos + width);
         }
+
+        [TestMethod]
+        public void DrawSquareTestInvalidParameter()
+        {
+            //Sets integer variables
+            String width = "250a";
+            String message = "";
+            //Passes values as parameters to Test.MoveTo
+            try
+            {
+                Test.DrawSquare(int.Parse(width));
+            }
+            catch (FormatException ex)
+            {
+                message = ex.Message;
+            }
+
+
+            //Checks if the statements are true as expected
+            Assert.AreEqual("Input string was not in a correct format.", message);
+        }
         [TestMethod]
         public void DrawCircleTest()
         {
@@ -128,6 +241,27 @@ namespace CanvassTests
             Assert.IsTrue(toX - radius == Test.xPos - radius);
             Assert.IsTrue(toY - radius == Test.yPos - radius);
         }
+
+        [TestMethod]
+        public void DrawCircleTestInvalidParameter()
+        {
+            //Sets integer variables
+            String radius = "250a";
+            String message = "";
+            //Passes values as parameters to Test.MoveTo
+            try
+            {
+                Test.DrawCircle(int.Parse(radius));
+            }
+            catch (FormatException ex)
+            {
+                message = ex.Message;
+            }
+
+
+            //Checks if the statements are true as expected
+            Assert.AreEqual("Input string was not in a correct format.", message);
+        }
         [TestMethod]
         public void DrawTriangleTest()
         {
@@ -146,6 +280,29 @@ namespace CanvassTests
             Assert.IsTrue(toX + width == Test.xPos + width);
             Assert.IsTrue(toY + height == Test.yPos + height);
         }
+
+        [TestMethod]
+        public void DrawTriangleTestInvalidParameter()
+        {
+            //Sets integer variables
+            String width = "250a";
+            String height = "250a";
+            String message = "";
+            //Passes values as parameters to Test.MoveTo
+            try
+            {
+                Test.DrawTriangle(int.Parse(width),int.Parse(height));
+            }
+            catch (FormatException ex)
+            {
+                message = ex.Message;
+            }
+
+
+            //Checks if the statements are true as expected
+            Assert.AreEqual("Input string was not in a correct format.", message);
+        }
+
         [TestMethod]
         public void DrawRectangleTest()
         {
@@ -164,6 +321,36 @@ namespace CanvassTests
             Assert.IsTrue(toX + width == Test.xPos + width);
             Assert.IsTrue(toY + height == Test.yPos + height);
         }
+
+        [TestMethod]
+        public void DrawRectangleTestInvalidParameter()
+        {
+            //Sets integer variables
+            String width = "250a";
+            String height = "250a";
+            String message = "";
+            //Passes values as parameters to Test.MoveTo
+            try
+            {
+                Test.DrawRectangle(int.Parse(width), int.Parse(height));
+            }
+            catch (FormatException ex)
+            {
+                message = ex.Message;
+            }
+
+
+            //Checks if the statements are true as expected
+            Assert.AreEqual("Input string was not in a correct format.", message);
+        }
+
+
+
+
+
+
+
+        //Component 2 tests
         [TestMethod]
         public void InitializeVariableTest()
         {

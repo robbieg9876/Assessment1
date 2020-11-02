@@ -139,28 +139,21 @@ namespace Assessment1
             }
         }
 
-        private void command()
+        public void command()
         {
             txtCommandLine.Clear();
             Refresh();
             //Checks that parameters have been inputted
 
-            try
-            {
-                //Splits parameters into seperate values and stores in array
-                ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
-            }
-            catch (IndexOutOfRangeException ex1)
-            {
-                NoParameters();
-                return;
-            }
+                
             //Checks for valid commands
             if (CommandSplit[0].Equals("moveto") == true)
             {
                 //Recieves two inputs and stores as integers
                 try
                 {
+                    //Splits parameters into seperate values and stores in array
+                    ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
                     //Tries to pass parameters
                     int x = int.Parse(ParameterSplit[0]);
                     int y = int.Parse(ParameterSplit[1]);
@@ -180,11 +173,6 @@ namespace Assessment1
                     InvalidParameter();
                     return;
                 }
-                catch (NullReferenceException ex1)
-                {
-                    NoParameters();
-                    return;
-                }
                 catch (IndexOutOfRangeException ex1)
                 {
                     IncorrectNumberOfParameters();
@@ -201,6 +189,8 @@ namespace Assessment1
                 //Recieves two inputs and stores as integers
                 try
                 {
+                    //Splits parameters into seperate values and stores in array
+                    ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
                     //Checks if the correct number of paramters have been passed
                     int x = int.Parse(ParameterSplit[0]);
                     int y = int.Parse(ParameterSplit[1]);
@@ -219,11 +209,6 @@ namespace Assessment1
                     InvalidParameter();
                     return;
                 }
-                catch (NullReferenceException ex1)
-                {
-                    NoParameters();
-                    return;
-                }
                 catch (IndexOutOfRangeException ex1)
                 {
                     IncorrectNumberOfParameters();
@@ -236,7 +221,10 @@ namespace Assessment1
             {
                 //Recieves input and strores as an integer
                 try
+
                 {
+                    //Splits parameters into seperate values and stores in array
+                    ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
                     //Checks if the correct number of paramters have been passed
                     int length = int.Parse(ParameterSplit[0]);
                     if (ParameterSplit.Length != 1)
@@ -255,11 +243,6 @@ namespace Assessment1
                     InvalidParameter();
                     return;
                 }
-                catch (NullReferenceException ex1)
-                {
-                    NoParameters();
-                    return;
-                }
                 catch (IndexOutOfRangeException ex1)
                 {
                     IncorrectNumberOfParameters();
@@ -274,6 +257,8 @@ namespace Assessment1
                 //Recieves input and strores as an integer
                 try
                 {
+                    //Splits parameters into seperate values and stores in array
+                    ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
                     //Checks if the correct number of paramters have been passed
                     int radius = int.Parse(ParameterSplit[0]);
                     if (ParameterSplit.Length != 1)
@@ -291,11 +276,6 @@ namespace Assessment1
                     InvalidParameter();
                     return;
                 }
-                catch (NullReferenceException ex1)
-                {
-                    NoParameters();
-                    return;
-                }
                 catch (IndexOutOfRangeException ex1)
                 {
                     IncorrectNumberOfParameters();
@@ -310,8 +290,10 @@ namespace Assessment1
                 //Recieves two inputs and stores as integers
                 try
                 {
-                        int width = int.Parse(ParameterSplit[0]);
-                        int height = int.Parse(ParameterSplit[1]);
+                    //Splits parameters into seperate values and stores in array
+                    ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                    int width = int.Parse(ParameterSplit[0]);
+                    int height = int.Parse(ParameterSplit[1]);
                     //Checks if the correct number of paramters have been passed
                     if (ParameterSplit.Length != 2)
                     {
@@ -328,11 +310,6 @@ namespace Assessment1
                     InvalidParameter();
                     return;
                 }
-                catch (NullReferenceException ex1)
-                {
-                    NoParameters();
-                    return;
-                }
                 catch (IndexOutOfRangeException ex1)
                 {
                     IncorrectNumberOfParameters();
@@ -346,8 +323,10 @@ namespace Assessment1
                 //Recieves two inputs and stores as integers
                 try
                 {
+                    //Splits parameters into seperate values and stores in array
+                    ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
                     //Checks if the correct number of paramters have been passed
-                        int width = int.Parse(ParameterSplit[0]);
+                    int width = int.Parse(ParameterSplit[0]);
                         int height = int.Parse(ParameterSplit[1]);
                     if (ParameterSplit.Length != 2)
                     {
@@ -362,11 +341,6 @@ namespace Assessment1
                 catch (FormatException ex)
                 {
                     InvalidParameter();
-                    return;
-                }
-                catch (NullReferenceException ex1)
-                {
-                    NoParameters();
                     return;
                 }
                 catch (IndexOutOfRangeException ex1)
@@ -395,6 +369,8 @@ namespace Assessment1
             {
                 try
                 {
+                    //Splits parameters into seperate values and stores in array
+                    ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
                     //Checks if the correct number of paramters have been passed
                     String check = ParameterSplit[0];
                     if (ParameterSplit.Length != 1)
@@ -428,11 +404,6 @@ namespace Assessment1
                     InvalidParameter();
                     return;
                 }
-                catch (NullReferenceException ex1)
-                {
-                    NoParameters();
-                    return;
-                }
                 catch (IndexOutOfRangeException ex1)
                 {
                     IncorrectNumberOfParameters();
@@ -444,6 +415,8 @@ namespace Assessment1
             {
                 try
                 {
+                    //Splits parameters into seperate values and stores in array
+                    ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
                     //Checks if the correct number of paramters have been passed
                     String Check = ParameterSplit[0];
                     if (ParameterSplit.Length != 1)
@@ -498,11 +471,6 @@ namespace Assessment1
                     InvalidParameter();
                     return;
                 }
-                catch (NullReferenceException ex1)
-                {
-                    NoParameters();
-                    return;
-                }
                 catch (IndexOutOfRangeException ex1)
                 {
                     IncorrectNumberOfParameters();
@@ -526,13 +494,6 @@ namespace Assessment1
         private void InvalidParameter()
         {
             string error = "ERROR INVALID PARAMETERS";
-            txtErrors.Text = error;
-            ErrorList = ErrorList + Environment.NewLine;
-            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
-        }
-        private void NoParameters()
-        {
-            string error = "ERROR NO PARAMETERS";
             txtErrors.Text = error;
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
