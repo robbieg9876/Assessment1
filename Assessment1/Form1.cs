@@ -97,6 +97,7 @@ namespace Assessment1
                     if (Directory.Exists(path))
                     {
                         //Adds file with the name inputted to the folder
+                        File.WriteAllText(path + CommandSplit[1], String.Empty);
                         File.AppendAllText(path + CommandSplit[1], txtInput.Text);
                     }
 

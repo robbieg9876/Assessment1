@@ -1,8 +1,8 @@
 moveto 100,100
 circle 10
-circle 25x
+circle 25
 circle 50
-xdrawto 200,100
+drawto 200,100
 circle 10
 circle 25
 circle 50
@@ -11,7 +11,7 @@ circle 10
 circle 25
 circle 50
 drawto 100,200
-ccircle 10
+circle 10
 circle 25
 circle 50
-drawto 100x
+drawto 100,200
