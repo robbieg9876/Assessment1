@@ -1,0 +1,11 @@
+radius = 50
+circle radius
+width = 50
+height = 60
+If height > 50
+square width
+triangle width,height
+rectangle width,height
+Endif
+height = 200
+rectangle width,height
