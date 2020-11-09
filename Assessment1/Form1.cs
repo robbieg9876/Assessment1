@@ -105,6 +105,7 @@ namespace Assessment1
                         //Creates the folder set above
                         Directory.CreateDirectory(path);
                         // Adds file with the name inputted to the folder
+                        File.WriteAllText(path + CommandSplit[1], String.Empty);
                         File.AppendAllText(path + CommandSplit[1], txtInput.Text);
                     }
                 }
