@@ -25,6 +25,7 @@ namespace Assessment1
         public String[] ParameterCheck = new string[1];
         public int lineNumber = 0;
         public string ErrorList = "";
+        IDictionary<string, int> VariableDictionary = new Dictionary<string, int>();
         public Form1()
         {
             //Sets graphics up on bitmap
@@ -147,7 +148,7 @@ namespace Assessment1
             Refresh();
             //Checks that parameters have been inputted
 
-                
+
             //Checks for valid commands
             if (CommandSplit[0].Equals("moveto") == true)
             {
@@ -156,6 +157,8 @@ namespace Assessment1
                 {
                     //Splits parameters into seperate values and stores in array
                     ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                    //Checks if the parameters inputted are variables
+                    CheckForVariable();
                     //Tries to pass parameters
                     int x = int.Parse(ParameterSplit[0]);
                     int y = int.Parse(ParameterSplit[1]);
@@ -164,11 +167,11 @@ namespace Assessment1
                     {
                         //Forces IndexOutOfRangeException
                         ParameterCheck[2] = ParameterSplit[2];
-                     }
+                    }
                     else
                     {
                         MyCanvass.MoveTo(x, y);
-                     }
+                    }
                 }
                 catch (FormatException ex)
                 {
@@ -193,6 +196,8 @@ namespace Assessment1
                 {
                     //Splits parameters into seperate values and stores in array
                     ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                    //Checks if the parameters inputted are variables
+                    CheckForVariable();
                     //Checks if the correct number of paramters have been passed
                     int x = int.Parse(ParameterSplit[0]);
                     int y = int.Parse(ParameterSplit[1]);
@@ -227,6 +232,8 @@ namespace Assessment1
                 {
                     //Splits parameters into seperate values and stores in array
                     ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                    //Checks if the parameters inputted are variables
+                    CheckForVariable();
                     //Checks if the correct number of paramters have been passed
                     int length = int.Parse(ParameterSplit[0]);
                     if (ParameterSplit.Length != 1)
@@ -261,6 +268,8 @@ namespace Assessment1
                 {
                     //Splits parameters into seperate values and stores in array
                     ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                    //Checks if the parameters inputted are variables
+                    CheckForVariable();
                     //Checks if the correct number of paramters have been passed
                     int radius = int.Parse(ParameterSplit[0]);
                     if (ParameterSplit.Length != 1)
@@ -294,6 +303,8 @@ namespace Assessment1
                 {
                     //Splits parameters into seperate values and stores in array
                     ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                    //Checks if the parameters inputted are variables
+                    CheckForVariable();
                     int width = int.Parse(ParameterSplit[0]);
                     int height = int.Parse(ParameterSplit[1]);
                     //Checks if the correct number of paramters have been passed
@@ -327,9 +338,11 @@ namespace Assessment1
                 {
                     //Splits parameters into seperate values and stores in array
                     ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                    //Checks if the parameters inputted are variables
+                    CheckForVariable();
                     //Checks if the correct number of paramters have been passed
                     int width = int.Parse(ParameterSplit[0]);
-                        int height = int.Parse(ParameterSplit[1]);
+                    int height = int.Parse(ParameterSplit[1]);
                     if (ParameterSplit.Length != 2)
                     {
                         ParameterCheck[2] = ParameterSplit[2];
@@ -462,10 +475,6 @@ namespace Assessment1
                             //Writes to console
                             Console.WriteLine("WHITE");
                         }
-                        else
-                        {
-                            InvalidParameter();
-                        }
                     }
                 }
                 catch (FormatException ex)
@@ -478,10 +487,25 @@ namespace Assessment1
                     IncorrectNumberOfParameters();
                     return;
                 }
-        }
+            }
+            //Checks if there are three elements in the array
+            else if (CommandSplit.Length==3)
+            {
+                //Checks if the middle element is a "="
+                if (CommandSplit[1].Equals("="))
+                {
+                    //Calls NewVariable()
+                    NewVariable();
+                }
+                else
+                {
+                    //If the middle element is not "=" then throw InvalidCommand() error
+                    InvalidCommand();
+                }
+            }
             else
             {
-                InvalidCommand();    
+                InvalidCommand();
             }
             Refresh();
 
@@ -516,7 +540,71 @@ namespace Assessment1
             Graphics g = e.Graphics;
             g.DrawImageUnscaled(OutputBitMap, 0, 0);
         }
+        private void NewVariable()
+        {
+            Boolean AlreadyInArray = false;
+            //Loops through the VariableDictionary to check if the variable is already stored
+            foreach (KeyValuePair<string, int> variable in VariableDictionary)
+            {
+                if (variable.Key.Equals(CommandSplit[0]))
+                {
+                    //If it is sets boolean value to true
+                     AlreadyInArray = true;
+                }
+            }
+            if (AlreadyInArray)
+            {
+                //Removes the variable from the array
+                VariableDictionary.Remove(CommandSplit[0]);
+            }
+            try
+            {
+                //Adds the variable with the inputted value if it is an integer
+                VariableDictionary.Add(CommandSplit[0], int.Parse(CommandSplit[2]));
+            }
+            catch (FormatException ex)
+            {
+                //If it is not an integer throw an error
+                ValueIsIncorrect();
+                return;
+            }
 
+        }
+        private void CheckForVariable()
+        {
+            //Loops through all the parameters
+            for (int i=0;ParameterSplit.Length>i; i++)
+            {
+
+            
+            try
+            {
+                    //Checks if the parameter is an int
+                int test = int.Parse(ParameterSplit[i]);
+            }
+            catch
+            {
+                    //if it is not then loop through the VariableDictionary to check if the parameter is a variable name
+                foreach (KeyValuePair<string, int> variable in VariableDictionary)
+                {
+                    if(variable.Key.Equals(ParameterSplit[i]))
+                    {
+                            //if it is then assign the parameter the integer value of the variable
+                        ParameterSplit[i] = variable.Value.ToString();
+                    }
+                }
+            }
+            }
+
+        }
+        private void ValueIsIncorrect()
+        {
+            //Method is called when user tries to store a non integer value
+            string error = "ERROR VALUE MUST BE AN INTEGER";
+            txtErrors.Text = error;
+            ErrorList = ErrorList + Environment.NewLine;
+            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+        }
 
     }
 }
