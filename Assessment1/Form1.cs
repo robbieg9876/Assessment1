@@ -489,23 +489,8 @@ namespace Assessment1
                         return;
                     }
                 }
-                //Checks if there are three elements in the array
-                else if (CommandSplit.Length == 3)
+                else if (CommandSplit[0].Equals("If"))
                 {
-                    //Checks if the middle element is a "="
-                    if (CommandSplit[1].Equals("="))
-                    {
-                        //Calls NewVariable()
-                        NewVariable();
-                    }
-                    else
-                    {
-                        //If the middle element is not "=" then throw InvalidCommand() error
-                        InvalidCommand();
-                    }
-                }
-                else if(CommandSplit[0].Equals("If"))
-                    {
                     //Splits the inputs into 3
                     string variable = CommandSplit[1];
                     string comparator = CommandSplit[2];
@@ -583,22 +568,38 @@ namespace Assessment1
                         }
 
                     }
-                   if (isAVariable == false)
+                    if (isAVariable == false)
                     {
                         //Throws error because the variable inputted does not exist
                         notAVariable();
                     }
-                    }
+                }
                 else if (CommandSplit[0].Equals("Endif"))
                 {
                     //Sets boolean to true to end branching
                     ifStatement = true;
+                }
+                
+                else if (CommandSplit.Length > 2)
+                {
+                    //Checks if the middle element is a "="
+                    if (CommandSplit[1].Equals("="))
+                    {
+                        //Calls NewVariable()
+                        NewVariable();
+                    }
+                    else
+                    {
+                        //Throws error because the command inputted was invalid
+                        InvalidCommand();
+                    }
                 }
                 else
                 {
                     //Throws error because the command inputted was invalid
                     InvalidCommand();
                 }
+
                 Refresh();
             }
             else
@@ -647,6 +648,11 @@ namespace Assessment1
         private void NewVariable()
         {
             Boolean AlreadyInArray = false;
+            Boolean Value1IsVariable = false;
+            Boolean Value2IsVariable = false;
+            int value = 0;
+            int value1= 0;
+            int value2 = 0;
             //Loops through the VariableDictionary to check if the variable is already stored
             foreach (KeyValuePair<string, int> variable in VariableDictionary)
             {
@@ -656,6 +662,25 @@ namespace Assessment1
                      AlreadyInArray = true;
                 }
             }
+            foreach (KeyValuePair<string, int> variable in VariableDictionary)
+            {
+                if (variable.Key.Equals(CommandSplit[2]))
+                {
+                    value1 = variable.Value;
+                    Value1IsVariable = true;
+                }
+            }
+            if (CommandSplit.Length.Equals(5))
+            {
+                foreach (KeyValuePair<string, int> variable in VariableDictionary)
+                {
+                    if (variable.Key.Equals(CommandSplit[4]))
+                    {
+                        value2 = variable.Value;
+                        Value2IsVariable = true;
+                    }
+                }
+            }
             if (AlreadyInArray)
             {
                 //Removes the variable from the array
@@ -663,8 +688,48 @@ namespace Assessment1
             }
             try
             {
+                if (Value1IsVariable.Equals(false))
+                {
+                    value1 = int.Parse(CommandSplit[2]);
+                }
+                if (Value2IsVariable.Equals(false))
+                {
+                    if (CommandSplit.Length.Equals(5))
+                    {
+                        value2 = int.Parse(CommandSplit[4]);
+                    }
+                }
+                if (CommandSplit.Length > 3) { 
+                    if (CommandSplit[3].Equals("+"))
+                    {
+                        value = value1 + value2;
+                    }
+                    else if (CommandSplit[3].Equals("-"))
+                    {
+                        value = value1 - value2;
+                    }
+                    else
+                    {
+                        InvalidOperator();
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        value = int.Parse(CommandSplit[2]);
+                    }
+                    catch (FormatException ex)
+                    {
+                        //If it is not an integer throw an error
+                        ValueIsIncorrect();
+                        return;
+                    }
+
+                }
+                
                 //Adds the variable with the inputted value if it is an integer
-                VariableDictionary.Add(CommandSplit[0], int.Parse(CommandSplit[2]));
+                VariableDictionary.Add(CommandSplit[0],value);
             }
             catch (FormatException ex)
             {
@@ -721,6 +786,14 @@ namespace Assessment1
         {
             //Method is called when user tries to store a non integer value
             string error = "Variable you have tried to compare is not a variable";
+            txtErrors.Text = error;
+            ErrorList = ErrorList + Environment.NewLine;
+            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+        }
+        private void InvalidOperator()
+        {
+            //Method is called when user tries to store a non integer value
+            string error = "ERROR Operator must be '+' or '-' ";
             txtErrors.Text = error;
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
