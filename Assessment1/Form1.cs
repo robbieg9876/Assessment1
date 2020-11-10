@@ -27,7 +27,12 @@ namespace Assessment1
         public int lineNumber = 0;
         public string ErrorList = "";
         IDictionary<string, int> VariableDictionary = new Dictionary<string, int>();
-        public Boolean ifStatement=true;
+        public Boolean ifStatement= true;
+        public Boolean LoopStatement = true;
+        public Boolean LoopStart = false;
+        public Boolean LoopEnd = false;
+        public string line;
+        public List<String> LoopArray = new List<string>();
         public Form1()
         {
             //Sets graphics up on bitmap
@@ -63,7 +68,7 @@ namespace Assessment1
                     using (StringReader reader = new StringReader(txtInput.Text))
                     {
                         //Loops through each line in the input box
-                        string line;
+                        
                         lineNumber = 0;
                         ErrorList="";
                         while ((line = reader.ReadLine()) != null)
@@ -150,466 +155,602 @@ namespace Assessment1
             Refresh();
             if (ifStatement)
             {
-                //Checks for valid commands
-                if (CommandSplit[0].Equals("moveto") == true)
+                if (LoopStatement)
                 {
-                    //Recieves two inputs and stores as integers
-                    try
+                    if (LoopStart)
                     {
-                        //Splits parameters into seperate values and stores in array
-                        ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
-                        //Checks if the parameters inputted are variables
-                        CheckForVariable();
-                        //Tries to pass parameters
-                        int x = int.Parse(ParameterSplit[0]);
-                        int y = int.Parse(ParameterSplit[1]);
-                        //Checks if the correct number of parameters have been inputted
-                        if (ParameterSplit.Length != 2)
+                        LoopArray.Add(line);
+                    }
+                    //Checks for valid commands
+                    if (CommandSplit[0].Equals("moveto") == true)
+                    {
+                        //Recieves two inputs and stores as integers
+                        try
                         {
-                            //Forces IndexOutOfRangeException
-                            ParameterCheck[2] = ParameterSplit[2];
-                        }
-                        else
-                        {
-                            MyCanvass.MoveTo(x, y);
-                        }
-                    }
-                    catch (FormatException ex)
-                    {
-                        InvalidParameter();
-                        return;
-                    }
-                    catch (IndexOutOfRangeException ex1)
-                    {
-                        IncorrectNumberOfParameters();
-                        return;
-                    }
-
-                    //Passes the values as parameters to MyCanvass.MoveTo 
-
-                    //Writes message to console
-                    Console.WriteLine("MOVE TO");
-                }
-                else if (CommandSplit[0].Equals("drawto") == true)
-                {
-                    //Recieves two inputs and stores as integers
-                    try
-                    {
-                        //Splits parameters into seperate values and stores in array
-                        ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
-                        //Checks if the parameters inputted are variables
-                        CheckForVariable();
-                        //Checks if the correct number of paramters have been passed
-                        int x = int.Parse(ParameterSplit[0]);
-                        int y = int.Parse(ParameterSplit[1]);
-                        if (ParameterSplit.Length != 2)
-                        {
-                            ParameterCheck[2] = ParameterSplit[2];
-                        }
-                        else
-                        {
-                            //Passes the values as parameters to MyCanvass.DrawTo
-                            MyCanvass.DrawTo(x, y);
-                        }
-                    }
-                    catch (FormatException ex)
-                    {
-                        InvalidParameter();
-                        return;
-                    }
-                    catch (IndexOutOfRangeException ex1)
-                    {
-                        IncorrectNumberOfParameters();
-                        return;
-                    }
-                    //Writes to console
-                    Console.WriteLine("DRAW TO");
-                }
-                else if (CommandSplit[0].Equals("square") == true)
-                {
-                    //Recieves input and strores as an integer
-                    try
-
-                    {
-                        //Splits parameters into seperate values and stores in array
-                        ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
-                        //Checks if the parameters inputted are variables
-                        CheckForVariable();
-                        //Checks if the correct number of paramters have been passed
-                        int length = int.Parse(ParameterSplit[0]);
-                        if (ParameterSplit.Length != 1)
-                        {
-                            ParameterCheck[1] = ParameterSplit[1];
-                        }
-                        else
-                        {
-                            //Passes the value as a parameter to MyCanvass.DrawSquare
-                            MyCanvass.DrawSquare(length);
-                        }
-
-                    }
-                    catch (FormatException ex)
-                    {
-                        InvalidParameter();
-                        return;
-                    }
-                    catch (IndexOutOfRangeException ex1)
-                    {
-                        IncorrectNumberOfParameters();
-                        return;
-                    }
-
-                    //Writes to console
-                    Console.WriteLine("SQUARE");
-                }
-                else if (CommandSplit[0].Equals("circle") == true)
-                {
-                    //Recieves input and strores as an integer
-                    try
-                    {
-                        //Splits parameters into seperate values and stores in array
-                        ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
-                        //Checks if the parameters inputted are variables
-                        CheckForVariable();
-                        //Checks if the correct number of paramters have been passed
-                        int radius = int.Parse(ParameterSplit[0]);
-                        if (ParameterSplit.Length != 1)
-                        {
-                            ParameterCheck[2] = ParameterSplit[2];
-                        }
-                        else
-                        {
-                            //Passes the value as a parameter to MyCanvass.DrawCircle
-                            MyCanvass.DrawCircle(radius);
-                        }
-                    }
-                    catch (FormatException ex)
-                    {
-                        InvalidParameter();
-                        return;
-                    }
-                    catch (IndexOutOfRangeException ex1)
-                    {
-                        IncorrectNumberOfParameters();
-                        return;
-                    }
-
-                    //Writes to console
-                    Console.WriteLine("CIRCLE");
-                }
-                else if (CommandSplit[0].Equals("triangle") == true)
-                {
-                    //Recieves two inputs and stores as integers
-                    try
-                    {
-                        //Splits parameters into seperate values and stores in array
-                        ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
-                        //Checks if the parameters inputted are variables
-                        CheckForVariable();
-                        int width = int.Parse(ParameterSplit[0]);
-                        int height = int.Parse(ParameterSplit[1]);
-                        //Checks if the correct number of paramters have been passed
-                        if (ParameterSplit.Length != 2)
-                        {
-                            ParameterCheck[2] = ParameterSplit[2];
-                        }
-                        else
-                        {
-                            //Passes the values as parameters to MyCanvass.DrawTriangle
-                            MyCanvass.DrawTriangle(width, height);
-                        }
-                    }
-                    catch (FormatException ex)
-                    {
-                        InvalidParameter();
-                        return;
-                    }
-                    catch (IndexOutOfRangeException ex1)
-                    {
-                        IncorrectNumberOfParameters();
-                        return;
-                    }
-                    //Writes to console
-                    Console.WriteLine("TRIANGLE");
-                }
-                else if (CommandSplit[0].Equals("rectangle") == true)
-                {
-                    //Recieves two inputs and stores as integers
-                    try
-                    {
-                        //Splits parameters into seperate values and stores in array
-                        ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
-                        //Checks if the parameters inputted are variables
-                        CheckForVariable();
-                        //Checks if the correct number of paramters have been passed
-                        int width = int.Parse(ParameterSplit[0]);
-                        int height = int.Parse(ParameterSplit[1]);
-                        if (ParameterSplit.Length != 2)
-                        {
-                            ParameterCheck[2] = ParameterSplit[2];
-                        }
-                        else
-                        {
-                            //Passes the values as parameters to MyCanvass.DrawRectangle
-                            MyCanvass.DrawRectangle(width, height);
-                        }
-                    }
-                    catch (FormatException ex)
-                    {
-                        InvalidParameter();
-                        return;
-                    }
-                    catch (IndexOutOfRangeException ex1)
-                    {
-                        IncorrectNumberOfParameters();
-                        return;
-                    }
-                    //Writes to console
-                    Console.WriteLine("SQUARE");
-                }
-                else if (CommandSplit[0].Equals("clear") == true)
-                {
-                    //Passes the colour of the output window as a parameter to MyCanvass.clearArea
-                    MyCanvass.clearArea(OutputWindow.BackColor);
-                    //Writes to console
-                    Console.WriteLine("CLEAR");
-                }
-                else if (CommandSplit[0].Equals("reset") == true)
-                {
-                    //Calls MyCanvass,resetPenPosition to put starting drawing position back to (0,0)
-                    MyCanvass.resetPenPosition();
-                    //Writes to console
-                    Console.WriteLine("RESET PEN");
-                }
-                else if (CommandSplit[0].Equals("fill") == true)
-                {
-                    try
-                    {
-                        //Splits parameters into seperate values and stores in array
-                        ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
-                        //Checks if the correct number of paramters have been passed
-                        String check = ParameterSplit[0];
-                        if (ParameterSplit.Length != 1)
-                        {
-                            ParameterCheck[2] = ParameterSplit[2];
-                        }
-                        else
-                        {
-                            if (check.Equals("on"))
+                            //Splits parameters into seperate values and stores in array
+                            ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                            //Checks if the parameters inputted are variables
+                            CheckForVariable();
+                            //Tries to pass parameters
+                            int x = int.Parse(ParameterSplit[0]);
+                            int y = int.Parse(ParameterSplit[1]);
+                            //Checks if the correct number of parameters have been inputted
+                            if (ParameterSplit.Length != 2)
                             {
-                                //Turns fill on by making boolean Fill true
-                                MyCanvass.FillShape(true);
-                                //Writes to console
-                                Console.WriteLine("FILL ON");
-                            }
-                            else if (check.Equals("off") == true)
-                            {
-                                //Turns fill off by making boolean Fill false
-                                MyCanvass.FillShape(false);
-                                //Writes to console
-                                Console.WriteLine("FILL OFF");
+                                //Forces IndexOutOfRangeException
+                                ParameterCheck[2] = ParameterSplit[2];
                             }
                             else
                             {
-                                InvalidParameter();
+                                MyCanvass.MoveTo(x, y);
                             }
                         }
-                    }
-                    catch (FormatException ex)
-                    {
-                        InvalidParameter();
-                        return;
-                    }
-                    catch (IndexOutOfRangeException ex1)
-                    {
-                        IncorrectNumberOfParameters();
-                        return;
-                    }
+                        catch (FormatException ex)
+                        {
+                            InvalidParameter();
+                            return;
+                        }
+                        catch (IndexOutOfRangeException ex1)
+                        {
+                            IncorrectNumberOfParameters();
+                            return;
+                        }
 
-                }
-                else if (CommandSplit[0].Equals("pen"))
-                {
-                    try
+                        //Passes the values as parameters to MyCanvass.MoveTo 
+
+                        //Writes message to console
+                        Console.WriteLine("MOVE TO");
+                    }
+                    else if (CommandSplit[0].Equals("drawto") == true)
                     {
-                        //Splits parameters into seperate values and stores in array
-                        ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
-                        //Checks if the correct number of paramters have been passed
-                        String Check = ParameterSplit[0];
-                        if (ParameterSplit.Length != 1)
+                        //Recieves two inputs and stores as integers
+                        try
                         {
-                            ParameterCheck[2] = ParameterSplit[2];
-                        }
-                        else
-                        {
-                            if (ParameterSplit[0].Equals("red") == true)
+                            //Splits parameters into seperate values and stores in array
+                            ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                            //Checks if the parameters inputted are variables
+                            CheckForVariable();
+                            //Checks if the correct number of paramters have been passed
+                            int x = int.Parse(ParameterSplit[0]);
+                            int y = int.Parse(ParameterSplit[1]);
+                            if (ParameterSplit.Length != 2)
                             {
-                                //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                                MyCanvass.PenColour(Color.Red);
-                                //Writes to console
-                                Console.WriteLine("RED");
+                                ParameterCheck[2] = ParameterSplit[2];
                             }
-                            else if (ParameterSplit[0].Equals("green") == true)
+                            else
                             {
-                                //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                                MyCanvass.PenColour(Color.Green);
-                                //Writes to console
-                                Console.WriteLine("GREEN");
-                            }
-                            else if (ParameterSplit[0].Equals("blue") == true)
-                            {
-                                //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                                MyCanvass.PenColour(Color.Blue);
-                                //Writes to console
-                                Console.WriteLine("BLUE");
-                            }
-                            else if (ParameterSplit[0].Equals("yellow") == true)
-                            {
-                                //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                                MyCanvass.PenColour(Color.Yellow);
-                                //Writes to console
-                                Console.WriteLine("YELLOW");
-                            }
-                            else if (ParameterSplit[0].Equals("white") == true)
-                            {
-                                //Passes the colour inputted as a parameter to MyCanvass.PenColour
-                                MyCanvass.PenColour(Color.White);
-                                //Writes to console
-                                Console.WriteLine("WHITE");
+                                //Passes the values as parameters to MyCanvass.DrawTo
+                                MyCanvass.DrawTo(x, y);
                             }
                         }
+                        catch (FormatException ex)
+                        {
+                            InvalidParameter();
+                            return;
+                        }
+                        catch (IndexOutOfRangeException ex1)
+                        {
+                            IncorrectNumberOfParameters();
+                            return;
+                        }
+                        //Writes to console
+                        Console.WriteLine("DRAW TO");
                     }
-                    catch (FormatException ex)
+                    else if (CommandSplit[0].Equals("square") == true)
                     {
-                        InvalidParameter();
-                        return;
+                        //Recieves input and strores as an integer
+                        try
+
+                        {
+                            //Splits parameters into seperate values and stores in array
+                            ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                            //Checks if the parameters inputted are variables
+                            CheckForVariable();
+                            //Checks if the correct number of paramters have been passed
+                            int length = int.Parse(ParameterSplit[0]);
+                            if (ParameterSplit.Length != 1)
+                            {
+                                ParameterCheck[1] = ParameterSplit[1];
+                            }
+                            else
+                            {
+                                //Passes the value as a parameter to MyCanvass.DrawSquare
+                                MyCanvass.DrawSquare(length);
+                            }
+
+                        }
+                        catch (FormatException ex)
+                        {
+                            InvalidParameter();
+                            return;
+                        }
+                        catch (IndexOutOfRangeException ex1)
+                        {
+                            IncorrectNumberOfParameters();
+                            return;
+                        }
+
+                        //Writes to console
+                        Console.WriteLine("SQUARE");
                     }
-                    catch (IndexOutOfRangeException ex1)
+                    else if (CommandSplit[0].Equals("circle") == true)
                     {
-                        IncorrectNumberOfParameters();
-                        return;
+                        //Recieves input and strores as an integer
+                        try
+                        {
+                            //Splits parameters into seperate values and stores in array
+                            ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                            //Checks if the parameters inputted are variables
+                            CheckForVariable();
+                            //Checks if the correct number of paramters have been passed
+                            int radius = int.Parse(ParameterSplit[0]);
+                            if (ParameterSplit.Length != 1)
+                            {
+                                ParameterCheck[2] = ParameterSplit[2];
+                            }
+                            else
+                            {
+                                //Passes the value as a parameter to MyCanvass.DrawCircle
+                                MyCanvass.DrawCircle(radius);
+                            }
+                        }
+                        catch (FormatException ex)
+                        {
+                            InvalidParameter();
+                            return;
+                        }
+                        catch (IndexOutOfRangeException ex1)
+                        {
+                            IncorrectNumberOfParameters();
+                            return;
+                        }
+
+                        //Writes to console
+                        Console.WriteLine("CIRCLE");
                     }
-                }
-                else if (CommandSplit[0].Equals("If"))
-                {
-                    //Splits the inputs into 3
-                    string variable = CommandSplit[1];
-                    string comparator = CommandSplit[2];
-                    string value = CommandSplit[3];
-                    Boolean isAVariable = false;
-                    //Loops through the VariableDictionary to find the variable name inputted
-                    foreach (KeyValuePair<string, int> variable1 in VariableDictionary)
+                    else if (CommandSplit[0].Equals("triangle") == true)
+                    {
+                        //Recieves two inputs and stores as integers
+                        try
+                        {
+                            //Splits parameters into seperate values and stores in array
+                            ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                            //Checks if the parameters inputted are variables
+                            CheckForVariable();
+                            int width = int.Parse(ParameterSplit[0]);
+                            int height = int.Parse(ParameterSplit[1]);
+                            //Checks if the correct number of paramters have been passed
+                            if (ParameterSplit.Length != 2)
+                            {
+                                ParameterCheck[2] = ParameterSplit[2];
+                            }
+                            else
+                            {
+                                //Passes the values as parameters to MyCanvass.DrawTriangle
+                                MyCanvass.DrawTriangle(width, height);
+                            }
+                        }
+                        catch (FormatException ex)
+                        {
+                            InvalidParameter();
+                            return;
+                        }
+                        catch (IndexOutOfRangeException ex1)
+                        {
+                            IncorrectNumberOfParameters();
+                            return;
+                        }
+                        //Writes to console
+                        Console.WriteLine("TRIANGLE");
+                    }
+                    else if (CommandSplit[0].Equals("rectangle") == true)
+                    {
+                        //Recieves two inputs and stores as integers
+                        try
+                        {
+                            //Splits parameters into seperate values and stores in array
+                            ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                            //Checks if the parameters inputted are variables
+                            CheckForVariable();
+                            //Checks if the correct number of paramters have been passed
+                            int width = int.Parse(ParameterSplit[0]);
+                            int height = int.Parse(ParameterSplit[1]);
+                            if (ParameterSplit.Length != 2)
+                            {
+                                ParameterCheck[2] = ParameterSplit[2];
+                            }
+                            else
+                            {
+                                //Passes the values as parameters to MyCanvass.DrawRectangle
+                                MyCanvass.DrawRectangle(width, height);
+                            }
+                        }
+                        catch (FormatException ex)
+                        {
+                            InvalidParameter();
+                            return;
+                        }
+                        catch (IndexOutOfRangeException ex1)
+                        {
+                            IncorrectNumberOfParameters();
+                            return;
+                        }
+                        //Writes to console
+                        Console.WriteLine("SQUARE");
+                    }
+                    else if (CommandSplit[0].Equals("clear") == true)
+                    {
+                        //Passes the colour of the output window as a parameter to MyCanvass.clearArea
+                        MyCanvass.clearArea(OutputWindow.BackColor);
+                        //Writes to console
+                        Console.WriteLine("CLEAR");
+                    }
+                    else if (CommandSplit[0].Equals("reset") == true)
+                    {
+                        //Calls MyCanvass,resetPenPosition to put starting drawing position back to (0,0)
+                        MyCanvass.resetPenPosition();
+                        //Writes to console
+                        Console.WriteLine("RESET PEN");
+                    }
+                    else if (CommandSplit[0].Equals("fill") == true)
                     {
                         try
                         {
-                            //Checks if the value inputted is an integer
-                            int width = int.Parse(value);
-                            //checks if the variable is the current element in VariableDictionary
-                            if (variable1.Key.Equals(variable))
+                            //Splits parameters into seperate values and stores in array
+                            ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                            //Checks if the correct number of paramters have been passed
+                            String check = ParameterSplit[0];
+                            if (ParameterSplit.Length != 1)
                             {
-                                //Sets check boolean to true
-                                isAVariable = true;
-                                //Checks what comparator is used
-                                if (comparator.Equals("=="))
+                                ParameterCheck[2] = ParameterSplit[2];
+                            }
+                            else
+                            {
+                                if (check.Equals("on"))
                                 {
-                                    //Checks if the statement inputted is true
-                                    if (value.Equals(variable1.Value.ToString()))
-                                    {
-                                        //sets the boolean to check whether to read the following lines
-                                        ifStatement = true;
-                                    }
-                                    else
-                                    {
-                                        //sets the boolean to not read the following lines until Endif is typed
-                                        ifStatement = false;
-                                    }
+                                    //Turns fill on by making boolean Fill true
+                                    MyCanvass.FillShape(true);
+                                    //Writes to console
+                                    Console.WriteLine("FILL ON");
                                 }
-                                //Checks what comparator is used
-                                else if (comparator.Equals(">"))
+                                else if (check.Equals("off") == true)
                                 {
-                                    //Checks if the statement inputted is true
-                                    if ((variable1.Value > int.Parse(value)))
-                                    {
-                                        //sets the boolean to check whether to read the following lines
-                                        ifStatement = true;
-                                    }
-                                    else
-                                    {
-                                        //sets the boolean to not read the following lines until Endif is typed
-                                        ifStatement = false;
-                                    }
-                                }
-                                //Checks what comparator is used
-                                else if (comparator.Equals("<"))
-                                {
-                                    //Checks if the statement inputted is true
-                                    if ((variable1.Value < int.Parse(value)))
-                                    {
-                                        //sets the boolean to check whether to read the following lines
-                                        ifStatement = true;
-                                    }
-                                    else
-                                    {
-                                        //sets the boolean to not read the following lines until Endif is typed
-                                        ifStatement = false;
-                                    }
+                                    //Turns fill off by making boolean Fill false
+                                    MyCanvass.FillShape(false);
+                                    //Writes to console
+                                    Console.WriteLine("FILL OFF");
                                 }
                                 else
                                 {
-                                    //Throws error because an invalid Comparator was inputted
-                                    InvalidComparator();
+                                    InvalidParameter();
                                 }
                             }
                         }
                         catch (FormatException ex)
                         {
-                            //Throws exception because the value inputted was not an integer
                             InvalidParameter();
+                            return;
+                        }
+                        catch (IndexOutOfRangeException ex1)
+                        {
+                            IncorrectNumberOfParameters();
                             return;
                         }
 
                     }
-                    if (isAVariable == false)
+                    else if (CommandSplit[0].Equals("pen"))
                     {
-                        //Throws error because the variable inputted does not exist
-                        notAVariable();
+                        try
+                        {
+                            //Splits parameters into seperate values and stores in array
+                            ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                            //Checks if the correct number of paramters have been passed
+                            String Check = ParameterSplit[0];
+                            if (ParameterSplit.Length != 1)
+                            {
+                                ParameterCheck[2] = ParameterSplit[2];
+                            }
+                            else
+                            {
+                                if (ParameterSplit[0].Equals("red") == true)
+                                {
+                                    //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                                    MyCanvass.PenColour(Color.Red);
+                                    //Writes to console
+                                    Console.WriteLine("RED");
+                                }
+                                else if (ParameterSplit[0].Equals("green") == true)
+                                {
+                                    //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                                    MyCanvass.PenColour(Color.Green);
+                                    //Writes to console
+                                    Console.WriteLine("GREEN");
+                                }
+                                else if (ParameterSplit[0].Equals("blue") == true)
+                                {
+                                    //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                                    MyCanvass.PenColour(Color.Blue);
+                                    //Writes to console
+                                    Console.WriteLine("BLUE");
+                                }
+                                else if (ParameterSplit[0].Equals("yellow") == true)
+                                {
+                                    //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                                    MyCanvass.PenColour(Color.Yellow);
+                                    //Writes to console
+                                    Console.WriteLine("YELLOW");
+                                }
+                                else if (ParameterSplit[0].Equals("white") == true)
+                                {
+                                    //Passes the colour inputted as a parameter to MyCanvass.PenColour
+                                    MyCanvass.PenColour(Color.White);
+                                    //Writes to console
+                                    Console.WriteLine("WHITE");
+                                }
+                            }
+                        }
+                        catch (FormatException ex)
+                        {
+                            InvalidParameter();
+                            return;
+                        }
+                        catch (IndexOutOfRangeException ex1)
+                        {
+                            IncorrectNumberOfParameters();
+                            return;
+                        }
                     }
-                }
-                else if (CommandSplit[0].Equals("Endif"))
-                {
-                    //Sets boolean to true to end branching
-                    ifStatement = true;
-                }
-                
-                else if (CommandSplit.Length > 2)
-                {
-                    //Checks if the middle element is a "="
-                    if (CommandSplit[1].Equals("="))
+                    else if (CommandSplit[0].Equals("If"))
                     {
-                        //Calls NewVariable()
-                        NewVariable();
+                        //Splits the inputs into 3
+                        string variable = CommandSplit[1];
+                        string comparator = CommandSplit[2];
+                        string value = CommandSplit[3];
+                        Boolean isAVariable = false;
+                        //Loops through the VariableDictionary to find the variable name inputted
+                        foreach (KeyValuePair<string, int> variable1 in VariableDictionary)
+                        {
+                            try
+                            {
+                                //Checks if the value inputted is an integer
+                                int width = int.Parse(value);
+                                //checks if the variable is the current element in VariableDictionary
+                                if (variable1.Key.Equals(variable))
+                                {
+                                    //Sets check boolean to true
+                                    isAVariable = true;
+                                    //Checks what comparator is used
+                                    if (comparator.Equals("=="))
+                                    {
+                                        //Checks if the statement inputted is true
+                                        if (value.Equals(variable1.Value.ToString()))
+                                        {
+                                            //sets the boolean to check whether to read the following lines
+                                            ifStatement = true;
+                                        }
+                                        else
+                                        {
+                                            //sets the boolean to not read the following lines until Endif is typed
+                                            ifStatement = false;
+                                        }
+                                    }
+                                    //Checks what comparator is used
+                                    else if (comparator.Equals(">"))
+                                    {
+                                        //Checks if the statement inputted is true
+                                        if ((variable1.Value > int.Parse(value)))
+                                        {
+                                            //sets the boolean to check whether to read the following lines
+                                            ifStatement = true;
+                                        }
+                                        else
+                                        {
+                                            //sets the boolean to not read the following lines until Endif is typed
+                                            ifStatement = false;
+                                        }
+                                    }
+                                    //Checks what comparator is used
+                                    else if (comparator.Equals("<"))
+                                    {
+                                        //Checks if the statement inputted is true
+                                        if ((variable1.Value < int.Parse(value)))
+                                        {
+                                            //sets the boolean to check whether to read the following lines
+                                            ifStatement = true;
+                                        }
+                                        else
+                                        {
+                                            //sets the boolean to not read the following lines until Endif is typed
+                                            ifStatement = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //Throws error because an invalid Comparator was inputted
+                                        InvalidComparator();
+                                    }
+                                }
+                            }
+                            catch (FormatException ex)
+                            {
+                                //Throws exception because the value inputted was not an integer
+                                InvalidParameter();
+                                return;
+                            }
+
+                        }
+                        if (isAVariable == false)
+                        {
+                            //Throws error because the variable inputted does not exist
+                            notAVariable();
+                        }
+                    }
+                    else if (CommandSplit[0].Equals("Endif"))
+                    {
+                        //Sets boolean to true to end branching
+                        ifStatement = true;
+                    }
+                    else if (CommandSplit[0].Equals("While"))
+                    {
+                        if (LoopArray is null)
+                        {
+
+                        }
+                        else { 
+                            LoopArray.Clear();
+                        }
+                        LoopArray.Add(line);
+                        //Splits the inputs into 3
+                        string variable = CommandSplit[1];
+                        string comparator = CommandSplit[2];
+                        string value = CommandSplit[3];
+                        Boolean isAVariable = false;
+                        //Loops through the VariableDictionary to find the variable name inputted
+                        foreach (KeyValuePair<string, int> variable1 in VariableDictionary)
+                        {
+                            try
+                            {
+                                //Checks if the value inputted is an integer
+                                int width = int.Parse(value);
+                                //checks if the variable is the current element in VariableDictionary
+                                if (variable1.Key.Equals(variable))
+                                {
+                                    //Sets check boolean to true
+                                    isAVariable = true;
+                                    //Checks what comparator is used
+                                    if (comparator.Equals("=="))
+                                    {
+                                        //Checks if the statement inputted is true
+                                        if (value.Equals(variable1.Value.ToString()))
+                                        {
+                                            //sets the boolean to check whether to read the following lines
+                                           LoopStatement = true;
+                                           LoopStart = true;
+                                        }
+                                        else
+                                        {
+                                            //sets the boolean to not read the following lines until Endif is typed
+                                            LoopStatement = false;
+                                            LoopStart= false;
+                                        }
+                                    }
+                                    //Checks what comparator is used
+                                    else if (comparator.Equals(">"))
+                                    {
+                                        //Checks if the statement inputted is true
+                                        if ((variable1.Value > int.Parse(value)))
+                                        {
+                                            //sets the boolean to check whether to read the following lines
+                                            LoopStatement = true;
+                                            LoopStart = true;
+                                        }
+                                        else
+                                        {
+                                            //sets the boolean to not read the following lines until Endif is typed
+                                            LoopStatement = false;
+                                            LoopStart = false;
+                                        }
+                                    }
+                                    //Checks what comparator is used
+                                    else if (comparator.Equals("<"))
+                                    {
+                                        //Checks if the statement inputted is true
+                                        if ((variable1.Value < int.Parse(value)))
+                                        {
+                                            //sets the boolean to check whether to read the following lines
+                                            LoopStatement = true;
+                                            LoopStart = true;
+                                        }
+                                        else
+                                        {
+                                            //sets the boolean to not read the following lines until Endif is typed
+                                            LoopStatement = false;
+                                            LoopStart = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        LoopStatement = false;
+                                        LoopStart = false;
+                                        //Throws error because an invalid Comparator was inputted
+                                        InvalidComparator();
+                                    }
+                                }
+                            }
+                            catch (FormatException ex)
+                            {
+                                LoopStatement = false;
+                                LoopStart = false;
+                                //Throws exception because the value inputted was not an integer
+                                InvalidParameter();
+                                return;
+                            }
+
+                        }
+                        if (isAVariable == false)
+                        {
+                            LoopStatement = false;
+                            LoopStart = false;
+                            //Throws error because the variable inputted does not exist
+                            notAVariable();
+                        }
+                    }
+                    else if (CommandSplit[0].Equals("Endloop"))
+                    {
+                         List<String> CopyLoopArray = new List<string>();
+                        foreach (String line1 in LoopArray)
+                        {
+                            CopyLoopArray.Add(line1);
+                        }
+                            foreach (String line1 in CopyLoopArray)
+                        {
+                            line = line1;
+                            CommandSplit = line1.Split();
+                            command();
+                        }
+                        
+                    }
+                    else if (CommandSplit.Length > 2)
+                    {
+                        //Checks if the middle element is a "="
+                        if (CommandSplit[1].Equals("="))
+                        {
+                            //Calls NewVariable()
+                            NewVariable();
+                        }
+                        else
+                        {
+                            //Throws error because the command inputted was invalid
+                            InvalidCommand();
+                        }
                     }
                     else
                     {
                         //Throws error because the command inputted was invalid
                         InvalidCommand();
                     }
+
+                    Refresh();
                 }
                 else
                 {
-                    //Throws error because the command inputted was invalid
-                    InvalidCommand();
+                    if (CommandSplit[0].Equals("Endloop"))
+                    {
+                        //Sets boolean to true to end branching
+                        LoopStatement = true;
+                        LoopStart = false;
+                    }
                 }
-
-                Refresh();
             }
             else
-            {
-                if (CommandSplit[0].Equals("Endif"))
                 {
-                    //Sets boolean to true to end branching
-                    ifStatement = true;
+                    if (CommandSplit[0].Equals("Endif"))
+                    {
+                        //Sets boolean to true to end branching
+                        ifStatement = true;
+                    }
                 }
-            }
+            
 
         }
         private void InvalidCommand()
