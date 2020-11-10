@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,12 +28,17 @@ namespace Assessment1
         public int lineNumber = 0;
         public string ErrorList = "";
         IDictionary<string, int> VariableDictionary = new Dictionary<string, int>();
+        Dictionary<string,string> MethodDictionary = new Dictionary<string,string>();
         public Boolean ifStatement= true;
         public Boolean LoopStatement = true;
         public Boolean LoopStart = false;
         public Boolean LoopEnd = false;
         public string line;
         public List<String> LoopArray = new List<string>();
+        public ArrayList LinesArray= new ArrayList();
+        public int methodStart;
+        public int methodEnd;
+        public string methodName;
         public Form1()
         {
             //Sets graphics up on bitmap
@@ -52,6 +58,7 @@ namespace Assessment1
             //Checks if enter key is pressed
             if (e.KeyCode == Keys.Enter)
             {
+                LinesArray = new ArrayList();
                 //Stores the input in a string
                 //Removes whitespace and converts letters to lower case
                 String Command = txtCommandLine.Text.Trim().ToLower();
@@ -67,15 +74,20 @@ namespace Assessment1
                     //Splits it into individual lines
                     using (StringReader reader = new StringReader(txtInput.Text))
                     {
-                        //Loops through each line in the input box
-                        
-                        lineNumber = 0;
-                        ErrorList="";
                         while ((line = reader.ReadLine()) != null)
                         {
+                            LinesArray.Add(line);
+                        }
+                        //Loops through each line in the input box
+
+                        lineNumber = 0;
+                        ErrorList="";
+                        for (int i=0; i<LinesArray.Count;i++ )
+                        {
+                             line= LinesArray[i].ToString();
                             //Splits line and stores values in commandSplit Array
                             CommandSplit = line.Split(' ');
-                            lineNumber++;
+                            lineNumber=i;
                             //Calls command method
                             command();
                         }
@@ -710,6 +722,12 @@ namespace Assessment1
                         }
                         
                     }
+                    else if (CommandSplit[0].Equals("Method"))
+                    {
+                        methodName = CommandSplit[1];
+                        methodStart = lineNumber;
+                        ifStatement = false;
+                    }
                     else if (CommandSplit.Length > 2)
                     {
                         //Checks if the middle element is a "="
@@ -726,8 +744,31 @@ namespace Assessment1
                     }
                     else
                     {
-                        //Throws error because the command inputted was invalid
-                        InvalidCommand();
+                        Boolean checkMethod = false;
+                        foreach (KeyValuePair<string, string> method in MethodDictionary)
+                        {
+                            if (method.Key.Equals(CommandSplit[0]))
+                            {
+                                string[] points = method.Value.Split();
+                                int startPoint = int.Parse(points[0])+1;
+                                int endPoint = int.Parse(points[1]);
+                                for (int start = startPoint; start < endPoint; start++)
+                                {
+                                    line = LinesArray[start].ToString();
+                                    //Splits line and stores values in commandSplit Array
+                                    CommandSplit = line.Split(' ');
+                                    lineNumber = start;
+                                    //Calls command method
+                                    command();
+                                }
+                                checkMethod = true;
+                            }
+                        }
+                        if (checkMethod.Equals(false)){
+                            //Throws error because the command inputted was invalid
+                            InvalidCommand();
+                        }
+                        
                     }
 
                     Refresh();
@@ -749,7 +790,28 @@ namespace Assessment1
                         //Sets boolean to true to end branching
                         ifStatement = true;
                     }
-                }
+                    if (CommandSplit[0].Equals("Endmethod"))
+                    {
+                    Boolean AlreadyInArray = false;
+                        methodEnd = lineNumber;
+                    string points = methodStart.ToString() + " " + methodEnd.ToString();
+                    foreach (KeyValuePair<string, string> method in MethodDictionary)
+                    {
+                        if (method.Key.Equals(methodName))
+                        {
+                            //If it is sets boolean value to true
+                            AlreadyInArray = true;
+                        }
+                    }
+                    if (AlreadyInArray)
+                    {
+                        MethodDictionary.Remove(methodName);
+                    }
+                    MethodDictionary.Add(methodName, points);
+                        //Sets boolean to true to end branching
+                        ifStatement = true;
+                    }
+            }
             
 
         }
