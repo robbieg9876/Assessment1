@@ -12,7 +12,7 @@ namespace Assessment1
         public Pen Pen;
         public int xPos, yPos;
         public SolidBrush solidBrush;
-        public Boolean Fill;
+        public int Fill=0;
         public string CurrentVariableName;
         public int CurrentVariableValue;
         public int StartLine;
@@ -48,75 +48,6 @@ namespace Assessment1
             xPos = toX;
             yPos = toY;
         }
-
-        public void DrawSquare(int width)
-        {
-
-            //Draws a square from the current drawing postion with sides of the width inputted
-            if (Fill)
-            {
-                //Fills the square with the current pen colour
-                SolidBrush solidBrush = new SolidBrush(Pen.Color);
-                g.FillRectangle(solidBrush, xPos, yPos,width,width);
-            }
-            else
-            {
-                g.DrawRectangle(Pen, xPos, yPos,width,width);
-            }
-                
-        }
-        public void DrawCircle(int radius)
-        {
-            //Draws a circle with the radius inputted
-            if (Fill)
-            {
-                //Fills the square with the current pen colour
-                //Fills the circle with the current pen colour
-                SolidBrush solidBrush = new SolidBrush(Pen.Color);
-                g.FillEllipse(solidBrush, xPos, yPos, radius + radius, radius + radius);
-            }
-            else
-            {
-                g.DrawEllipse(Pen, xPos, yPos, radius + radius, radius + radius);
-            }
-            
-        }
-        public void DrawTriangle(int width, int height)
-        {
-            //Creates an array with 3 points
-            //User inputs the width and height
-            // 3 Points are starting point, horizantally from start point, vertically from start point
-            Point[] Triangle = new Point[] { new Point(xPos, yPos), new Point(xPos + width, yPos), new Point(xPos, yPos + height) };
-            if (Fill)
-            {
-                //Fills the triangle with the current pen colour
-                SolidBrush solidBrush = new SolidBrush(Pen.Color);
-                g.FillPolygon(solidBrush, Triangle);
-            }
-            else
-            {
-                //Draws lines bewtween the points to make a triangle
-                g.DrawPolygon(Pen, Triangle);
-            }
-            
-            
-        }
-
-        public void DrawRectangle(int width, int height)
-        {
-            //Draws a rectangle from the start drawing point with width and height values inputted
-            if (Fill)
-            {
-                //Fills the rectangle with the current pen colour
-                SolidBrush solidBrush = new SolidBrush(Pen.Color);
-                g.FillRectangle(solidBrush, xPos, yPos, width, height);
-            }
-            else
-            {
-                g.DrawRectangle(Pen, xPos, yPos, width, height);
-            }
-            
-        }
         public void PenColour(Color colour)
         {
             //Changes the pen colour to the one inputted
@@ -137,11 +68,11 @@ namespace Assessment1
         {
             if (fill)
             {
-                Fill = true;
+                Fill = 1;
             }
             else
             {
-                Fill = false;
+                Fill = 0;
             }
         }
 

@@ -43,6 +43,7 @@ namespace Assessment1
         public int LoopVariableValue;
         public string LoopComparator;
         public int LoopValue;
+        Factory factory = new Factory();
         public Form1()
         {
             //Sets graphics up on bitmap
@@ -259,15 +260,24 @@ namespace Assessment1
                             //Checks if the parameters inputted are variables
                             CheckForVariable();
                             //Checks if the correct number of paramters have been passed
-                            int length = int.Parse(ParameterSplit[0]);
+                            int width = int.Parse(ParameterSplit[0]);
                             if (ParameterSplit.Length != 1)
                             {
                                 ParameterCheck[1] = ParameterSplit[1];
                             }
                             else
                             {
-                                //Passes the value as a parameter to MyCanvass.DrawSquare
-                                MyCanvass.DrawSquare(length);
+                                Shape shape;
+                                shape = factory.getShape("square");
+                                shape.set(MyCanvass.Pen.Color, MyCanvass.xPos, MyCanvass.yPos, width);
+                                if (MyCanvass.Fill == 1)
+                                {
+                                    shape.fill(MyCanvass.g);
+                                }
+                                else
+                                {
+                                    shape.draw(MyCanvass.g);
+                                }
                             }
 
                         }
@@ -302,8 +312,17 @@ namespace Assessment1
                             }
                             else
                             {
-                                //Passes the value as a parameter to MyCanvass.DrawCircle
-                                MyCanvass.DrawCircle(radius);
+							Shape shape;
+							shape = factory.getShape("circle");
+                            shape.set(MyCanvass.Pen.Color, MyCanvass.xPos, MyCanvass.yPos, radius);
+                                if (MyCanvass.Fill == 1)
+                                {
+                                    shape.fill(MyCanvass.g);
+                                }
+                                else { 
+                                    shape.draw(MyCanvass.g); 
+                                }
+                            
                             }
                         }
                         catch (FormatException ex)
@@ -338,8 +357,17 @@ namespace Assessment1
                             }
                             else
                             {
-                                //Passes the values as parameters to MyCanvass.DrawTriangle
-                                MyCanvass.DrawTriangle(width, height);
+                                Shape shape;
+                                shape = factory.getShape("triangle");
+                                shape.set(MyCanvass.Pen.Color, MyCanvass.xPos, MyCanvass.yPos, width, height);
+                                if (MyCanvass.Fill == 1)
+                                {
+                                    shape.fill(MyCanvass.g);
+                                }
+                                else
+                                {
+                                    shape.draw(MyCanvass.g);
+                                }
                             }
                         }
                         catch (FormatException ex)
@@ -373,8 +401,17 @@ namespace Assessment1
                             }
                             else
                             {
-                                //Passes the values as parameters to MyCanvass.DrawRectangle
-                                MyCanvass.DrawRectangle(width, height);
+                                Shape shape;
+                                shape = factory.getShape("rectangle");
+                                shape.set(MyCanvass.Pen.Color, MyCanvass.xPos, MyCanvass.yPos, width, height);
+                                if (MyCanvass.Fill == 1)
+                                {
+                                    shape.fill(MyCanvass.g);
+                                }
+                                else
+                                {
+                                    shape.draw(MyCanvass.g);
+                                }
                             }
                         }
                         catch (FormatException ex)

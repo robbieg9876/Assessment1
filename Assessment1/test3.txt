@@ -1,11 +1,25 @@
+pen white
 radius = 50
 circle radius
+Method method1
+pen green
+fill on
+square 50
+fill off
+circle 100
+Endmethod
+radius = 50 + 100
+circle radius
+radius = radius + radius
+circle radius
 width = 50
-height = 60
-If height > 50
-square width
-triangle width,height
-rectangle width,height
-Endif
 height = 200
+If width == 50
+pen red
+Endif
+While height > 50
 rectangle width,height
+width = width + 5
+height = height - 5
+Endloop
+method1
