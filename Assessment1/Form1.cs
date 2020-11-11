@@ -31,14 +31,18 @@ namespace Assessment1
         Dictionary<string,string> MethodDictionary = new Dictionary<string,string>();
         public Boolean ifStatement= true;
         public Boolean LoopStatement = true;
-        public Boolean LoopStart = false;
-        public Boolean LoopEnd = false;
+        public int LoopStart;
+        public int LoopEnd;
         public string line;
         public List<String> LoopArray = new List<string>();
         public ArrayList LinesArray= new ArrayList();
         public int methodStart;
         public int methodEnd;
         public string methodName;
+        public string LoopVariable;
+        public int LoopVariableValue;
+        public string LoopComparator;
+        public int LoopValue;
         public Form1()
         {
             //Sets graphics up on bitmap
@@ -169,10 +173,6 @@ namespace Assessment1
             {
                 if (LoopStatement)
                 {
-                    if (LoopStart)
-                    {
-                        LoopArray.Add(line);
-                    }
                     //Checks for valid commands
                     if (CommandSplit[0].Equals("moveto") == true)
                     {
@@ -604,14 +604,6 @@ namespace Assessment1
                     }
                     else if (CommandSplit[0].Equals("While"))
                     {
-                        if (LoopArray is null)
-                        {
-
-                        }
-                        else { 
-                            LoopArray.Clear();
-                        }
-                        LoopArray.Add(line);
                         //Splits the inputs into 3
                         string variable = CommandSplit[1];
                         string comparator = CommandSplit[2];
@@ -636,14 +628,16 @@ namespace Assessment1
                                         if (value.Equals(variable1.Value.ToString()))
                                         {
                                             //sets the boolean to check whether to read the following lines
-                                           LoopStatement = true;
-                                           LoopStart = true;
+                                            LoopStatement = true;
+                                            LoopStart = lineNumber;
+                                            LoopVariable = variable1.Key;
+                                            LoopValue = int.Parse(value);
+                                            LoopComparator = comparator;
                                         }
                                         else
                                         {
                                             //sets the boolean to not read the following lines until Endif is typed
                                             LoopStatement = false;
-                                            LoopStart= false;
                                         }
                                     }
                                     //Checks what comparator is used
@@ -654,13 +648,15 @@ namespace Assessment1
                                         {
                                             //sets the boolean to check whether to read the following lines
                                             LoopStatement = true;
-                                            LoopStart = true;
+                                            LoopStart = lineNumber;
+                                            LoopVariable = variable1.Key;
+                                            LoopValue = int.Parse(value);
+                                            LoopComparator = comparator;
                                         }
                                         else
                                         {
                                             //sets the boolean to not read the following lines until Endif is typed
                                             LoopStatement = false;
-                                            LoopStart = false;
                                         }
                                     }
                                     //Checks what comparator is used
@@ -671,19 +667,20 @@ namespace Assessment1
                                         {
                                             //sets the boolean to check whether to read the following lines
                                             LoopStatement = true;
-                                            LoopStart = true;
+                                            LoopStart = lineNumber;
+                                            LoopVariable = variable1.Key;
+                                            LoopValue = int.Parse(value);
+                                            LoopComparator = comparator;
                                         }
                                         else
                                         {
                                             //sets the boolean to not read the following lines until Endif is typed
                                             LoopStatement = false;
-                                            LoopStart = false;
                                         }
                                     }
                                     else
                                     {
                                         LoopStatement = false;
-                                        LoopStart = false;
                                         //Throws error because an invalid Comparator was inputted
                                         InvalidComparator();
                                     }
@@ -692,7 +689,6 @@ namespace Assessment1
                             catch (FormatException ex)
                             {
                                 LoopStatement = false;
-                                LoopStart = false;
                                 //Throws exception because the value inputted was not an integer
                                 InvalidParameter();
                                 return;
@@ -702,25 +698,46 @@ namespace Assessment1
                         if (isAVariable == false)
                         {
                             LoopStatement = false;
-                            LoopStart = false;
                             //Throws error because the variable inputted does not exist
                             notAVariable();
                         }
                     }
                     else if (CommandSplit[0].Equals("Endloop"))
                     {
-                         List<String> CopyLoopArray = new List<string>();
-                        foreach (String line1 in LoopArray)
-                        {
-                            CopyLoopArray.Add(line1);
-                        }
-                            foreach (String line1 in CopyLoopArray)
-                        {
-                            line = line1;
-                            CommandSplit = line1.Split();
-                            command();
-                        }
+                        LoopStart = LoopStart + 1;
+                        LoopEnd = lineNumber;
                         
+                        foreach (KeyValuePair<string, int> variable in VariableDictionary)
+                        {
+                            if (variable.Key.Equals(LoopVariable))
+                            {
+                                //if it is then assign the parameter the integer value of the variable
+                                LoopVariableValue = variable.Value;
+                            }
+                        }
+                        if (LoopComparator.Equals("=="))
+                        {
+                            while (LoopVariableValue == LoopValue){
+                                StartLoop();
+                            }
+                        }
+                        else if (LoopComparator.Equals(">"))
+                        {
+                            while (LoopVariableValue > LoopValue)
+                            {
+                                StartLoop();
+                            }
+                        }
+                        else if (LoopComparator.Equals("<"))
+                        {
+                            while (LoopVariableValue < LoopValue)
+                            {
+                                StartLoop();
+                            }
+                        }
+
+
+
                     }
                     else if (CommandSplit[0].Equals("Method"))
                     {
@@ -779,7 +796,6 @@ namespace Assessment1
                     {
                         //Sets boolean to true to end branching
                         LoopStatement = true;
-                        LoopStart = false;
                     }
                 }
             }
@@ -968,6 +984,27 @@ namespace Assessment1
             }
             }
 
+        }
+
+        private void StartLoop()
+        {
+            for (int start = LoopStart; start < LoopEnd; start++)
+            {
+                line = LinesArray[start].ToString();
+                //Splits line and stores values in commandSplit Array
+                CommandSplit = line.Split(' ');
+                lineNumber = start;
+                //Calls command method
+                command();
+            }
+            foreach (KeyValuePair<string, int> variable in VariableDictionary)
+            {
+                if (variable.Key.Equals(LoopVariable))
+                {
+                    //if it is then assign the parameter the integer value of the variable
+                    LoopVariableValue = variable.Value;
+                }
+            }
         }
         private void ValueIsIncorrect()
         {
