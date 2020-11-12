@@ -11,6 +11,12 @@ namespace Assessment1
 
 	 class Factory
 	{
+		/// <summary>
+		/// Takes in a string parameter and checks which shape it is
+		/// Then returns the correct shapes class
+		/// </summary>
+		/// <param name="shapeName"></param>
+		/// <returns></returns>
 		public Shape getShape(String shapeName)
 		{
 			shapeName=shapeName.ToUpper().Trim();

@@ -45,6 +45,9 @@ namespace Assessment1
         public int LoopValue;
         public string error;
         Factory factory = new Factory();
+        /// <summary>
+        /// Initialises the graphics on the bitmap by inheriting the canvass from Canvass.cs
+        /// </summary>
         public Form1()
         {
             //Sets graphics up on bitmap
@@ -55,6 +58,14 @@ namespace Assessment1
         {
 
         }
+        /// <summary>
+        /// If the user presses enter in the commandLine the method is run
+        /// checks value typed and processes command accordingly
+        /// Checks if the user wants to use the programme box if they typed save,load or run
+        /// If they did not, just pass the single command through to command()
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void txtCommandLine_KeyDown(object sender, KeyEventArgs e)
         {
             //Checks if enter key is pressed
@@ -162,7 +173,11 @@ namespace Assessment1
 
             }
         }
-
+        /// <summary>
+        /// Uses the commandSplit that is populated for every new line
+        /// Checks which command has been typed on that line
+        /// Proccesses the command accordingly
+        /// </summary>
         public void command()
         {
             txtCommandLine.Clear();
@@ -865,6 +880,10 @@ namespace Assessment1
             
 
         }
+        /// <summary>
+        /// This method is called when the command typed is not a recognised command
+        /// Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+        /// </summary>
        public void InvalidCommand()
         {
             //Method is called when user tries to input an invalid command
@@ -873,6 +892,10 @@ namespace Assessment1
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
+        /// <summary>
+        /// This method is called when the parameters typed are not of the correct format
+        /// Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+        /// </summary>
         public void InvalidParameter()
         {
             //Method is called when user tries to input an invalid parameter
@@ -882,6 +905,10 @@ namespace Assessment1
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
 
+        /// <summary>
+        /// This method is called when there is an incorrect number of parameters for the command typed
+        /// Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+        /// </summary>
         public void IncorrectNumberOfParameters()
         {
             //Method is called when user tries to input an incorrect number of parameters
@@ -892,12 +919,27 @@ namespace Assessment1
             
         }
 
+        /// <summary>
+        /// Initialises the graphics to go on the output window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OutputWindow_Paint(object sender, PaintEventArgs e)
         {
             //Initialises the graphics on the output window
             Graphics g = e.Graphics;
             g.DrawImageUnscaled(OutputBitMap, 0, 0);
         }
+
+        /// <summary>
+        /// Takes the variable name from CommandSplit[0]
+        /// Takes value from CommandSplit[2]
+        /// If the value is being changed then the value at CommandSplit[4] is also stored
+        /// It checks which operator has been used and changes the value accordingly e.g width = width + 100 will change the value to be stored by 100
+        /// The method checks if there is already a variable in the dictionary with the same name
+        /// If there is, it will delete this variable
+        /// It then adds the variable using the varible name as the key and the variable value as the value
+        /// </summary>
         public void NewVariable()
         {
             Boolean AlreadyInArray = false;
@@ -992,6 +1034,12 @@ namespace Assessment1
             }
 
         }
+        /// <summary>
+        /// Loops for each parameter that is passed into the ParameterSplit array
+        /// checks if the paramater is an integer or a string
+        /// If it is a string it will check if the string is a variable name in the variable dictionary
+        /// If it is then put the value of the variable into the parameters array.
+        /// </summary>
         public void CheckForVariable()
         {
             //Loops through all the parameters
@@ -1019,7 +1067,13 @@ namespace Assessment1
             }
 
         }
-
+        /// <summary>
+        /// Loops from the startline to the endline by getting the lines from the LinesArray
+        /// Splits the line and updates the line number
+        /// Calls the command() method to process the command
+        /// It will also update the variable being compared in the while statement 
+        /// If the value has been changed during the loop
+        /// </summary>
         public void StartLoop()
         {
             for (int start = LoopStart; start < LoopEnd; start++)
@@ -1040,6 +1094,10 @@ namespace Assessment1
                 }
             }
         }
+        /// <summary>
+        /// This method is called when the parameter being used to change the value of a variable is not an integer
+        /// Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+        /// </summary>
         public void ValueIsIncorrect()
         {
             //Method is called when user tries to store a non integer value
@@ -1048,6 +1106,10 @@ namespace Assessment1
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
+        /// <summary>
+        /// This method is called when the comparator being used in while and if statements is invalid 
+        /// Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+        /// </summary>
         public void InvalidComparator()
         {
             //Method is called when user tries to store a non integer value
@@ -1056,6 +1118,10 @@ namespace Assessment1
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
+        /// <summary>
+        /// This method is called when the variable they have tried to use in a if or while statement is not a variable stored in the dictionary.
+        /// Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+        /// </summary>
         public void notAVariable()
         {
             //Method is called when user tries to store a non integer value
@@ -1064,6 +1130,10 @@ namespace Assessment1
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
+        /// <summary>
+        /// This method is called when the operator used to change the value of the variable inputted is invalid
+        /// Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+        /// </summary>
         public void InvalidOperator()
         {
             //Method is called when user tries to store a non integer value
