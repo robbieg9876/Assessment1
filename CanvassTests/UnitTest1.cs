@@ -3,11 +3,12 @@ using System.Drawing;
 using Assessment1;
 using System;
 using System.Linq;
-using Microsoft.VisualBasic;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace CanvassTests
 {
-    
+
     [TestClass]
     public class UnitTest1 {
         //Initialises bitmap with set size
@@ -15,6 +16,7 @@ namespace CanvassTests
 
         //Makes an instance of the Canvass class
         readonly Canvass Test;
+        Form1 form1 = new Form1();
         public UnitTest1()
         {
             //Sets graphics up on bitmap
@@ -167,9 +169,10 @@ namespace CanvassTests
         public void FillOnTest()
         {
             //Sets integer variables
-            Boolean fill = true;
+           int fill = 1;
+            Boolean Fill = true;
             //Checks if the statements are true as expected
-            Test.FillShape(fill);
+            Test.FillShape(Fill);
 
             Assert.AreEqual(fill,Test.Fill);
         }
@@ -177,11 +180,12 @@ namespace CanvassTests
         public void FillOffTest()
         {
             //Sets integer variables
+            int Fill = 0;
             Boolean fill = false;
             //Checks if the statements are true as expected
             Test.FillShape(fill);
 
-            Assert.AreEqual(fill, Test.Fill);
+            Assert.AreEqual(Fill, Test.Fill);
         }
 
         [TestMethod]
@@ -191,8 +195,8 @@ namespace CanvassTests
             int width = 50;
             int toX = Test.xPos;
             int toY = Test.yPos;
-            //Passes values as parameters to Test.MoveTo
-            Test.DrawSquare(width);
+            form1.CommandSplit = "square 50".Split(' ');
+            form1.command();
             //Checks if the statements are true as expected
             //Checks drawing position has not changed
             Assert.IsTrue(toX == Test.xPos);
@@ -209,18 +213,13 @@ namespace CanvassTests
             String width = "250a";
             String message = "";
             //Passes values as parameters to Test.MoveTo
-            try
-            {
-                Test.DrawSquare(int.Parse(width));
-            }
-            catch (FormatException ex)
-            {
-                message = ex.Message;
-            }
+                form1.CommandSplit = "square 250a".Split(' ');
+                form1.command();
+            
 
 
             //Checks if the statements are true as expected
-            Assert.AreEqual("Input string was not in a correct format.", message);
+            Assert.AreEqual("ERROR INVALID PARAMETERS", form1.error);
         }
         [TestMethod]
         public void DrawCircleTest()
@@ -230,7 +229,8 @@ namespace CanvassTests
             int toX = Test.xPos;
             int toY = Test.yPos;
             //Passes values as parameters to Test.MoveTo
-            Test.DrawCircle(radius);
+            form1.CommandSplit = "circle 50".Split(' ');
+            form1.command();
             //Checks if the statements are true as expected
             //Checks drawing position has not changed
             Assert.IsTrue(toX == Test.xPos);
@@ -249,18 +249,10 @@ namespace CanvassTests
             String radius = "250a";
             String message = "";
             //Passes values as parameters to Test.MoveTo
-            try
-            {
-                Test.DrawCircle(int.Parse(radius));
-            }
-            catch (FormatException ex)
-            {
-                message = ex.Message;
-            }
-
-
+                form1.CommandSplit = "circle 250a".Split(' ');
+                form1.command();
             //Checks if the statements are true as expected
-            Assert.AreEqual("Input string was not in a correct format.", message);
+            Assert.AreEqual("ERROR INVALID PARAMETERS", form1.error);
         }
         [TestMethod]
         public void DrawTriangleTest()
@@ -271,7 +263,8 @@ namespace CanvassTests
             int toX = Test.xPos;
             int toY = Test.yPos;
             //Passes values as parameters to Test.MoveTo
-            Test.DrawTriangle(width,height);
+            form1.CommandSplit = "trinagle 50,150".Split(' ');
+            form1.command();
             //Checks if the statements are true as expected
             //Checks drawing position has not changed
             Assert.IsTrue(toX == Test.xPos);
@@ -284,23 +277,12 @@ namespace CanvassTests
         [TestMethod]
         public void DrawTriangleTestInvalidParameter()
         {
-            //Sets integer variables
-            String width = "250a";
-            String height = "250a";
-            String message = "";
             //Passes values as parameters to Test.MoveTo
-            try
-            {
-                Test.DrawTriangle(int.Parse(width),int.Parse(height));
-            }
-            catch (FormatException ex)
-            {
-                message = ex.Message;
-            }
-
+                form1.CommandSplit = "triangle 250a,250a".Split(' ');
+                form1.command();
 
             //Checks if the statements are true as expected
-            Assert.AreEqual("Input string was not in a correct format.", message);
+            Assert.AreEqual("ERROR INVALID PARAMETERS", form1.error);
         }
 
         [TestMethod]
@@ -312,7 +294,8 @@ namespace CanvassTests
             int toX = Test.xPos;
             int toY = Test.yPos;
             //Passes values as parameters to Test.MoveTo
-            Test.DrawRectangle(width, height);
+            form1.CommandSplit = "rectangle 50,150".Split(' ');
+            form1.command();
             //Checks if the statements are true as expected
             //Checks drawing position has not changed
             Assert.IsTrue(toX == Test.xPos);
@@ -324,24 +307,11 @@ namespace CanvassTests
 
         [TestMethod]
         public void DrawRectangleTestInvalidParameter()
-        {
-            //Sets integer variables
-            String width = "250a";
-            String height = "250a";
-            String message = "";
-            //Passes values as parameters to Test.MoveTo
-            try
-            {
-                Test.DrawRectangle(int.Parse(width), int.Parse(height));
-            }
-            catch (FormatException ex)
-            {
-                message = ex.Message;
-            }
-
-
+        { 
+            form1.CommandSplit = "rectangle 250a".Split(' ');
+            form1.command();
             //Checks if the statements are true as expected
-            Assert.AreEqual("Input string was not in a correct format.", message);
+            Assert.AreEqual("ERROR INVALID PARAMETERS", form1.error);
         }
 
 
@@ -354,55 +324,106 @@ namespace CanvassTests
         [TestMethod]
         public void InitializeVariableTest()
         {
-            String variableName = "Test";
-            int value = 50;
+            String variableName = "width";
+            int VariableValue = 100;
+            string variable1="";
+            int value1=0;
+            form1.CommandSplit = "width = 100".Split(' ');
+            form1.command();
             //Passes values as parameters to Test.MoveTo
-            Test.InitaliseVariable(variableName, value);
-            
-            //Checks shape is the same size as expected
-            Assert.IsTrue(variableName == Test.CurrentVariableName);
-            Assert.IsTrue(value == Test.CurrentVariableValue);
+            foreach (KeyValuePair<string, int> variable in form1.VariableDictionary)
+            {
+                if (variable.Key.Equals(variableName))
+                {
+                    variable1 = variable.Key;
+                    value1 = variable.Value;
+                }
+            }
+            Assert.AreEqual(variableName, variable1);
+            Assert.AreEqual(VariableValue, value1);
+
         }
         [TestMethod]
         public void LoopTest()
         {
-            int startLine = 10;
-            int endLine = 15;
+            Boolean loop = true;
+            form1.CommandSplit = "width = 100".Split(' ');
+            form1.command();
+
+            form1.CommandSplit = "While width == 100".Split(' ');
+            form1.command();
             //Passes values as parameters to Test.MoveTo
-            Test.Loop(startLine, endLine);
 
             //Checks shape is the same size as expected
-            Assert.IsTrue(startLine == Test.StartLine);
-            Assert.IsTrue(endLine == Test.EndLine);
+            Assert.AreEqual(loop, form1.LoopStatement);
+            loop = false;
+            form1.CommandSplit = "While width == 90".Split(' ');
+            form1.command();
+            Assert.AreEqual(loop, form1.LoopStatement);
         }
         [TestMethod]
         public void IfStatementTest()
         {
-            int startLine = 10;
-            int endLine = 15;
-            //Passes values as parameters to Test.MoveTo
-            Test.IfStatement(startLine, endLine);
+            Boolean If = true;
+            form1.CommandSplit = "width = 100".Split(' ');
+            form1.command();
 
-            //Checks shape is the same size as expected
-            Assert.IsTrue(startLine == Test.StartLine);
-            Assert.IsTrue(endLine == Test.EndLine);
+            form1.CommandSplit = "If width == 100".Split(' ');
+            form1.command();
+            Assert.AreEqual(If, form1.ifStatement);
+
+            form1.CommandSplit = "If width > 80".Split(' ');
+            form1.command();
+            Assert.AreEqual(If, form1.ifStatement);
+
+            form1.CommandSplit = "If width < 120".Split(' ');
+            form1.command();
+            Assert.AreEqual(If, form1.ifStatement);
+
+            If = false;
+
+            form1.CommandSplit = "If width == 90".Split(' ');
+            form1.command();
+            Assert.AreEqual(If, form1.ifStatement);
+
+            form1.CommandSplit = "If width > 110".Split(' ');
+            form1.command();
+            Assert.AreEqual(If, form1.ifStatement);
+
+            form1.CommandSplit = "If width < 80".Split(' ');
+            form1.command();
+            Assert.AreEqual(If, form1.ifStatement);
         }
         [TestMethod]
         public void MethodsTest()
         {
-            string methodName = "MyMethod";
-            string[] Parameters = new string [100];
-            Parameters.Append("188");
-            Parameters.Append("200");
-            Parameters.Append("300");
+            String MethodName = "method1";
+            string method1 = "";
+            string points = "";
+            form1.LinesArray.Add("Method method1");
+            form1.lineNumber = 1;
+            form1.CommandSplit= "Method method1".Split(' ');
+            form1.command();
+            form1.LinesArray.Add("square 50");
+            form1.lineNumber = 2;
+            form1.CommandSplit = "square 50".Split(' ');
+            form1.command();
+            form1.LinesArray.Add("Endmethod");
+            form1.lineNumber = 3;
+            form1.CommandSplit = "Endmethod".Split(' ');
+            form1.command();
             //Passes values as parameters to Test.MoveTo
-            Test.Methods(methodName, Parameters);
+            foreach (KeyValuePair<string, string> method in form1.MethodDictionary)
+            {
+                if (method.Key.Equals(MethodName))
+                {
+                    method1 = method.Key;
+                    points = method.Value;
 
-            //Checks shape is the same size as expected
-            Assert.IsTrue(methodName.Equals(Test.CurrentMethodName));
-            Assert.AreEqual(Parameters[0], Test.CurrentParameters[0]);
-            Assert.AreEqual(Parameters[1], Test.CurrentParameters[1]);
-            Assert.AreEqual(Parameters[2], Test.CurrentParameters[2]);
+                }
+            }
+            Assert.AreEqual(MethodName, method1);
+            Assert.AreEqual("1 3", points);
         }
     }
 }

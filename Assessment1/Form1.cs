@@ -27,8 +27,8 @@ namespace Assessment1
         public String[] ParameterCheck = new string[1];
         public int lineNumber = 0;
         public string ErrorList = "";
-        IDictionary<string, int> VariableDictionary = new Dictionary<string, int>();
-        Dictionary<string,string> MethodDictionary = new Dictionary<string,string>();
+        public IDictionary<string, int> VariableDictionary = new Dictionary<string, int>();
+        public Dictionary<string,string> MethodDictionary = new Dictionary<string,string>();
         public Boolean ifStatement= true;
         public Boolean LoopStatement = true;
         public int LoopStart;
@@ -43,6 +43,7 @@ namespace Assessment1
         public int LoopVariableValue;
         public string LoopComparator;
         public int LoopValue;
+        public string error;
         Factory factory = new Factory();
         public Form1()
         {
@@ -50,15 +51,11 @@ namespace Assessment1
             InitializeComponent();
             MyCanvass = new Canvass(Graphics.FromImage(OutputBitMap));
         }
-
-
-
-
         private void txtCommandLine_TextChanged(object sender, EventArgs e)
         {
 
         }
-        private void txtCommandLine_KeyDown(object sender, KeyEventArgs e)
+        public void txtCommandLine_KeyDown(object sender, KeyEventArgs e)
         {
             //Checks if enter key is pressed
             if (e.KeyCode == Keys.Enter)
@@ -868,40 +865,40 @@ namespace Assessment1
             
 
         }
-        private void InvalidCommand()
+       public void InvalidCommand()
         {
             //Method is called when user tries to input an invalid command
-            string error = "ERROR INVALID COMMAND";
+            error = "ERROR INVALID COMMAND";
             txtErrors.Text = error;
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
-        private void InvalidParameter()
+        public void InvalidParameter()
         {
             //Method is called when user tries to input an invalid parameter
-            string error = "ERROR INVALID PARAMETERS";
+            error = "ERROR INVALID PARAMETERS";
             txtErrors.Text = error;
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
 
-        private void IncorrectNumberOfParameters()
+        public void IncorrectNumberOfParameters()
         {
             //Method is called when user tries to input an incorrect number of parameters
-            string error = "ERROR INCORRECT NUMBER OF PARAMETERS";
+             error = "ERROR INCORRECT NUMBER OF PARAMETERS";
             txtErrors.Text = error ;
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
             
         }
 
-        private void OutputWindow_Paint(object sender, PaintEventArgs e)
+        public void OutputWindow_Paint(object sender, PaintEventArgs e)
         {
             //Initialises the graphics on the output window
             Graphics g = e.Graphics;
             g.DrawImageUnscaled(OutputBitMap, 0, 0);
         }
-        private void NewVariable()
+        public void NewVariable()
         {
             Boolean AlreadyInArray = false;
             Boolean Value1IsVariable = false;
@@ -995,7 +992,7 @@ namespace Assessment1
             }
 
         }
-        private void CheckForVariable()
+        public void CheckForVariable()
         {
             //Loops through all the parameters
             for (int i=0;ParameterSplit.Length>i; i++)
@@ -1023,7 +1020,7 @@ namespace Assessment1
 
         }
 
-        private void StartLoop()
+        public void StartLoop()
         {
             for (int start = LoopStart; start < LoopEnd; start++)
             {
@@ -1043,7 +1040,7 @@ namespace Assessment1
                 }
             }
         }
-        private void ValueIsIncorrect()
+        public void ValueIsIncorrect()
         {
             //Method is called when user tries to store a non integer value
             string error = "ERROR VALUE MUST BE AN INTEGER";
@@ -1051,7 +1048,7 @@ namespace Assessment1
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
-        private void InvalidComparator()
+        public void InvalidComparator()
         {
             //Method is called when user tries to store a non integer value
             string error = "ERROR Comparator must be '==' or '>' or '<'";
@@ -1059,7 +1056,7 @@ namespace Assessment1
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
-        private void notAVariable()
+        public void notAVariable()
         {
             //Method is called when user tries to store a non integer value
             string error = "Variable you have tried to compare is not a variable";
@@ -1067,7 +1064,7 @@ namespace Assessment1
             ErrorList = ErrorList + Environment.NewLine;
             ErrorList = ErrorList + error + " AT LINE " + lineNumber;
         }
-        private void InvalidOperator()
+        public void InvalidOperator()
         {
             //Method is called when user tries to store a non integer value
             string error = "ERROR Operator must be '+' or '-' ";
