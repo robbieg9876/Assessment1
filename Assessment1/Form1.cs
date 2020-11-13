@@ -28,13 +28,15 @@ namespace Assessment1
         public int lineNumber = 0;
         public string ErrorList = "";
         public IDictionary<string, int> VariableDictionary = new Dictionary<string, int>();
-        public Dictionary<string,string> MethodDictionary = new Dictionary<string,string>();
+        public IDictionary<string, int> MethodVariableDictionary = new Dictionary<string, int>();
+        public Dictionary<string,List <int>> MethodDictionary = new Dictionary<string,List <int>>();
         public Boolean ifStatement= true;
         public Boolean LoopStatement = true;
         public int LoopStart;
         public int LoopEnd;
         public string line;
         public List<String> LoopArray = new List<string>();
+        public List<int> methodParameters = new List<int>();
         public ArrayList LinesArray= new ArrayList();
         public int methodStart;
         public int methodEnd;
@@ -44,6 +46,11 @@ namespace Assessment1
         public string LoopComparator;
         public int LoopValue;
         public string error;
+        public string variable;
+        public string comparator;
+        public string value;
+        public int VariableValue=0;
+        Boolean isAVariable = false;
         Factory factory = new Factory();
         /// <summary>
         /// Initialises the graphics on the bitmap by inheriting the canvass from Canvass.cs
@@ -564,12 +571,11 @@ namespace Assessment1
                     else if (CommandSplit[0].Equals("If"))
                     {
                         //Splits the inputs into 3
-                        string variable = CommandSplit[1];
-                        string comparator = CommandSplit[2];
-                        string value = CommandSplit[3];
-                        Boolean isAVariable = false;
-                        //Loops through the VariableDictionary to find the variable name inputted
-                        foreach (KeyValuePair<string, int> variable1 in VariableDictionary)
+                        variable = CommandSplit[1];
+                        comparator = CommandSplit[2];
+                        value = CommandSplit[3];
+                        //Loops through the MethodVariableDictionary to find the variable name inputted
+                        foreach (KeyValuePair<string, int> variable1 in MethodVariableDictionary)
                         {
                             try
                             {
@@ -580,56 +586,8 @@ namespace Assessment1
                                 {
                                     //Sets check boolean to true
                                     isAVariable = true;
-                                    //Checks what comparator is used
-                                    if (comparator.Equals("=="))
-                                    {
-                                        //Checks if the statement inputted is true
-                                        if (value.Equals(variable1.Value.ToString()))
-                                        {
-                                            //sets the boolean to check whether to read the following lines
-                                            ifStatement = true;
-                                        }
-                                        else
-                                        {
-                                            //sets the boolean to not read the following lines until Endif is typed
-                                            ifStatement = false;
-                                        }
-                                    }
-                                    //Checks what comparator is used
-                                    else if (comparator.Equals(">"))
-                                    {
-                                        //Checks if the statement inputted is true
-                                        if ((variable1.Value > int.Parse(value)))
-                                        {
-                                            //sets the boolean to check whether to read the following lines
-                                            ifStatement = true;
-                                        }
-                                        else
-                                        {
-                                            //sets the boolean to not read the following lines until Endif is typed
-                                            ifStatement = false;
-                                        }
-                                    }
-                                    //Checks what comparator is used
-                                    else if (comparator.Equals("<"))
-                                    {
-                                        //Checks if the statement inputted is true
-                                        if ((variable1.Value < int.Parse(value)))
-                                        {
-                                            //sets the boolean to check whether to read the following lines
-                                            ifStatement = true;
-                                        }
-                                        else
-                                        {
-                                            //sets the boolean to not read the following lines until Endif is typed
-                                            ifStatement = false;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        //Throws error because an invalid Comparator was inputted
-                                        InvalidComparator();
-                                    }
+                                    VariableValue = variable1.Value;
+                                    checkIf();
                                 }
                             }
                             catch (FormatException ex)
@@ -639,6 +597,33 @@ namespace Assessment1
                                 return;
                             }
 
+                        }
+                        if (isAVariable == false)
+                        {
+                            //Loops through the VariableDictionary to find the variable name inputted
+                            foreach (KeyValuePair<string, int> variable1 in VariableDictionary)
+                            {
+                                try
+                                {
+                                    //Checks if the value inputted is an integer
+                                    int width = int.Parse(value);
+                                    //checks if the variable is the current element in VariableDictionary
+                                    if (variable1.Key.Equals(variable))
+                                    {
+                                        //Sets check boolean to true
+                                        isAVariable = true;
+                                        VariableValue = variable1.Value;
+                                        checkIf();
+                                    }
+                                }
+                                catch (FormatException ex)
+                                {
+                                    //Throws exception because the value inputted was not an integer
+                                    InvalidParameter();
+                                    return;
+                                }
+
+                            }
                         }
                         if (isAVariable == false)
                         {
@@ -654,15 +639,15 @@ namespace Assessment1
                     else if (CommandSplit[0].Equals("While"))
                     {
                         //Splits the inputs into 3
-                        string variable = CommandSplit[1];
-                        string comparator = CommandSplit[2];
-                        string value = CommandSplit[3];
+                        variable = CommandSplit[1];
+                        comparator = CommandSplit[2];
+                        value = CommandSplit[3];
                         Boolean isAVariable = false;
-                        //Loops through the VariableDictionary to find the variable name inputted
-                        foreach (KeyValuePair<string, int> variable1 in VariableDictionary)
+                        foreach (KeyValuePair<string, int> variable1 in MethodVariableDictionary)
                         {
                             try
                             {
+
                                 //Checks if the value inputted is an integer
                                 int width = int.Parse(value);
                                 //checks if the variable is the current element in VariableDictionary
@@ -670,69 +655,12 @@ namespace Assessment1
                                 {
                                     //Sets check boolean to true
                                     isAVariable = true;
-                                    //Checks what comparator is used
-                                    if (comparator.Equals("=="))
-                                    {
-                                        //Checks if the statement inputted is true
-                                        if (value.Equals(variable1.Value.ToString()))
-                                        {
-                                            //sets the boolean to check whether to read the following lines
-                                            LoopStatement = true;
-                                            LoopStart = lineNumber;
-                                            LoopVariable = variable1.Key;
-                                            LoopValue = int.Parse(value);
-                                            LoopComparator = comparator;
-                                        }
-                                        else
-                                        {
-                                            //sets the boolean to not read the following lines until Endif is typed
-                                            LoopStatement = false;
-                                        }
-                                    }
-                                    //Checks what comparator is used
-                                    else if (comparator.Equals(">"))
-                                    {
-                                        //Checks if the statement inputted is true
-                                        if ((variable1.Value > int.Parse(value)))
-                                        {
-                                            //sets the boolean to check whether to read the following lines
-                                            LoopStatement = true;
-                                            LoopStart = lineNumber;
-                                            LoopVariable = variable1.Key;
-                                            LoopValue = int.Parse(value);
-                                            LoopComparator = comparator;
-                                        }
-                                        else
-                                        {
-                                            //sets the boolean to not read the following lines until Endif is typed
-                                            LoopStatement = false;
-                                        }
-                                    }
-                                    //Checks what comparator is used
-                                    else if (comparator.Equals("<"))
-                                    {
-                                        //Checks if the statement inputted is true
-                                        if ((variable1.Value < int.Parse(value)))
-                                        {
-                                            //sets the boolean to check whether to read the following lines
-                                            LoopStatement = true;
-                                            LoopStart = lineNumber;
-                                            LoopVariable = variable1.Key;
-                                            LoopValue = int.Parse(value);
-                                            LoopComparator = comparator;
-                                        }
-                                        else
-                                        {
-                                            //sets the boolean to not read the following lines until Endif is typed
-                                            LoopStatement = false;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        LoopStatement = false;
-                                        //Throws error because an invalid Comparator was inputted
-                                        InvalidComparator();
-                                    }
+                                    VariableValue = variable1.Value;
+                                    CheckLoop();
+                                }
+                                if (LoopStatement)
+                                {
+                                    LoopVariable = variable1.Key;
                                 }
                             }
                             catch (FormatException ex)
@@ -746,6 +674,40 @@ namespace Assessment1
                         }
                         if (isAVariable == false)
                         {
+                            //Loops through the VariableDictionary to find the variable name inputted
+                            foreach (KeyValuePair<string, int> variable1 in VariableDictionary)
+                            {
+                                try
+                                {
+
+                                    //Checks if the value inputted is an integer
+                                    int width = int.Parse(value);
+                                    //checks if the variable is the current element in VariableDictionary
+                                    if (variable1.Key.Equals(variable))
+                                    {
+                                        //Sets check boolean to true
+                                        isAVariable = true;
+                                        VariableValue = variable1.Value;
+                                        CheckLoop();
+                                    }
+                                    if (LoopStatement)
+                                    {
+                                        LoopVariable = variable1.Key;
+                                    }
+                                }
+                                catch (FormatException ex)
+                                {
+                                    LoopStatement = false;
+                                    //Throws exception because the value inputted was not an integer
+                                    InvalidParameter();
+                                    return;
+                                }
+
+                            }
+                        }
+
+                        if (isAVariable == false)
+                        {
                             LoopStatement = false;
                             //Throws error because the variable inputted does not exist
                             notAVariable();
@@ -757,6 +719,14 @@ namespace Assessment1
                         LoopEnd = lineNumber;
                         
                         foreach (KeyValuePair<string, int> variable in VariableDictionary)
+                        {
+                            if (variable.Key.Equals(LoopVariable))
+                            {
+                                //if it is then assign the parameter the integer value of the variable
+                                LoopVariableValue = variable.Value;
+                            }
+                        }
+                        foreach (KeyValuePair<string, int> variable in MethodVariableDictionary)
                         {
                             if (variable.Key.Equals(LoopVariable))
                             {
@@ -793,6 +763,16 @@ namespace Assessment1
                         methodName = CommandSplit[1];
                         methodStart = lineNumber;
                         ifStatement = false;
+                        String parameters;
+                        parameters = CommandSplit[2].Replace("(","");
+                        parameters = parameters.Replace(")", "");
+                        ParameterSplit = parameters.Split(',');
+                        CheckForVariable();
+                        methodParameters.Clear();
+                        foreach(string variable in ParameterSplit)
+                        {
+                            methodParameters.Add(int.Parse(variable));
+                        }
                     }
                     else if (CommandSplit.Length > 2)
                     {
@@ -811,13 +791,21 @@ namespace Assessment1
                     else
                     {
                         Boolean checkMethod = false;
-                        foreach (KeyValuePair<string, string> method in MethodDictionary)
+                        foreach (KeyValuePair<string, List<int>> method in MethodDictionary)
                         {
                             if (method.Key.Equals(CommandSplit[0]))
                             {
-                                string[] points = method.Value.Split();
-                                int startPoint = int.Parse(points[0])+1;
-                                int endPoint = int.Parse(points[1]);
+                                String parameters;
+                                parameters = CommandSplit[1].Replace("(", "");
+                                parameters = parameters.Replace(")", "");
+                                ParameterSplit = parameters.Split(',');
+                                int startPoint = method.Value[0]+1;
+                                int endPoint = method.Value[1];
+                                MethodVariableDictionary.Clear();
+                                for(int i = 2; i < method.Value.Count(); i++)
+                                {
+                                    MethodVariableDictionary.Add(ParameterSplit[i-2], method.Value[i]);
+                                }
                                 for (int start = startPoint; start < endPoint; start++)
                                 {
                                     line = LinesArray[start].ToString();
@@ -827,6 +815,7 @@ namespace Assessment1
                                     //Calls command method
                                     command();
                                 }
+                                MethodVariableDictionary.Clear();
                                 checkMethod = true;
                             }
                         }
@@ -858,9 +847,16 @@ namespace Assessment1
                     if (CommandSplit[0].Equals("Endmethod"))
                     {
                     Boolean AlreadyInArray = false;
-                        methodEnd = lineNumber;
-                    string points = methodStart.ToString() + " " + methodEnd.ToString();
-                    foreach (KeyValuePair<string, string> method in MethodDictionary)
+                    methodEnd = lineNumber;
+
+                    List <int> Method = new List<int>();
+                    Method.Add(methodStart);
+                    Method.Add(methodEnd);
+                    foreach(int variable in methodParameters)
+                    {
+                        Method.Add(variable);
+                    }
+                    foreach (KeyValuePair<string, List<int>> method in MethodDictionary)
                     {
                         if (method.Key.Equals(methodName))
                         {
@@ -872,7 +868,7 @@ namespace Assessment1
                     {
                         MethodDictionary.Remove(methodName);
                     }
-                    MethodDictionary.Add(methodName, points);
+                    MethodDictionary.Add(methodName,Method);
                         //Sets boolean to true to end branching
                         ifStatement = true;
                     }
@@ -1046,27 +1042,164 @@ namespace Assessment1
             for (int i=0;ParameterSplit.Length>i; i++)
             {
 
-            
-            try
-            {
-                    //Checks if the parameter is an int
-                int test = int.Parse(ParameterSplit[i]);
-            }
-            catch
-            {
-                    //if it is not then loop through the VariableDictionary to check if the parameter is a variable name
-                foreach (KeyValuePair<string, int> variable in VariableDictionary)
+
+                try
                 {
-                    if(variable.Key.Equals(ParameterSplit[i]))
-                    {
-                            //if it is then assign the parameter the integer value of the variable
-                        ParameterSplit[i] = variable.Value.ToString();
-                    }
+                    //Checks if the parameter is an int
+                    int test = int.Parse(ParameterSplit[i]);
                 }
-            }
+                catch
+                {
+                    Boolean foundVariable =false;
+                    foreach (KeyValuePair<string, int> variable in MethodVariableDictionary)
+                    {
+                        if (variable.Key.Equals(ParameterSplit[i]))
+                        {
+                            //if it is then assign the parameter the integer value of the variable
+                            ParameterSplit[i] = variable.Value.ToString();
+                            foundVariable = true;
+                        }
+                    }
+                    if (foundVariable == false)
+                    {
+                        //if it is not then loop through the VariableDictionary to check if the parameter is a variable name
+                        foreach (KeyValuePair<string, int> variable in VariableDictionary)
+                        {
+                            if (variable.Key.Equals(ParameterSplit[i]))
+                            {
+                                //if it is then assign the parameter the integer value of the variable
+                                ParameterSplit[i] = variable.Value.ToString();
+                            }
+                        }
+                    }
+                    
+                }
             }
 
         }
+
+
+
+
+        public void checkIf()
+        {
+            //Checks what comparator is used
+            if (comparator.Equals("=="))
+            {
+                //Checks if the statement inputted is true
+                if (int.Parse(value).Equals(VariableValue))
+                {
+                    //sets the boolean to check whether to read the following lines
+                    ifStatement = true;
+                }
+                else
+                {
+                    //sets the boolean to not read the following lines until Endif is typed
+                    ifStatement = false;
+                }
+            }
+            //Checks what comparator is used
+            else if (comparator.Equals(">"))
+            {
+                //Checks if the statement inputted is true
+                if ((VariableValue > int.Parse(value)))
+                {
+                    //sets the boolean to check whether to read the following lines
+                    ifStatement = true;
+                }
+                else
+                {
+                    //sets the boolean to not read the following lines until Endif is typed
+                    ifStatement = false;
+                }
+            }
+            //Checks what comparator is used
+            else if (comparator.Equals("<"))
+            {
+                //Checks if the statement inputted is true
+                if ((VariableValue < int.Parse(value)))
+                {
+                    //sets the boolean to check whether to read the following lines
+                    ifStatement = true;
+                }
+                else
+                {
+                    //sets the boolean to not read the following lines until Endif is typed
+                    ifStatement = false;
+                }
+            }
+            else
+            {
+                //Throws error because an invalid Comparator was inputted
+                InvalidComparator();
+            }
+        }
+
+        public void CheckLoop()
+        {
+            //Checks what comparator is used
+            if (comparator.Equals("=="))
+            {
+                //Checks if the statement inputted is true
+                if (int.Parse(value).Equals(VariableValue))
+                {
+                    //sets the boolean to check whether to read the following lines
+                    LoopStatement = true;
+                    LoopStart = lineNumber;
+                    
+                    LoopValue = int.Parse(value);
+                    LoopComparator = comparator;
+                }
+                else
+                {
+                    //sets the boolean to not read the following lines until Endif is typed
+                    LoopStatement = false;
+                }
+            }
+            //Checks what comparator is used
+            else if (comparator.Equals(">"))
+            {
+                //Checks if the statement inputted is true
+                if ((VariableValue > int.Parse(value)))
+                {
+                    //sets the boolean to check whether to read the following lines
+                    LoopStatement = true;
+                    LoopStart = lineNumber;
+                    LoopValue = int.Parse(value);
+                    LoopComparator = comparator;
+                }
+                else
+                {
+                    //sets the boolean to not read the following lines until Endif is typed
+                    LoopStatement = false;
+                }
+            }
+            //Checks what comparator is used
+            else if (comparator.Equals("<"))
+            {
+                //Checks if the statement inputted is true
+                if ((VariableValue < int.Parse(value)))
+                {
+                    //sets the boolean to check whether to read the following lines
+                    LoopStatement = true;
+                    LoopStart = lineNumber;
+                    LoopValue = int.Parse(value);
+                    LoopComparator = comparator;
+                }
+                else
+                {
+                    //sets the boolean to not read the following lines until Endif is typed
+                    LoopStatement = false;
+                }
+            }
+            else
+            {
+                LoopStatement = false;
+                //Throws error because an invalid Comparator was inputted
+                InvalidComparator();
+            }
+        }
+
         /// <summary>
         /// Loops from the startline to the endline by getting the lines from the LinesArray
         /// Splits the line and updates the line number
