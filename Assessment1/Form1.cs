@@ -134,20 +134,30 @@ namespace Assessment1
                     //Sets folder for file to be saved into
                     string path = @"C:\Users\robbi\source\repos\Assessment1\Assessment1\";
                     //Checks if the folder already exists
-                    if (Directory.Exists(path))
+                    try
                     {
-                        //Adds file with the name inputted to the folder
-                        File.WriteAllText(path + CommandSplit[1], String.Empty);
-                        File.AppendAllText(path + CommandSplit[1], txtInput.Text);
-                    }
 
-                    else
+
+                        if (Directory.Exists(path))
+                        {
+                            //Adds file with the name inputted to the folder
+                            File.WriteAllText(path + CommandSplit[1], String.Empty);
+                            File.AppendAllText(path + CommandSplit[1], txtInput.Text);
+                        }
+
+                        else
+                        {
+                            //Creates the folder set above
+                            Directory.CreateDirectory(path);
+                            // Adds file with the name inputted to the folder
+                            File.WriteAllText(path + CommandSplit[1], String.Empty);
+                            File.AppendAllText(path + CommandSplit[1], txtInput.Text);
+                        }
+                    }
+                    catch (IndexOutOfRangeException ex1)
                     {
-                        //Creates the folder set above
-                        Directory.CreateDirectory(path);
-                        // Adds file with the name inputted to the folder
-                        File.WriteAllText(path + CommandSplit[1], String.Empty);
-                        File.AppendAllText(path + CommandSplit[1], txtInput.Text);
+                        IncorrectNumberOfParameters();
+                        return;
                     }
                 }
                 else if (CommandSplit[0].Equals("load") == true)
@@ -167,6 +177,11 @@ namespace Assessment1
                     {
                         string error = "ERROR FILE NOT FOUND";
                         txtErrors.Text = error;
+                        return;
+                    }
+                    catch (IndexOutOfRangeException ex1)
+                    {
+                        IncorrectNumberOfParameters();
                         return;
                     }
                 }
@@ -771,7 +786,16 @@ namespace Assessment1
                         methodParameters.Clear();
                         foreach(string variable in ParameterSplit)
                         {
-                            methodParameters.Add(int.Parse(variable));
+                            try
+                            {
+                                methodParameters.Add(int.Parse(variable));
+                            }
+                            catch (FormatException ex)
+                            {
+                                //Throws exception because the value inputted was not an integer
+                                InvalidParameter();
+                                return;
+                            }
                         }
                     }
                     else if (CommandSplit.Length > 2)
@@ -802,21 +826,37 @@ namespace Assessment1
                                 int startPoint = method.Value[0]+1;
                                 int endPoint = method.Value[1];
                                 MethodVariableDictionary.Clear();
-                                for(int i = 2; i < method.Value.Count(); i++)
+                                if ((ParameterSplit.Length) == (method.Value.Count() - 2))
                                 {
-                                    MethodVariableDictionary.Add(ParameterSplit[i-2], method.Value[i]);
+                                    for (int i = 2; i < method.Value.Count(); i++)
+                                    {
+                                        try
+                                        {
+                                            MethodVariableDictionary.Add(ParameterSplit[i - 2], method.Value[i]);
+                                        }
+                                        catch (IndexOutOfRangeException ex1)
+                                        {
+                                            IncorrectNumberOfParameters();
+                                            return;
+                                        }
+                                    }
+                                    for (int start = startPoint; start < endPoint; start++)
+                                    {
+                                        line = LinesArray[start].ToString();
+                                        //Splits line and stores values in commandSplit Array
+                                        CommandSplit = line.Split(' ');
+                                        lineNumber = start;
+                                        //Calls command method
+                                        command();
+                                    }
+                                    MethodVariableDictionary.Clear();
+                                    checkMethod = true;
                                 }
-                                for (int start = startPoint; start < endPoint; start++)
+                                else
                                 {
-                                    line = LinesArray[start].ToString();
-                                    //Splits line and stores values in commandSplit Array
-                                    CommandSplit = line.Split(' ');
-                                    lineNumber = start;
-                                    //Calls command method
-                                    command();
+                                    checkMethod = true;
+                                    IncorrectNumberOfParameters();
                                 }
-                                MethodVariableDictionary.Clear();
-                                checkMethod = true;
                             }
                         }
                         if (checkMethod.Equals(false)){
@@ -886,7 +926,7 @@ namespace Assessment1
             error = "ERROR INVALID COMMAND";
             txtErrors.Text = error;
             ErrorList = ErrorList + Environment.NewLine;
-            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+            ErrorList = ErrorList + error + " AT LINE " + (lineNumber+1);
         }
         /// <summary>
         /// This method is called when the parameters typed are not of the correct format
@@ -898,7 +938,7 @@ namespace Assessment1
             error = "ERROR INVALID PARAMETERS";
             txtErrors.Text = error;
             ErrorList = ErrorList + Environment.NewLine;
-            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+            ErrorList = ErrorList + error + " AT LINE " + (lineNumber + 1);
         }
 
         /// <summary>
@@ -911,7 +951,7 @@ namespace Assessment1
              error = "ERROR INCORRECT NUMBER OF PARAMETERS";
             txtErrors.Text = error ;
             ErrorList = ErrorList + Environment.NewLine;
-            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+            ErrorList = ErrorList + error + " AT LINE " + (lineNumber + 1);
             
         }
 
@@ -1237,7 +1277,7 @@ namespace Assessment1
             string error = "ERROR VALUE MUST BE AN INTEGER";
             txtErrors.Text = error;
             ErrorList = ErrorList + Environment.NewLine;
-            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+            ErrorList = ErrorList + error + " AT LINE " + (lineNumber + 1);
         }
         /// <summary>
         /// This method is called when the comparator being used in while and if statements is invalid 
@@ -1249,7 +1289,7 @@ namespace Assessment1
             string error = "ERROR Comparator must be '==' or '>' or '<'";
             txtErrors.Text = error;
             ErrorList = ErrorList + Environment.NewLine;
-            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+            ErrorList = ErrorList + error + " AT LINE " + (lineNumber + 1);
         }
         /// <summary>
         /// This method is called when the variable they have tried to use in a if or while statement is not a variable stored in the dictionary.
@@ -1261,7 +1301,7 @@ namespace Assessment1
             string error = "Variable you have tried to compare is not a variable";
             txtErrors.Text = error;
             ErrorList = ErrorList + Environment.NewLine;
-            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+            ErrorList = ErrorList + error + " AT LINE " + (lineNumber + 1);
         }
         /// <summary>
         /// This method is called when the operator used to change the value of the variable inputted is invalid
@@ -1273,7 +1313,7 @@ namespace Assessment1
             string error = "ERROR Operator must be '+' or '-' ";
             txtErrors.Text = error;
             ErrorList = ErrorList + Environment.NewLine;
-            ErrorList = ErrorList + error + " AT LINE " + lineNumber;
+            ErrorList = ErrorList + error + " AT LINE " + (lineNumber + 1);
         }
 
     }
