@@ -37,6 +37,14 @@ namespace Assessment1
 			{
 				return new Triangle();
 			}
+			else if (shapeName.Equals("ARC"))
+			{
+				return new Arc();
+			}
+			else if (shapeName.Equals("HEXAGON"))
+			{
+				return new Hexagon();
+			}
 			else
 			{
 				System.ArgumentException argEx = new System.ArgumentException("ERROR FACTORY CLASS FAILURE");

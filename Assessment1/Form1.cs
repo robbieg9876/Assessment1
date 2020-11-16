@@ -463,7 +463,97 @@ namespace Assessment1
                             return;
                         }
                         //Writes to console
-                        Console.WriteLine("SQUARE");
+                        Console.WriteLine("RECTANGLE");
+                    }
+                    else if (CommandSplit[0].Equals("arc") == true)
+                    {
+                        //Recieves two inputs and stores as integers
+                        try
+                        {
+                            //Splits parameters into seperate values and stores in array
+                            ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                            //Checks if the parameters inputted are variables
+                            CheckForVariable();
+                            //Checks if the correct number of paramters have been passed
+                            int width = int.Parse(ParameterSplit[0]);
+                            int height = int.Parse(ParameterSplit[1]);
+                            if (ParameterSplit.Length != 2)
+                            {
+                                ParameterCheck[2] = ParameterSplit[2];
+                            }
+                            else
+                            {
+                                Shape shape;
+                                shape = factory.getShape("arc");
+                                shape.set(MyCanvass.Pen.Color, MyCanvass.xPos, MyCanvass.yPos, width, height);
+                                if (MyCanvass.Fill == 1)
+                                {
+                                    shape.fill(MyCanvass.g);
+                                }
+                                else
+                                {
+                                    shape.draw(MyCanvass.g);
+                                }
+                            }
+                        }
+                        catch (FormatException ex)
+                        {
+                            InvalidParameter();
+                            return;
+                        }
+                        catch (IndexOutOfRangeException ex1)
+                        {
+                            IncorrectNumberOfParameters();
+                            return;
+                        }
+                        //Writes to console
+                        Console.WriteLine("ARC");
+                    }
+                    else if (CommandSplit[0].Equals("hexagon") == true)
+                    {
+                        //Recieves input and strores as an integer
+                        try
+
+                        {
+                            //Splits parameters into seperate values and stores in array
+                            ParameterSplit = CommandSplit[1].Split(",".ToCharArray());
+                            //Checks if the parameters inputted are variables
+                            CheckForVariable();
+                            //Checks if the correct number of paramters have been passed
+                            int width = int.Parse(ParameterSplit[0]);
+                            if (ParameterSplit.Length != 1)
+                            {
+                                ParameterCheck[1] = ParameterSplit[1];
+                            }
+                            else
+                            {
+                                Shape shape;
+                                shape = factory.getShape("hexagon");
+                                shape.set(MyCanvass.Pen.Color, MyCanvass.xPos, MyCanvass.yPos, width);
+                                if (MyCanvass.Fill == 1)
+                                {
+                                    shape.fill(MyCanvass.g);
+                                }
+                                else
+                                {
+                                    shape.draw(MyCanvass.g);
+                                }
+                            }
+
+                        }
+                        catch (FormatException ex)
+                        {
+                            InvalidParameter();
+                            return;
+                        }
+                        catch (IndexOutOfRangeException ex1)
+                        {
+                            IncorrectNumberOfParameters();
+                            return;
+                        }
+
+                        //Writes to console
+                        Console.WriteLine("HEXAGON");
                     }
                     else if (CommandSplit[0].Equals("clear") == true)
                     {
