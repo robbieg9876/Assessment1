@@ -90,6 +90,8 @@ namespace Assessment1
                 //Checks if the first value in the array is a valid command
                 if (CommandSplit[0].Equals("run") == true)
                 {
+                    pictureBox1.Visible = true;
+                    OutputWindow.Visible = false;
                     //This takes all the text in the input box
                     //Splits it into individual lines
                     using (StringReader reader = new StringReader(txtInput.Text))
@@ -114,6 +116,8 @@ namespace Assessment1
                         //Checks if there are any errors
                         if (ErrorList.Equals(""))
                         {
+                            pictureBox1.Visible = false;
+                            OutputWindow.Visible = true;
                             txtErrors.Text = ErrorList;
                             Refresh();
                         }
@@ -1120,7 +1124,13 @@ namespace Assessment1
 
 
 
-
+        /// <summary>
+        /// Checks that the if statement is true or false
+        /// Checks which operator has been used and checks the value against the variable value
+        /// Changes ifStatement to true if the statement is true
+        /// Changes ifStatement to false if the statement is false
+        /// If an incorrect comparator is used then an error is thrown
+        /// </summary>
         public void checkIf()
         {
             //Checks what comparator is used
@@ -1175,6 +1185,16 @@ namespace Assessment1
             }
         }
 
+
+        /// <summary>
+        /// Checks that the while statement is true or false
+        /// Checks which operator has been used and checks the value against the variable value
+        /// Changes LoopStatement to true if the statement is true, gets the line numebr of the start of the loop,
+        /// initialises the variable LoopValue to equal the value being compared with the variable value and
+        /// initialises the variable LoopComparator to equal the comparator being used in the while statement.
+        /// Changes LooStatement to false if the statement is false
+        /// If an incorrect comparator is used then an error is thrown
+        /// </summary>
         public void CheckLoop()
         {
             //Checks what comparator is used

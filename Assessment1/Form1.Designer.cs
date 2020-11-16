@@ -36,7 +36,9 @@
             this.OutputWindow = new System.Windows.Forms.PictureBox();
             this.txtErrors = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.OutputWindow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtInput
@@ -101,7 +103,7 @@
             // 
             this.OutputWindow.BackColor = System.Drawing.Color.Black;
             this.OutputWindow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.OutputWindow.Location = new System.Drawing.Point(904, 32);
+            this.OutputWindow.Location = new System.Drawing.Point(909, 32);
             this.OutputWindow.Name = "OutputWindow";
             this.OutputWindow.Size = new System.Drawing.Size(871, 519);
             this.OutputWindow.TabIndex = 6;
@@ -130,12 +132,24 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Errors:";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Black;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Location = new System.Drawing.Point(909, 32);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(871, 519);
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.WaitOnLoad = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ClientSize = new System.Drawing.Size(1827, 928);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtErrors);
             this.Controls.Add(this.OutputWindow);
@@ -147,6 +161,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.OutputWindow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,6 +176,7 @@
         private System.Windows.Forms.PictureBox OutputWindow;
         private System.Windows.Forms.TextBox txtErrors;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
