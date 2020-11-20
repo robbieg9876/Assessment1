@@ -29,14 +29,14 @@ namespace Assessment1
         public string ErrorList = "";
         public IDictionary<string, int> VariableDictionary = new Dictionary<string, int>();
         public IDictionary<string, int> MethodVariableDictionary = new Dictionary<string, int>();
-        public Dictionary<string,List <int>> MethodDictionary = new Dictionary<string,List <int>>();
+        public Dictionary<string,List <string>> MethodDictionary = new Dictionary<string,List <string>>();
         public Boolean ifStatement= true;
         public Boolean LoopStatement = true;
         public int LoopStart;
         public int LoopEnd;
         public string line;
         public List<String> LoopArray = new List<string>();
-        public List<int> methodParameters = new List<int>();
+        public List<string> methodParameters = new List<string>();
         public ArrayList LinesArray= new ArrayList();
         public int methodStart;
         public int methodEnd;
@@ -876,13 +876,12 @@ namespace Assessment1
                         parameters = CommandSplit[2].Replace("(","");
                         parameters = parameters.Replace(")", "");
                         ParameterSplit = parameters.Split(',');
-                        CheckForVariable();
                         methodParameters.Clear();
                         foreach(string variable in ParameterSplit)
                         {
                             try
                             {
-                                methodParameters.Add(int.Parse(variable));
+                                methodParameters.Add((variable));
                             }
                             catch (FormatException ex)
                             {
@@ -909,7 +908,7 @@ namespace Assessment1
                     else
                     {
                         Boolean checkMethod = false;
-                        foreach (KeyValuePair<string, List<int>> method in MethodDictionary)
+                        foreach (KeyValuePair<string, List<string>> method in MethodDictionary)
                         {
                             if (method.Key.Equals(CommandSplit[0]))
                             {
@@ -917,8 +916,9 @@ namespace Assessment1
                                 parameters = CommandSplit[1].Replace("(", "");
                                 parameters = parameters.Replace(")", "");
                                 ParameterSplit = parameters.Split(',');
-                                int startPoint = method.Value[0]+1;
-                                int endPoint = method.Value[1];
+                                CheckForVariable();
+                                int startPoint = int.Parse(method.Value[0])+1;
+                                int endPoint = int.Parse(method.Value[1]);
                                 MethodVariableDictionary.Clear();
                                 if ((ParameterSplit.Length) == (method.Value.Count() - 2))
                                 {
@@ -926,7 +926,7 @@ namespace Assessment1
                                     {
                                         try
                                         {
-                                            MethodVariableDictionary.Add(ParameterSplit[i - 2], method.Value[i]);
+                                            MethodVariableDictionary.Add(method.Value[i], int.Parse(ParameterSplit[i - 2]));
                                         }
                                         catch (IndexOutOfRangeException ex1)
                                         {
@@ -951,6 +951,7 @@ namespace Assessment1
                                     checkMethod = true;
                                     IncorrectNumberOfParameters();
                                 }
+                                MethodVariableDictionary.Clear();
                             }
                         }
                         if (checkMethod.Equals(false)){
@@ -983,14 +984,14 @@ namespace Assessment1
                     Boolean AlreadyInArray = false;
                     methodEnd = lineNumber;
 
-                    List <int> Method = new List<int>();
-                    Method.Add(methodStart);
-                    Method.Add(methodEnd);
-                    foreach(int variable in methodParameters)
+                    List <string> Method = new List<string>();
+                    Method.Add(methodStart.ToString());
+                    Method.Add(methodEnd.ToString());
+                    foreach(string variable in methodParameters)
                     {
                         Method.Add(variable);
                     }
-                    foreach (KeyValuePair<string, List<int>> method in MethodDictionary)
+                    foreach (KeyValuePair<string, List<string>> method in MethodDictionary)
                     {
                         if (method.Key.Equals(methodName))
                         {
@@ -1191,6 +1192,7 @@ namespace Assessment1
                         {
                             //if it is then assign the parameter the integer value of the variable
                             ParameterSplit[i] = variable.Value.ToString();
+                            //ErrorList = ErrorList + variable.Key + ParameterSplit[i] + Environment.NewLine; ;
                             foundVariable = true;
                         }
                     }

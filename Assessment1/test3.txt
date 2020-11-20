@@ -1,7 +1,7 @@
 pen white
 radius = 50
 circle radius
-Method method1 (50,100,30)
+Method method1 (width,b,c)
 pen green
 fill on
 square width
@@ -22,4 +22,4 @@ rectangle width,height
 width = width + 5
 height = height - 5
 Endloop
-method1 (width,b,c)
+method1 (50,100,60)
