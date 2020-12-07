@@ -18,3 +18,4 @@ C:\Users\robbi\source\repos\Assessment1\CanvassTests\bin\Debug\net472\Assessment
 C:\Users\robbi\source\repos\Assessment1\CanvassTests\obj\Debug\net472\CanvassTests.csproj.CopyComplete
 C:\Users\robbi\source\repos\Assessment1\CanvassTests\obj\Debug\net472\CanvassTests.dll
 C:\Users\robbi\source\repos\Assessment1\CanvassTests\obj\Debug\net472\CanvassTests.pdb
+C:\Users\robbi\source\repos\Assessment1\CanvassTests\bin\Debug\net472\Assessment1.xml
