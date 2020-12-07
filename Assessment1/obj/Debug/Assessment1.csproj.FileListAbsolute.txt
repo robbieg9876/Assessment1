@@ -1,6 +1,3 @@
-C:\Users\robbi\source\repos\Assessment1\Assessment1\bin\Debug\Assessment1.exe.config
-C:\Users\robbi\source\repos\Assessment1\Assessment1\bin\Debug\Assessment1.exe
-C:\Users\robbi\source\repos\Assessment1\Assessment1\bin\Debug\Assessment1.pdb
 C:\Users\robbi\source\repos\Assessment1\Assessment1\obj\Debug\Assessment1.Form1.resources
 C:\Users\robbi\source\repos\Assessment1\Assessment1\obj\Debug\Assessment1.Properties.Resources.resources
 C:\Users\robbi\source\repos\Assessment1\Assessment1\obj\Debug\Assessment1.csproj.GenerateResource.cache
@@ -8,3 +5,8 @@ C:\Users\robbi\source\repos\Assessment1\Assessment1\obj\Debug\Assessment1.csproj
 C:\Users\robbi\source\repos\Assessment1\Assessment1\obj\Debug\Assessment1.exe
 C:\Users\robbi\source\repos\Assessment1\Assessment1\obj\Debug\Assessment1.pdb
 C:\Users\robbi\source\repos\Assessment1\Assessment1\obj\Debug\Assessment1.csprojAssemblyReference.cache
+C:\Users\robbi\source\repos\Assessment1\Assessment1.exe.config
+C:\Users\robbi\source\repos\Assessment1\Assessment1\Assessment1.xml
+C:\Users\robbi\source\repos\Assessment1\Assessment1.exe
+C:\Users\robbi\source\repos\Assessment1\Assessment1.pdb
+C:\Users\robbi\source\repos\Assessment1\Assessment1.xml

@@ -69,7 +69,7 @@ namespace Assessment1
         /// <summary>
         /// Calculates the area of the square using the width
         /// </summary>
-        /// <returns></returns>
+        /// <returns>width</returns>
         public override double calcArea()
         {
             return width * width;
@@ -78,7 +78,7 @@ namespace Assessment1
         /// <summary>
         /// Calculates the perimeter of the square
         /// </summary>
-        /// <returns></returns>
+        /// <returns>perimeter</returns>
         public override double calcPerimeter()
         {
             return 4 * width;
@@ -86,7 +86,7 @@ namespace Assessment1
         /// <summary>
         /// Returns the string value of the shape
         /// </summary>
-        /// <returns></returns>
+        /// <returns>as string</returns>
         public override string ToString()
         {
             return base.ToString() + "  " + this.width;

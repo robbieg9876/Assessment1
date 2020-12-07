@@ -71,7 +71,7 @@ namespace Assessment1
         /// <summary>
         /// Calculates the area of the arc using the radius
         /// </summary>
-        /// <returns></returns>
+        /// <returns>area</returns>
         public override double calcArea()
         {
             return 0;
@@ -80,7 +80,7 @@ namespace Assessment1
         /// <summary>
         /// Calculates the perimeter of the arc
         /// </summary>
-        /// <returns></returns>
+        /// <returns>perimeter</returns>
         public override double calcPerimeter()
         {
             return 0;
@@ -88,7 +88,7 @@ namespace Assessment1
         /// <summary>
         /// Returns the string value of the shape
         /// </summary>
-        /// <returns></returns>
+        /// <returns>as string</returns>
         public override string ToString()
         {
             return base.ToString() + "  " + this.width+" "+this.height;

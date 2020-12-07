@@ -71,7 +71,7 @@ namespace Assessment1
         /// <summary>
         /// Calculates the area of the circle using the radius
         /// </summary>
-        /// <returns></returns>
+        /// <returns>area</returns>
         public override double calcArea()
         {
             return Math.PI * (radius ^ 2);
@@ -80,7 +80,7 @@ namespace Assessment1
         /// <summary>
         /// Calculates the perimeter of the circle
         /// </summary>
-        /// <returns></returns>
+        /// <returns>perimeter</returns>
         public override double calcPerimeter()
         {
             return 2 * Math.PI * radius;
@@ -88,7 +88,7 @@ namespace Assessment1
         /// <summary>
         /// Returns the string value of the shape
         /// </summary>
-        /// <returns></returns>
+        /// <returns>as stringr</returns>
         public override string ToString()
         {
             return base.ToString()+"  "+this.radius;

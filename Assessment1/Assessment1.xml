@@ -1,0 +1,550 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Assessment1</name>
+    </assembly>
+    <members>
+        <!-- Badly formed XML comment ignored for member "M:Assessment1.Arc.#ctor(System.Int32,System.Drawing.Color,System.Int32,System.Int32,System.Int32,System.Int32)" -->
+        <member name="M:Assessment1.Arc.set(System.Drawing.Color,System.Int32[])">
+            <summary>
+            Gets passed the pen colour and a list of integers that includes the drwaing position and the width and height
+            Sets the colour and the drawing position
+             Stores the radius value in the local variable for radius 
+            </summary>
+            <param name="colour"></param>
+            <param name="list"></param>
+        </member>
+        <member name="M:Assessment1.Arc.draw(System.Drawing.Graphics)">
+            <summary>
+            Draws a arc with the pen colour from the drawing position with the width and height of the local variables
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Arc.fill(System.Drawing.Graphics)">
+            <summary>
+            Draws a filled arc with the pen colour from the drawing position with the width and height of the local variables
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Arc.calcArea">
+            <summary>
+            Calculates the area of the arc using the radius
+            </summary>
+            <returns>area</returns>
+        </member>
+        <member name="M:Assessment1.Arc.calcPerimeter">
+            <summary>
+            Calculates the perimeter of the arc
+            </summary>
+            <returns>perimeter</returns>
+        </member>
+        <member name="M:Assessment1.Arc.ToString">
+            <summary>
+            Returns the string value of the shape
+            </summary>
+            <returns>as string</returns>
+        </member>
+        <member name="M:Assessment1.Canvass.#ctor(System.Drawing.Graphics)">
+            <summary>
+            Initialises the graphics variables 
+            Sets the starting drawing position and the pen colour
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Canvass.MoveTo(System.Int32,System.Int32)">
+            <summary>
+            Takes in the parameters inputted and moves the drawing position to those values
+            </summary>
+            <param name="toX"></param>
+            <param name="toY"></param>
+        </member>
+        <member name="M:Assessment1.Canvass.DrawTo(System.Int32,System.Int32)">
+            <summary>
+            Draws a line from the current drawing position to the point inputted
+            </summary>
+            <param name="toX"></param>
+            <param name="toY"></param>
+        </member>
+        <member name="M:Assessment1.Canvass.PenColour(System.Drawing.Color)">
+            <summary>
+            Changes the pen colour to the one inputted
+            </summary>
+            <param name="colour"></param>
+        </member>
+        <member name="M:Assessment1.Canvass.clearArea(System.Drawing.Color)">
+            <summary>
+            Clears the  outbox with the colour of the background
+            </summary>
+            <param name="colour"></param>
+        </member>
+        <member name="M:Assessment1.Canvass.resetPenPosition">
+            <summary>
+            Resets the drawing position back to the original position
+            </summary>
+        </member>
+        <member name="M:Assessment1.Canvass.FillShape(System.Boolean)">
+            <summary>
+            Takes in a boolean value for whether the shapes should be filled
+            Changes the value of int Fill accordingly, so that they can be checked when a shape is being drawn
+            </summary>
+            <param name="fill"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Assessment1.Circle.#ctor(System.Int32,System.Drawing.Color,System.Int32,System.Int32,System.Int32)" -->
+        <member name="M:Assessment1.Circle.set(System.Drawing.Color,System.Int32[])">
+            <summary>
+            Gets passed the pen colour and a list of integers that includes the drwaing position and the radius
+            Sets the colour and the drawing position
+             Stores the radius value in the local variable for radius 
+            </summary>
+            <param name="colour"></param>
+            <param name="list"></param>
+        </member>
+        <member name="M:Assessment1.Circle.draw(System.Drawing.Graphics)">
+            <summary>
+            Draws a circle with the pen colour from the drawing position with the radius of the local variable
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Circle.fill(System.Drawing.Graphics)">
+            <summary>
+            Draws a filled circle with the pen colour from the drawing position with the radius of the local variable
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Circle.calcArea">
+            <summary>
+            Calculates the area of the circle using the radius
+            </summary>
+            <returns>area</returns>
+        </member>
+        <member name="M:Assessment1.Circle.calcPerimeter">
+            <summary>
+            Calculates the perimeter of the circle
+            </summary>
+            <returns>perimeter</returns>
+        </member>
+        <member name="M:Assessment1.Circle.ToString">
+            <summary>
+            Returns the string value of the shape
+            </summary>
+            <returns>as stringr</returns>
+        </member>
+        <member name="M:Assessment1.Factory.getShape(System.String)">
+            <summary>
+            Takes in a string parameter and checks which shape it is
+            Then returns the correct shapes class
+            </summary>
+            <param name="shapeName"></param>
+            <returns> selected shape class</returns>
+        </member>
+        <member name="M:Assessment1.Form1.#ctor">
+            <summary>
+            Initialises the graphics on the bitmap by inheriting the canvass from Canvass.cs
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.txtCommandLine_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            If the user presses enter in the commandLine the method is run
+            checks value typed and processes command accordingly
+            Checks if the user wants to use the programme box if they typed save,load or run
+            If they did not, just pass the single command through to command()
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Assessment1.Form1.command">
+            <summary>
+            Uses the commandSplit that is populated for every new line
+            Checks which command has been typed on that line
+            Proccesses the command accordingly
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.InvalidCommand">
+            <summary>
+            This method is called when the command typed is not a recognised command
+            Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.InvalidParameter">
+            <summary>
+            This method is called when the parameters typed are not of the correct format
+            Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.IncorrectNumberOfParameters">
+            <summary>
+            This method is called when there is an incorrect number of parameters for the command typed
+            Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.OutputWindow_Paint(System.Object,System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Initialises the graphics to go on the output window
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Assessment1.Form1.NewVariable">
+            <summary>
+            Takes the variable name from CommandSplit[0]
+            Takes value from CommandSplit[2]
+            If the value is being changed then the value at CommandSplit[4] is also stored
+            It checks which operator has been used and changes the value accordingly e.g width = width + 100 will change the value to be stored by 100
+            The method checks if there is already a variable in the dictionary with the same name
+            If there is, it will delete this variable
+            It then adds the variable using the varible name as the key and the variable value as the value
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.CheckForVariable">
+            <summary>
+            Loops for each parameter that is passed into the ParameterSplit array
+            checks if the paramater is an integer or a string
+            If it is a string it will check if the string is a variable name in the variable dictionary
+            If it is then put the value of the variable into the parameters array.
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.checkIf">
+            <summary>
+            Checks that the if statement is true or false
+            Checks which operator has been used and checks the value against the variable value
+            Changes ifStatement to true if the statement is true
+            Changes ifStatement to false if the statement is false
+            If an incorrect comparator is used then an error is thrown
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.CheckLoop">
+            <summary>
+            Checks that the while statement is true or false
+            Checks which operator has been used and checks the value against the variable value
+            Changes LoopStatement to true if the statement is true, gets the line numebr of the start of the loop,
+            initialises the variable LoopValue to equal the value being compared with the variable value and
+            initialises the variable LoopComparator to equal the comparator being used in the while statement.
+            Changes LooStatement to false if the statement is false
+            If an incorrect comparator is used then an error is thrown
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.StartLoop">
+            <summary>
+            Loops from the startline to the endline by getting the lines from the LinesArray
+            Splits the line and updates the line number
+            Calls the command() method to process the command
+            It will also update the variable being compared in the while statement 
+            If the value has been changed during the loop
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.ValueIsIncorrect">
+            <summary>
+            This method is called when the parameter being used to change the value of a variable is not an integer
+            Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.InvalidComparator">
+            <summary>
+            This method is called when the comparator being used in while and if statements is invalid 
+            Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.notAVariable">
+            <summary>
+            This method is called when the variable they have tried to use in a if or while statement is not a variable stored in the dictionary.
+            Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.InvalidOperator">
+            <summary>
+            This method is called when the operator used to change the value of the variable inputted is invalid
+            Errors are outputted to the error box and also added to ErrorList so that they can be outputted once all the lines in the program box have been processed.
+            </summary>
+        </member>
+        <member name="F:Assessment1.Form1.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Assessment1.Form1.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Assessment1.Form1.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Assessment1.Hexagon.#ctor(System.Drawing.Color,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets passed the pen colour, drawing position and the width 
+            Stores the width value in the local variable for width 
+            </summary>
+            <param name="colour"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="width"></param>
+        </member>
+        <member name="M:Assessment1.Hexagon.set(System.Drawing.Color,System.Int32[])">
+            <summary>
+            Gets passed the pen colour and a list of integers that includes the drwaing position and the width 
+            Sets the colour and the drawing position
+             Stores the width value in the local variable for width 
+            </summary>
+            <param name="colour"></param>
+            <param name="list"></param>
+        </member>
+        <member name="M:Assessment1.Hexagon.draw(System.Drawing.Graphics)">
+            <summary>
+            Draws a hexagon with the pen colour from the drawing position with the width of the local variable
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Hexagon.fill(System.Drawing.Graphics)">
+            <summary>
+            Draws a filled hexagon with the pen colour from the drawing position with the width of the local variables
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Hexagon.calcArea">
+            <summary>
+            Calculates the area of the hexagon using the width and height
+            </summary>
+            <returns>area</returns>
+        </member>
+        <member name="M:Assessment1.Hexagon.calcPerimeter">
+            <summary>
+            Calculates the hexagon of the triangle
+            </summary>
+            <returns>perimeter</returns>
+        </member>
+        <member name="M:Assessment1.Hexagon.ToString">
+            <summary>
+            Returns the string value of the shape
+            </summary>
+            <returns>as string</returns>
+        </member>
+        <member name="M:Assessment1.Program.Main">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="M:Assessment1.Rectangle.#ctor(System.Drawing.Color,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets passed the pen colour, drawing position, the width and the height
+            Stores the width value in the local variable for width and height 
+            </summary>
+            <param name="colour"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="width"></param>
+        </member>
+        <member name="M:Assessment1.Rectangle.set(System.Drawing.Color,System.Int32[])">
+            <summary>
+            Gets passed the pen colour and a list of integers that includes the drwaing position and the width and height
+            Sets the colour and the drawing position
+             Stores the width value in the local variable for width and height
+            </summary>
+            <param name="colour"></param>
+            <param name="list"></param>
+        </member>
+        <member name="M:Assessment1.Rectangle.draw(System.Drawing.Graphics)">
+            <summary>
+            Draws a rectangle with the pen colour from the drawing position with the width and height of the local variables
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Rectangle.fill(System.Drawing.Graphics)">
+            <summary>
+            Draws a filled rectangle with the pen colour from the drawing position with the width and height of the local variables
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Rectangle.calcArea">
+            <summary>
+            Calculates the area of the rectangle using the width and height
+            </summary>
+            <returns>area</returns>
+        </member>
+        <member name="M:Assessment1.Rectangle.calcPerimeter">
+            <summary>
+            Calculates the perimeter of the rectangle
+            </summary>
+            <returns>perimeter</returns>
+        </member>
+        <member name="M:Assessment1.Rectangle.ToString">
+            <summary>
+            Returns the string value of the shape
+            </summary>
+            <returns>as string</returns>
+        </member>
+        <member name="M:Assessment1.Square.#ctor(System.Drawing.Color,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets passed the pen colour, drawing position and the width
+            Stores the width value in the local variable for width 
+            </summary>
+            <param name="colour"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="width"></param>
+        </member>
+        <member name="M:Assessment1.Square.set(System.Drawing.Color,System.Int32[])">
+            <summary>
+            Gets passed the pen colour and a list of integers that includes the drwaing position and the width
+            Sets the colour and the drawing position
+             Stores the width value in the local variable for width 
+            </summary>
+            <param name="colour"></param>
+            <param name="list"></param>
+        </member>
+        <member name="M:Assessment1.Square.draw(System.Drawing.Graphics)">
+            <summary>
+            Draws a square with the pen colour from the drawing position with the width of the local variable
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Square.fill(System.Drawing.Graphics)">
+            <summary>
+            Draws a filled square with the pen colour from the drawing position with the width of the local variable
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Square.calcArea">
+            <summary>
+            Calculates the area of the square using the width
+            </summary>
+            <returns>width</returns>
+        </member>
+        <member name="M:Assessment1.Square.calcPerimeter">
+            <summary>
+            Calculates the perimeter of the square
+            </summary>
+            <returns>perimeter</returns>
+        </member>
+        <member name="M:Assessment1.Square.ToString">
+            <summary>
+            Returns the string value of the shape
+            </summary>
+            <returns>as string</returns>
+        </member>
+        <member name="M:Assessment1.Triangle.#ctor(System.Drawing.Color,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets passed the pen colour, drawing position, the width and the height
+            Stores the width value in the local variable for width and height 
+            </summary>
+            <param name="colour"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="width"></param>
+        </member>
+        <member name="M:Assessment1.Triangle.set(System.Drawing.Color,System.Int32[])">
+            <summary>
+            Gets passed the pen colour and a list of integers that includes the drwaing position and the width and height
+            Sets the colour and the drawing position
+             Stores the width value in the local variable for width and height
+            </summary>
+            <param name="colour"></param>
+            <param name="list"></param>
+        </member>
+        <member name="M:Assessment1.Triangle.draw(System.Drawing.Graphics)">
+            <summary>
+            Draws a triangle with the pen colour from the drawing position with the width and height of the local variables
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Triangle.fill(System.Drawing.Graphics)">
+            <summary>
+            Draws a filled triangle with the pen colour from the drawing position with the width and height of the local variables
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Assessment1.Triangle.calcArea">
+            <summary>
+            Calculates the area of the triangle using the width and height
+            </summary>
+            <returns>area</returns>
+        </member>
+        <member name="M:Assessment1.Triangle.calcPerimeter">
+            <summary>
+            Calculates the perimeter of the triangle
+            </summary>
+            <returns>perimeter</returns>
+        </member>
+        <member name="M:Assessment1.Triangle.ToString">
+            <summary>
+            Returns the string value of the shape
+            </summary>
+            <returns>as string</returns>
+        </member>
+        <member name="T:Assessment1.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Assessment1.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Assessment1.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:Shapes">
+            <summary>
+            Creates an inteface with the methods needed for the shape class
+            </summary>
+        </member>
+        <member name="M:Shape.#ctor">
+            <summary>
+            Initialises the pen colour and the drawing position
+            </summary>
+        </member>
+        <member name="M:Shape.#ctor(System.Drawing.Color,System.Int32,System.Int32)">
+            <summary>
+            Gets the parameters for pen colour and drawing postion and then assigns the values to the local variables
+            </summary>
+            <param name="colour"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Shape.draw(System.Drawing.Graphics)">
+            <summary>
+            Initialises method to draw shapes
+            </summary>
+            <param name="g"></param>
+            
+        </member>
+        <member name="M:Shape.fill(System.Drawing.Graphics)">
+            <summary>
+            Initialises method to draw a filled shape
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Shape.calcArea">
+            <summary>
+            Initialise a method to calculate the area of the shape
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shape.calcPerimeter">
+            <summary>
+            Initialise a method to calculate the area of the shape
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shape.set(System.Drawing.Color,System.Int32[])">
+            <summary>
+            Sets the colour and the int values from the parameters passed
+            </summary>
+            <param name="colour"></param>
+            <param name="list"></param>
+        </member>
+        <member name="M:Shape.ToString">
+            <summary>
+            Returns the string for the shape being drawn
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

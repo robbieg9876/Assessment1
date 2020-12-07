@@ -23,3 +23,4 @@ width = width + 5
 height = height - 5
 Endwhile
 method1 (20,100,60)
+method1 (20,200,60)

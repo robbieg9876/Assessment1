@@ -16,7 +16,7 @@ namespace Assessment1
 		/// Then returns the correct shapes class
 		/// </summary>
 		/// <param name="shapeName"></param>
-		/// <returns></returns>
+		/// <returns> selected shape class</returns>
 		public Shape getShape(String shapeName)
 		{
 			shapeName=shapeName.ToUpper().Trim();

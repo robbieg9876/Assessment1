@@ -72,7 +72,7 @@ namespace Assessment1
         /// <summary>
         /// Calculates the area of the hexagon using the width and height
         /// </summary>
-        /// <returns></returns>
+        /// <returns>area</returns>
         public override double calcArea()
         {
             return 0;
@@ -81,7 +81,7 @@ namespace Assessment1
         /// <summary>
         /// Calculates the hexagon of the triangle
         /// </summary>
-        /// <returns></returns>
+        /// <returns>perimeter</returns>
         public override double calcPerimeter()
         {
             return 0;
@@ -90,7 +90,7 @@ namespace Assessment1
         /// <summary>
         /// Returns the string value of the shape
         /// </summary>
-        /// <returns></returns>
+        /// <returns>as string</returns>
         public override string ToString()
         {
             return base.ToString() + "  " + this.width;
