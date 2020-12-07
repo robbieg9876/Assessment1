@@ -822,7 +822,7 @@ namespace Assessment1
                             notAVariable();
                         }
                     }
-                    else if (CommandSplit[0].Equals("Endloop"))
+                    else if (CommandSplit[0].Equals("Endwhile"))
                     {
                         LoopStart = LoopStart + 1;
                         LoopEnd = lineNumber;
@@ -859,6 +859,20 @@ namespace Assessment1
                         else if (LoopComparator.Equals("<"))
                         {
                             while (LoopVariableValue < LoopValue)
+                            {
+                                StartLoop();
+                            }
+                        }
+                        else if (LoopComparator.Equals("<="))
+                        {
+                            while (LoopVariableValue <= LoopValue)
+                            {
+                                StartLoop();
+                            }
+                        }
+                        else if (LoopComparator.Equals(">="))
+                        {
+                            while (LoopVariableValue >= LoopValue)
                             {
                                 StartLoop();
                             }
@@ -965,7 +979,7 @@ namespace Assessment1
                 }
                 else
                 {
-                    if (CommandSplit[0].Equals("Endloop"))
+                    if (CommandSplit[0].Equals("Endwhile"))
                     {
                         //Sets boolean to true to end branching
                         LoopStatement = true;
@@ -1270,6 +1284,34 @@ namespace Assessment1
                     ifStatement = false;
                 }
             }
+            else if (comparator.Equals("<="))
+            {
+                //Checks if the statement inputted is true
+                if ((VariableValue <= int.Parse(value)))
+                {
+                    //sets the boolean to check whether to read the following lines
+                    ifStatement = true;
+                }
+                else
+                {
+                    //sets the boolean to not read the following lines until Endif is typed
+                    ifStatement = false;
+                }
+            }
+            else if (comparator.Equals(">="))
+            {
+                //Checks if the statement inputted is true
+                if ((VariableValue >= int.Parse(value)))
+                {
+                    //sets the boolean to check whether to read the following lines
+                    ifStatement = true;
+                }
+                else
+                {
+                    //sets the boolean to not read the following lines until Endif is typed
+                    ifStatement = false;
+                }
+            }
             else
             {
                 //Throws error because an invalid Comparator was inputted
@@ -1331,6 +1373,42 @@ namespace Assessment1
             {
                 //Checks if the statement inputted is true
                 if ((VariableValue < int.Parse(value)))
+                {
+                    //sets the boolean to check whether to read the following lines
+                    LoopStatement = true;
+                    LoopStart = lineNumber;
+                    LoopValue = int.Parse(value);
+                    LoopComparator = comparator;
+                }
+                else
+                {
+                    //sets the boolean to not read the following lines until Endif is typed
+                    LoopStatement = false;
+                }
+            }
+            //Checks what comparator is used
+            else if (comparator.Equals("<="))
+            {
+                //Checks if the statement inputted is true
+                if ((VariableValue <= int.Parse(value)))
+                {
+                    //sets the boolean to check whether to read the following lines
+                    LoopStatement = true;
+                    LoopStart = lineNumber;
+                    LoopValue = int.Parse(value);
+                    LoopComparator = comparator;
+                }
+                else
+                {
+                    //sets the boolean to not read the following lines until Endif is typed
+                    LoopStatement = false;
+                }
+            }
+            //Checks what comparator is used
+            else if (comparator.Equals(">="))
+            {
+                //Checks if the statement inputted is true
+                if ((VariableValue >= int.Parse(value)))
                 {
                     //sets the boolean to check whether to read the following lines
                     LoopStatement = true;

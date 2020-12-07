@@ -17,9 +17,9 @@ height = 200
 If width == 50
 pen red
 Endif
-While height > 50
+While height >= 50
 rectangle width,height
 width = width + 5
 height = height - 5
-Endloop
-method1 (50,100,60)
+Endwhile
+method1 (20,100,60)
