@@ -681,12 +681,13 @@ namespace Assessment1
                             return;
                         }
                     }
-                    else if (CommandSplit[0].Equals("If"))
+                    else if (CommandSplit[0].Equals("if"))
                     {
                         //Splits the inputs into 3
                         variable = CommandSplit[1];
                         comparator = CommandSplit[2];
                         value = CommandSplit[3];
+                        isAVariable = false;
                         //Loops through the MethodVariableDictionary to find the variable name inputted
                         foreach (KeyValuePair<string, int> variable1 in MethodVariableDictionary)
                         {
@@ -744,12 +745,12 @@ namespace Assessment1
                             notAVariable();
                         }
                     }
-                    else if (CommandSplit[0].Equals("Endif"))
+                    else if (CommandSplit[0].Equals("endif"))
                     {
                         //Sets boolean to true to end branching
                         ifStatement = true;
                     }
-                    else if (CommandSplit[0].Equals("While"))
+                    else if (CommandSplit[0].Equals("while"))
                     {
                         //Splits the inputs into 3
                         variable = CommandSplit[1];
@@ -826,7 +827,7 @@ namespace Assessment1
                             notAVariable();
                         }
                     }
-                    else if (CommandSplit[0].Equals("Endwhile"))
+                    else if (CommandSplit[0].Equals("endwhile"))
                     {
                         LoopStart = LoopStart + 1;
                         LoopEnd = lineNumber;
@@ -885,7 +886,7 @@ namespace Assessment1
 
 
                     }
-                    else if (CommandSplit[0].Equals("Method"))
+                    else if (CommandSplit[0].Equals("method"))
                     {
                         methodName = CommandSplit[1];
                         methodStart = lineNumber;
@@ -983,7 +984,7 @@ namespace Assessment1
                 }
                 else
                 {
-                    if (CommandSplit[0].Equals("Endwhile"))
+                    if (CommandSplit[0].Equals("endwhile"))
                     {
                         //Sets boolean to true to end branching
                         LoopStatement = true;
@@ -992,12 +993,12 @@ namespace Assessment1
             }
             else
                 {
-                    if (CommandSplit[0].Equals("Endif"))
+                    if (CommandSplit[0].Equals("endif"))
                     {
                         //Sets boolean to true to end branching
                         ifStatement = true;
                     }
-                    if (CommandSplit[0].Equals("Endmethod"))
+                    if (CommandSplit[0].Equals("endmethod"))
                     {
                     Boolean AlreadyInArray = false;
                     methodEnd = lineNumber;

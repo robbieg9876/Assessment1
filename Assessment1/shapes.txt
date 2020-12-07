@@ -1,0 +1,9 @@
+moveto 200,200
+arc 200,180
+hexagon 50
+moveto 350,200
+hexagon 50
+moveto 275,250
+drawto 325,250
+moveto 290,300
+circle 10

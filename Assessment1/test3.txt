@@ -1,26 +1,26 @@
 pen white
 radius = 50
 circle radius
-Method method1 (width,b,c)
+method method1 (width,b,c)
 pen green
 fill on
 square width
 fill off
 circle b
-Endmethod
+endmethod
 radius = 50 + 100
 circle radius
 radius = radius + radius
 circle radius
 width = 50
 height = 200
-If width == 50
+if width == 60
 pen red
-Endif
-While height >= 50
+endif
+while height >= 50
 rectangle width,height
 width = width + 5
 height = height - 5
-Endwhile
+endwhile
 method1 (20,100,60)
 method1 (20,200,60)

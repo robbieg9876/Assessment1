@@ -1,0 +1,13 @@
+pen white
+radius = 50
+circle radius
+method method1 (width,radius,c)
+pen green
+fill on
+square width
+fill off
+circle radius
+endmethod
+circle 70
+method1 (20,100,60)
+method1 (40,200,60)
