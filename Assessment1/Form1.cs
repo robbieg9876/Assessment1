@@ -664,6 +664,10 @@ namespace Assessment1
                                     //Writes to console
                                     Console.WriteLine("WHITE");
                                 }
+                                else
+                                {
+                                    InvalidParameter();
+                                }
                             }
                         }
                         catch (FormatException ex)
