@@ -27,6 +27,7 @@ namespace Assessment1
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="width"></param>
+        /// <param name="height"></param>
         public Triangle(Color colour, int x, int y, int width, int height) : base(colour, x, y)
         {
             this.width = width;

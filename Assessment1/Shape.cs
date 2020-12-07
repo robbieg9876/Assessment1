@@ -10,9 +10,28 @@ using System.Threading.Tasks;
 /// </summary>
 public interface Shapes
 {
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="C"></param>
+	/// <param name="list"></param>
 	void set(Color C, params int[] list);
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="g"></param>
 	void draw(Graphics g);
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
 	double calcArea();
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
 	double calcPerimeter();
 }
 

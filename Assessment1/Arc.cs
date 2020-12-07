@@ -23,10 +23,12 @@ namespace Assessment1
         /// Gets passed the pen colour, drawing position and the width and height
         /// Stores the width and height values in the local variable for radius 
         /// </summary>
+        /// /// <param name="Fill"></param>
         /// <param name="colour"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        /// <param name="radius"></param
+        /// <param name="width"></param>
+        /// /// <param name="height"></param>
         public Arc(int Fill, Color colour, int x, int y, int width, int height) : base(colour, x, y)
         {
             this.width = width;

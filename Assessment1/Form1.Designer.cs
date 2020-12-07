@@ -113,6 +113,7 @@
             // 
             // txtErrors
             // 
+            this.txtErrors.AccessibleDescription = "Public";
             this.txtErrors.BackColor = System.Drawing.Color.Black;
             this.txtErrors.ForeColor = System.Drawing.Color.White;
             this.txtErrors.Location = new System.Drawing.Point(12, 639);
@@ -175,7 +176,7 @@
         private System.Windows.Forms.Label lblOutput;
         private System.Windows.Forms.Label lblCommandLine;
         private System.Windows.Forms.PictureBox OutputWindow;
-        private System.Windows.Forms.TextBox txtErrors;
+        public System.Windows.Forms.TextBox txtErrors;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
     }

@@ -52,6 +52,7 @@ namespace Assessment1
         public int VariableValue=0;
         Boolean isAVariable = false;
         Factory factory = new Factory();
+
         /// <summary>
         /// Initialises the graphics on the bitmap by inheriting the canvass from Canvass.cs
         /// </summary>

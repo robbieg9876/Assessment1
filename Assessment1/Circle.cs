@@ -22,10 +22,11 @@ namespace Assessment1
         /// Gets passed the pen colour, drawing position and the radius
         /// Stores the radius value in the local variable for radius 
         /// </summary>
+        /// /// <param name="Fill"></param>
         /// <param name="colour"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        /// <param name="radius"></param
+        /// <param name="radius"></param>
         public Circle(int Fill, Color colour, int x,int y, int radius) : base(colour,x,y)
         {
             this.radius = radius;

@@ -4,7 +4,18 @@
         <name>Assessment1</name>
     </assembly>
     <members>
-        <!-- Badly formed XML comment ignored for member "M:Assessment1.Arc.#ctor(System.Int32,System.Drawing.Color,System.Int32,System.Int32,System.Int32,System.Int32)" -->
+        <member name="M:Assessment1.Arc.#ctor(System.Int32,System.Drawing.Color,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets passed the pen colour, drawing position and the width and height
+            Stores the width and height values in the local variable for radius 
+            </summary>
+            /// <param name="Fill"></param>
+            <param name="colour"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="width"></param>
+            /// <param name="height"></param>
+        </member>
         <member name="M:Assessment1.Arc.set(System.Drawing.Color,System.Int32[])">
             <summary>
             Gets passed the pen colour and a list of integers that includes the drwaing position and the width and height
@@ -89,7 +100,17 @@
             </summary>
             <param name="fill"></param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Assessment1.Circle.#ctor(System.Int32,System.Drawing.Color,System.Int32,System.Int32,System.Int32)" -->
+        <member name="M:Assessment1.Circle.#ctor(System.Int32,System.Drawing.Color,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets passed the pen colour, drawing position and the radius
+            Stores the radius value in the local variable for radius 
+            </summary>
+            /// <param name="Fill"></param>
+            <param name="colour"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="radius"></param>
+        </member>
         <member name="M:Assessment1.Circle.set(System.Drawing.Color,System.Int32[])">
             <summary>
             Gets passed the pen colour and a list of integers that includes the drwaing position and the radius
@@ -336,6 +357,7 @@
             <param name="x"></param>
             <param name="y"></param>
             <param name="width"></param>
+            <param name="height"></param>
         </member>
         <member name="M:Assessment1.Rectangle.set(System.Drawing.Color,System.Int32[])">
             <summary>
@@ -434,6 +456,7 @@
             <param name="x"></param>
             <param name="y"></param>
             <param name="width"></param>
+            <param name="height"></param>
         </member>
         <member name="M:Assessment1.Triangle.set(System.Drawing.Color,System.Int32[])">
             <summary>
@@ -494,6 +517,31 @@
             <summary>
             Creates an inteface with the methods needed for the shape class
             </summary>
+        </member>
+        <member name="M:Shapes.set(System.Drawing.Color,System.Int32[])">
+            <summary>
+            
+            </summary>
+            <param name="C"></param>
+            <param name="list"></param>
+        </member>
+        <member name="M:Shapes.draw(System.Drawing.Graphics)">
+            <summary>
+            
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Shapes.calcArea">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shapes.calcPerimeter">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Shape.#ctor">
             <summary>
